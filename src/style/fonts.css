@@ -1,0 +1,12 @@
+@font-face {
+  font-family: "Poppins";
+  src:  local('☺'),
+  url("../assets/fonts/poppins-Regular.otf") format('opentype')
+}
+
+@font-face {
+  font-family: "PoppinsBold";
+  font-weight: bold;
+  src:  local('☻'),
+  url("../assets/fonts/poppins-SemiBold.otf") format('opentype')
+}
