@@ -12,6 +12,10 @@ const CID = 'CID';
 const CVC = 'CVC';
 const CVN = 'CVN';
 
+const DEFAULT_GAPS=[12, 8, 4];
+const DEFAULT_MIN_LENGTH=12;
+const DEFAULT_MAX_LENGTH=16;
+
 const clone = (x) => {
   let pattern, dupe;
 
@@ -122,8 +126,12 @@ types[MAESTRO] = {
 };
 
 const CreditCardType = (cardNumber) => {
-  let type, value;
-  const result = [];
+  let type, value, cards = [];
+  let result = {
+    cardType: false,
+    maxLength: DEFAULT_MAX_LENGTH,
+    minLength: DEFAULT_MIN_LENGTH
+  }
 
   if (!(typeof cardNumber === 'string' || cardNumber instanceof String)) {
     return result;
@@ -135,16 +143,49 @@ const CreditCardType = (cardNumber) => {
     value = types[type];
 
     if (cardNumber.length === 0 || value.pattern.test(cardNumber)) {
-      result.push(clone(value));
+      cards.push(clone(value));
     }
   }
+
+  cards=cards.length === 0 ? false : cards;
+  result.cardType=(cards.length === 1) ? cards[0] : false;
+  result.maxLength=CreditCardType.getMaxLength(cards);
+  result.minLength=CreditCardType.getMinLength(cards);
 
   return result;
 };
 
-CreditCardType.getTypeInfo = function (type) {
+CreditCardType.getTypeInfo = (type) => {
   return clone(types[type]);
 };
+
+CreditCardType.getMaxLength = (cards) => {
+  const maxLength=cards ? Math.max(...cards.map(card => card.lengths[card.lengths.length - 1])) : DEFAULT_MAX_LENGTH;
+  return maxLength;
+}
+
+CreditCardType.getMinLength = (cards) => {
+  const minLength=cards ? Math.min(...cards.map(card => card.lengths[0])) : DEFAULT_MIN_LENGTH;
+  return minLength;
+}
+
+CreditCardType.removeGaps = (value) => {
+  value=value.replace(/\s*/g, '');
+  value=new RegExp(/\d*/).exec(value);
+  value=!value ? '' : value[0];
+  return value.toString();
+}
+
+CreditCardType.addGaps = (value, type) => {
+  const gaps=type && type.gaps ? type.gaps.sort((a, b) => a - b).reverse() : DEFAULT_GAPS;
+  const tmpArr=value.split('');
+  for (const gap of gaps) {
+    if (gap < value.length) {
+      tmpArr.splice(gap, 0, ' ');
+    }
+  }
+  return tmpArr.join('');
+}
 
 CreditCardType.types = {
   VISA: VISA,
