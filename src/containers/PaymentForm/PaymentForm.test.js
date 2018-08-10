@@ -6,7 +6,7 @@ import PaymentForm from './PaymentForm';
 
 const mockStore = configureStore();
 
-describe("Component PaymentForm:", () => {
+describe('Component PaymentForm:', () => {
   let wrapper;
   
   beforeEach(function () {
@@ -16,7 +16,7 @@ describe("Component PaymentForm:", () => {
     wrapper = shallow(this.provider, { lifecycleExperimental: true });
   });
 
-  it("should mount", () => {
+  it('should mount', () => {
     expect(wrapper).toBeDefined();
   });
 });
