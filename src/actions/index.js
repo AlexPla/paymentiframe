@@ -1,16 +1,15 @@
-export const UPDATE_FIELDS = 'UPDATE_FIELDS';
-export const UPDATE_ERRORS = 'UPDATE_ERRORS';
+import * as constants from '../constants/actionTypes';
 
 export function updateFields(newState) {
   return {
-    type: UPDATE_FIELDS,
+    type: constants.UPDATE_FIELDS,
     newState
   };
 }
 
 export function updateErrors({ key, value }) {
   return {
-    type: UPDATE_ERRORS,
+    type: constants.UPDATE_ERRORS,
     key,
     value
   }

@@ -1,4 +1,4 @@
-import { UPDATE_FIELDS, UPDATE_ERRORS } from '../actions';
+import { UPDATE_FIELDS, UPDATE_ERRORS } from '../constants/actionTypes';
 
 const initialState = {
   card_holder: '',

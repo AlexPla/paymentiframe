@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { updateFields, updateErrors } from '../../actions/index';
+import { updateFields, updateErrors } from '../../actions/actionTypes';
 import CardNumberInput from '../../components/CardNumberInput/CardNumberInput';
 import './PaymentForm.css';
 
