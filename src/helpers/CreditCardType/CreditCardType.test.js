@@ -1,4 +1,4 @@
-import CreditCardType from "helpers/CreditCardType";
+import CreditCardType from "./CreditCardType";
 
 describe("Credit card type:", () => {
 
