@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { updateFields, updateErrors } from '../../actions/actionTypes';
+import { updateFields, updateErrors } from '../../actions';
 import CardNumberInput from '../../components/CardNumberInput/CardNumberInput';
 import './PaymentForm.css';
 
@@ -12,7 +12,7 @@ const getParamValue=(paramName) => {
     return (element.split('=')[0] === paramName);
   });
   return param ? param[1] : null;
-}
+};
 
 class PaymentForm extends Component {
   constructor(props, context) {
