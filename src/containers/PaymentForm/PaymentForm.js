@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { updateFields, updateErrors } from '../../actions';
+import CardHolderInput from '../../components/CardHolderInput/CardHolderInput';
 import CardNumberInput from '../../components/CardNumberInput/CardNumberInput';
 import './PaymentForm.css';
 
@@ -25,15 +26,18 @@ class PaymentForm extends Component {
   }
 
   render() {
-    const { card_number, card_type, updateFields, updateErrors } = this.props;
+    const { card_number, card_type, card_holder, updateFields, updateErrors } = this.props;
     const { parentApp, lang } = this.state;
     return (
       <div className='PaymentForm'>
-        <header className='PaymentForm-header'>
-          <h1 className='PaymentForm-title'>
-            { parentApp }
-          </h1>
-        </header>
+        {/*<header className='PaymentForm-header'>*/}
+          {/*<h1 className='PaymentForm-title'>*/}
+            {/*{ parentApp }*/}
+          {/*</h1>*/}
+        {/*</header>*/}
+        <div className='payment-form__item grid grid_column grid_size-12'>
+          <CardHolderInput lang={ lang } updateFields={ updateFields } updateErrors={ updateErrors } value={ card_holder } />
+        </div>
         <div className='payment-form__item grid grid_column grid_size-12'>
           <CardNumberInput lang={ lang } updateFields={ updateFields } updateErrors={ updateErrors } value={ card_number } cardType={ card_type }/>
         </div>
@@ -44,10 +48,10 @@ class PaymentForm extends Component {
 
 const mapStateToProps = ({ form }) => {
   return form;
-}
+};
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({ updateFields, updateErrors }, dispatch);
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(PaymentForm);

@@ -13,7 +13,7 @@ const initialState = {
     card_expiration: true,
     card_cvv: true
   }
-}
+};
 
 export default function(state = initialState, action) {
   switch (action.type) {
