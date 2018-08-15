@@ -59,7 +59,13 @@ class CardHolderInput extends Component {
   }
 
   onBlur() {
-    this.setState({ errorDisabled: false });
+    let card_holder = this.props.value.trim();
+    const errorMessage = this.validateInput(card_holder);
+    this.updateAppState(card_holder,  errorMessage);
+    this.setState({
+      errorDisabled: false,
+      errorMessage
+    });
   }
 
   render() {

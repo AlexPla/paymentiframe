@@ -173,4 +173,10 @@ describe('Component CardHolderInput:', () => {
     expect(component.state('errorDisabled')).toBe(false);
   });
 
+  it('should change trim input value on blur', () => {
+    component.setProps({ value: "John Doe " });
+    component.update();
+    input.prop('onBlur')();
+    expect(updateFieldsMock.mock.calls[0][0]).toEqual({ card_holder: 'John Doe' });
+  });
 });
