@@ -17,22 +17,30 @@ const initialState = {
 
 export default function(state = initialState, action) {
 
-  if (process.title === "browser") {
-    console.groupCollapsed(`REDUX Action: ${action.type}`);
-    console.info(`Action: `, action);
-    console.info(`State: `, state);
-    console.groupEnd();
-  }
+  let nextState;
 
   switch (action.type) {
     case UPDATE_FIELDS:
-      return Object.assign({}, state, action.newState);
+      nextState = Object.assign({}, state, action.newState);
+      break;
     case UPDATE_ERRORS:
       let newErrors = {};
       newErrors[action.key] = action.value;
-      Object.assign(newErrors, state.errors, newErrors);
-      return Object.assign({}, state, { errors: newErrors });
+      Object.assign({}, state.errors, newErrors);
+      nextState = Object.assign({}, state, { errors: newErrors });
+      break;
     default:
-      return state;
+      nextState = state;
+      break;
   }
+
+  if (process.title === "browser") {
+    console.groupCollapsed(`REDUX Action: ${action.type}`);
+    console.info(`Current State: `, state);
+    console.info(`Action: `, action);
+    console.info(`Next State: `, nextState);
+    console.groupEnd();
+  }
+
+  return nextState;
 }

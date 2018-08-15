@@ -36,7 +36,10 @@ class CardHolderInput extends Component {
 
   updateAppState(card_holder, errorMessage) {
     this.props.updateFields({ card_holder });
-    this.props.updateErrors({ card_holder: !!errorMessage });
+    this.props.updateErrors({
+      key: "card_holder",
+      value: !!errorMessage
+    });
   }
 
   onInput(e) {

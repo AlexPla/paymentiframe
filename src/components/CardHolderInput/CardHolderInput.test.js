@@ -107,7 +107,7 @@ describe('Component CardHolderInput:', () => {
       }
     });
     component.update();
-    expect(updateErrorsMock.mock.calls[0][0]).toEqual({ card_holder: true });
+    expect(updateErrorsMock.mock.calls[0][0]).toEqual({ key: 'card_holder', value: true });
   });
 
   it('should call updateErrorsMock with true error value if validation pass on user input', () => {
@@ -117,7 +117,7 @@ describe('Component CardHolderInput:', () => {
       }
     });
     component.update();
-    expect(updateErrorsMock.mock.calls[0][0]).toEqual({ card_holder: false });
+    expect(updateErrorsMock.mock.calls[0][0]).toEqual({ key: 'card_holder', value: false });
   });
 
   it('should not display clear button if input value is empty', () => {
@@ -164,7 +164,7 @@ describe('Component CardHolderInput:', () => {
     const clearButton = component.find('.card-holder-input__clear-button');
     clearButton.prop('onClick')();
     component.update();
-    expect(updateErrorsMock.mock.calls[0][0]).toEqual({ card_holder: true });
+    expect(updateErrorsMock.mock.calls[0][0]).toEqual({ key: 'card_holder', value: true });
   });
 
   it('should change state.errorDisabled to false on blur', () => {
