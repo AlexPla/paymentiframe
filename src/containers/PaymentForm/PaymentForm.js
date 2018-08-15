@@ -30,11 +30,11 @@ class PaymentForm extends Component {
     const { parentApp, lang } = this.state;
     return (
       <div className='PaymentForm'>
-        {/*<header className='PaymentForm-header'>*/}
-          {/*<h1 className='PaymentForm-title'>*/}
-            {/*{ parentApp }*/}
-          {/*</h1>*/}
-        {/*</header>*/}
+        <header className='PaymentForm-header'>
+          <h1 className='PaymentForm-title'>
+            { parentApp }
+          </h1>
+        </header>
         <div className='payment-form__item grid grid_column grid_size-12'>
           <CardHolderInput lang={ lang } updateFields={ updateFields } updateErrors={ updateErrors } value={ card_holder } />
         </div>

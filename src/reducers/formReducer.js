@@ -16,6 +16,14 @@ const initialState = {
 };
 
 export default function(state = initialState, action) {
+
+  if (process.title === "browser") {
+    console.groupCollapsed(`REDUX Action: ${action.type}`);
+    console.info(`Action: `, action);
+    console.info(`State: `, state);
+    console.groupEnd();
+  }
+
   switch (action.type) {
     case UPDATE_FIELDS:
       return Object.assign({}, state, action.newState);
