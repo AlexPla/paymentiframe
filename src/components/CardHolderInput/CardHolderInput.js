@@ -17,19 +17,17 @@ class CardHolderInput extends Component {
     this.onClearClick = this.onClearClick.bind(this);
   }
 
-  validateInput() {
+  validateInput(input) {
     const pattern = new RegExp(/^[a-zA-Zñçáéíóúàèòïü´ÑÇÁÉÍÓÚÀÈÒÏÜ]+([\‒\-\-]+[a-zA-Zñçáéíóúàèòïü´ÑÇÁÉÍÓÚÀÈÒÏÜ]+)*([\s]+([a-zA-Zñçáéíóúàèòïü´ÑÇÁÉÍÓÚÀÈÒÏÜ]+([\‒\-\-]+[a-zA-Zñçáéíóúàèòïü´ÑÇÁÉÍÓÚÀÈÒÏÜ]+)*))*$/); // eslint-disable-line no-useless-escape
 
-    if (typeof this.props.value !== "string") throw new Error ("invalid input type");
-
     switch (true) {
-      case this.props.value.length === 0:
+      case input.length === 0:
         return copies.errors.required[this.props.lang];
-      case this.props.value.length < 2:
+      case input.length < 2:
         return "systemMessages.SM18";
-      case this.props.value.length > 100:
+      case input.length > 100:
         return "maximum length exceeded";
-      case !pattern.test(this.props.value):
+      case !pattern.test(input):
         return "systemMessages.SM26";
       default:
         return "";
@@ -38,17 +36,12 @@ class CardHolderInput extends Component {
 
   updateAppState(card_holder, errorMessage) {
     this.props.updateFields({ card_holder });
-
-    if (errorMessage) {
-      this.props.updateErrors({
-        card_holder: true
-      });
-    }
+    this.props.updateErrors({ card_holder: !!errorMessage });
   }
 
   onInput(e) {
     let card_holder = e.target.value;
-    const errorMessage = this.validateInput();
+    const errorMessage = this.validateInput(card_holder);
     this.updateAppState(card_holder,  errorMessage);
     this.setState({
       errorDisabled: true,
@@ -57,10 +50,8 @@ class CardHolderInput extends Component {
   }
 
   onClearClick() {
-    const errorMessage = this.validateInput();
-
+    const errorMessage = copies.errors.required[this.props.lang];
     this.updateAppState('', errorMessage);
-
     this.setState({
       errorMessage,
       errorDisabled: false
@@ -68,11 +59,7 @@ class CardHolderInput extends Component {
   }
 
   onBlur() {
-    const errorMessage = this.validateInput();
-    this.setState({
-      errorMessage,
-      errorDisabled: false
-    });
+    this.setState({ errorDisabled: false });
   }
 
   render() {
