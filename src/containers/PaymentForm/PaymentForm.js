@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { updateFields, updateErrors } from '../../actions';
 import CardHolderInput from '../../components/CardHolderInput/CardHolderInput';
 import CardNumberInput from '../../components/CardNumberInput/CardNumberInput';
+import CardExpDateInput from '../../components/CardExpDateInput/CardExpDateInput';
 import './PaymentForm.css';
 
 const getParamValue=(paramName) => {
@@ -26,8 +27,12 @@ class PaymentForm extends Component {
   }
 
   render() {
-    const { card_number, card_type, card_holder, updateFields, updateErrors } = this.props;
+    const { card_holder, card_number, card_type, card_expiration_month, card_expiration_year, updateFields, updateErrors } = this.props;
     const { parentApp, lang } = this.state;
+    const date = {
+      month: card_expiration_month,
+      year: card_expiration_year
+    };
     return (
       <div className='PaymentForm'>
         <header className='PaymentForm-header'>
@@ -40,6 +45,9 @@ class PaymentForm extends Component {
         </div>
         <div className='payment-form__item grid grid_column grid_size-12'>
           <CardNumberInput lang={ lang } updateFields={ updateFields } updateErrors={ updateErrors } value={ card_number } cardType={ card_type }/>
+        </div>
+        <div className='payment-form__item grid grid_column grid_size-12'>
+          <CardExpDateInput lang={ lang } updateFields={ updateFields } updateErrors={ updateErrors } value={ date }/>
         </div>
       </div>
     );

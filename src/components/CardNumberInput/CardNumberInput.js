@@ -19,7 +19,7 @@ class CardNumberInput extends Component {
   }
 
   validateInput(value=this.props.value, card=this.props.cardType, minLength) {
-    minLength=minLength ? minLength : CreditCardType(value).minLength;
+    minLength=minLength ? minLength : CreditCardType.getCardType(value).minLength;
     let error='';
     if (value.length === 0) {
       error=copies.errors.required[this.props.lang];
@@ -37,16 +37,14 @@ class CardNumberInput extends Component {
       card_type: cardType
     });
 
-    if (errorMessage) {
-      this.props.updateErrors({ 
-        card_number: true
-      });
-    }
+    this.props.updateErrors({ 
+      card_number: Boolean(errorMessage)
+    });
   }
 
   onInput(e) {
     let value=CreditCardType.removeGaps(e.target.value);
-    let { cardType, maxLength, minLength }=CreditCardType(value);
+    let { cardType, maxLength, minLength }=CreditCardType.getCardType(value);
     let errorDisabled=this.state.errorDisabled;
 
     if (value.length > maxLength) {
