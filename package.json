@@ -30,6 +30,7 @@
     "dotenv-expand": "4.2.0",
     "enzyme": "^3.4.1",
     "enzyme-adapter-react-16": "^1.2.0",
+    "enzyme-to-json": "^3.3.4",
     "eslint": "4.10.0",
     "eslint-config-react-app": "^2.1.0",
     "eslint-loader": "1.9.0",
@@ -57,10 +58,13 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom",
-    "test-ci": "jest"
+    "test-ci": "jest --env=jsdom --coverage"
   },
   "pre-commit": {
-    "run": ["build", "test-ci"]
+    "run": [
+      "build",
+      "test-ci"
+    ]
   },
   "jest": {
     "collectCoverageFrom": [
