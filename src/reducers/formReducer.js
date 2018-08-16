@@ -4,8 +4,8 @@ const initialState = {
   card_holder: '',
   card_number: '',
   card_type: false,
-  card_expiration_year: '',
   card_expiration_month: '',
+  card_expiration_year: '',
   card_cvv: '',
   errors: {
     card_holder: true,

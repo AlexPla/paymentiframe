@@ -1,0 +1,29 @@
+{
+  "placeholder": {
+    "en": "EN_placeholder",
+    "es": "ES_placeholder",
+    "it": "IT_placeholder"
+  },
+  "errors": {
+    "required": {
+      "en": "EN_required",
+      "es": "ES_required",
+      "it": "IT_required"
+    },
+    "incomplete": {
+      "en": "EN_incomplete",
+      "es": "ES_incomplete",
+      "it": "IT_incomplete"
+    },
+    "pattern": {
+      "en": "EN_pattern",
+      "es": "ES_pattern",
+      "it": "IT_pattern"
+    },
+    "posterior": {
+      "en": "EN_posterior",
+      "es": "ES_posterior",
+      "it": "IT_posterior"
+    }
+  }
+}
