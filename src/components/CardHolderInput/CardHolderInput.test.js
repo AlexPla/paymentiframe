@@ -39,17 +39,6 @@ describe('Component CardHolderInput:', () => {
     expect(updateFieldsMock.mock.calls[0][0]).toEqual({ card_holder: 'changed' });
   });
 
-  it('\'should change state.errorDisabled to true on input', () => {
-    component.setState({ errorMessage: 'errorMessage' });
-    input.prop('onInput')({
-      target: {
-        value: "changed"
-      }
-    });
-    component.update();
-    expect(component.state('errorDisabled')).toBe(true);
-  });
-
   it('should validate input on input and clear state.errorMessage for proper name', () => {
     input.prop('onInput')({
       target: {

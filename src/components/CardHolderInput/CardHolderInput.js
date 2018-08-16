@@ -46,10 +46,7 @@ class CardHolderInput extends Component {
     let card_holder = e.target.value;
     const errorMessage = this.validateInput(card_holder);
     this.updateAppState(card_holder,  errorMessage);
-    this.setState({
-      errorDisabled: true,
-      errorMessage
-    });
+    this.setState({ errorMessage });
   }
 
   onClearClick() {
