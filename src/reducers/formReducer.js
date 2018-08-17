@@ -1,30 +1,29 @@
 import { UPDATE_FIELDS, UPDATE_ERRORS } from '../constants/actionTypes';
 
 const initialState = {
-  card_holder: '',
-  card_number: '',
-  card_type: false,
-  card_expiration_month: '',
-  card_expiration_year: '',
-  card_cvv: '',
+  cardHolder: '',
+  cardNumber: '',
+  cardType: false,
+  cardExpirationMonth: '',
+  cardExpirationYear: '',
+  cardCVV: '',
   errors: {
-    card_holder: true,
-    card_number: true,
-    card_expiration: true,
-    card_cvv: true
-  }
+    cardHolder: true,
+    cardNumber: true,
+    cardExpiration: true,
+    cardCVV: true,
+  },
 };
 
-export default function(state = initialState, action) {
-
+export default function (state = initialState, action) {
   let nextState;
+  const newErrors = {};
 
   switch (action.type) {
     case UPDATE_FIELDS:
       nextState = Object.assign({}, state, action.newState);
       break;
     case UPDATE_ERRORS:
-      let newErrors = {};
       newErrors[action.key] = action.value;
       Object.assign({}, state.errors, newErrors);
       nextState = Object.assign({}, state, { errors: newErrors });
@@ -34,11 +33,11 @@ export default function(state = initialState, action) {
       break;
   }
 
-  if (process.title === "browser") {
+  if (process.title === 'browser') {
     console.groupCollapsed(`REDUX Action: ${action.type}`);
-    console.info(`Current State: `, state);
-    console.info(`Action: `, action);
-    console.info(`Next State: `, nextState);
+    console.info('Current State: ', state);
+    console.info('Action: ', action);
+    console.info('Next State: ', nextState);
     console.groupEnd();
   }
 

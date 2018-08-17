@@ -1,65 +1,109 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { updateFields, updateErrors } from '../../actions';
-import CardHolderInput from '../../components/CardHolderInput/CardHolderInput';
-import CardNumberInput from '../../components/CardNumberInput/CardNumberInput';
-import CardExpDateInput from '../../components/CardExpDateInput/CardExpDateInput';
+import { PropTypes } from 'prop-types';
+import { updateFields, updateErrors } from '@Actions';
+import { CardHolderInput, CardNumberInput, CardExpDateInput } from '@Components';
 import './PaymentForm.css';
 
-const getParamValue=(paramName) => {
+const getParamValue = (paramName) => {
   const url = window.location.search.substring(1);
   const qArray = url.split('&');
-  const param = qArray.find((element) => {
-    return (element.split('=')[0] === paramName);
-  });
+  const param = qArray.find(element => (element.split('=')[0] === paramName));
   return param ? param[1] : null;
 };
 
 class PaymentForm extends Component {
+  static defaultProps = {
+    cardHolder: '',
+    cardNumber: '',
+    cardType: false,
+    cardExpirationMonth: '',
+    cardExpirationYear: '',
+  }
+
   constructor(props, context) {
     super(props, context);
 
     this.state = {
       parentApp: getParamValue('app') || 'storefront',
-      lang: getParamValue('lang') || 'es'
+      lang: getParamValue('lang') || 'es',
     };
   }
 
   render() {
-    const { card_holder, card_number, card_type, card_expiration_month, card_expiration_year, updateFields, updateErrors } = this.props;
+    const {
+      cardHolder,
+      cardNumber,
+      cardType,
+      cardExpirationMonth,
+      cardExpirationYear,
+    } = this.props;
     const { parentApp, lang } = this.state;
     const date = {
-      month: card_expiration_month,
-      year: card_expiration_year
+      month: cardExpirationMonth,
+      year: cardExpirationYear,
     };
     return (
-      <div className='PaymentForm'>
-        <header className='PaymentForm-header'>
-          <h1 className='PaymentForm-title'>
+      <div className="PaymentForm">
+        <header className="PaymentForm-header">
+          <h1 className="PaymentForm-title">
             { parentApp }
           </h1>
         </header>
-        <div className='payment-form__item grid grid_column grid_size-12'>
-          <CardHolderInput lang={ lang } updateFields={ updateFields } updateErrors={ updateErrors } value={ card_holder } />
+        <div className="payment-form__item grid grid_column grid_size-12">
+          <CardHolderInput
+            lang={lang}
+            updateFields={updateFields}
+            updateErrors={updateErrors}
+            value={cardHolder}
+          />
         </div>
-        <div className='payment-form__item grid grid_column grid_size-12'>
-          <CardNumberInput lang={ lang } updateFields={ updateFields } updateErrors={ updateErrors } value={ card_number } cardType={ card_type }/>
+        <div className="payment-form__item grid grid_column grid_size-12">
+          <CardNumberInput
+            lang={lang}
+            updateFields={updateFields}
+            updateErrors={updateErrors}
+            value={cardNumber}
+            cardType={cardType}
+          />
         </div>
-        <div className='payment-form__item grid grid_column grid_size-12'>
-          <CardExpDateInput lang={ lang } updateFields={ updateFields } updateErrors={ updateErrors } value={ date }/>
+        <div className="payment-form__item grid grid_column grid_size-12">
+          <CardExpDateInput
+            lang={lang}
+            updateFields={updateFields}
+            updateErrors={updateErrors}
+            value={date}
+          />
         </div>
       </div>
     );
   }
 }
 
-const mapStateToProps = ({ form }) => {
-  return form;
+PaymentForm.propTypes = {
+  cardHolder: PropTypes.string,
+  cardNumber: PropTypes.string,
+  cardType: PropTypes.oneOfType([
+    PropTypes.shape({
+      niceType: PropTypes.string,
+      type: PropTypes.string.isRequired,
+      pattern: PropTypes.string.isRequired,
+      gaps: PropTypes.arrayOf(PropTypes.number).isRequired,
+      lengths: PropTypes.arrayOf(PropTypes.number).isRequired,
+      code: PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        size: PropTypes.number.isRequired,
+      }),
+    }),
+    PropTypes.bool,
+  ]),
+  cardExpirationMonth: PropTypes.string,
+  cardExpirationYear: PropTypes.string,
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({ updateFields, updateErrors }, dispatch);
-};
+const mapStateToProps = ({ form }) => form;
+
+const mapDispatchToProps = dispatch => bindActionCreators({ updateFields, updateErrors }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(PaymentForm);

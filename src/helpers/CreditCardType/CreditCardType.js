@@ -1,158 +1,135 @@
-const types = {};
-const VISA = 'visa';
-const MASTERCARD = 'mc';
-const AMERICAN_EXPRESS = 'amex';
-const DINERS_CLUB = 'diners-club';
-const DISCOVER = 'discover';
-const JCB = 'jcb';
-const UNIONPAY = 'unionpay';
-const MAESTRO = 'maestro';
-const CVV = 'CVV';
-const CID = 'CID';
-const CVC = 'CVC';
-const CVN = 'CVN';
+import * as constants from '@Constants/creditCard';
 
-const DEFAULT_GAPS=[12, 8, 4];
-const DEFAULT_MIN_LENGTH=12;
-const DEFAULT_MAX_LENGTH=16;
+const types = {};
 
 const clone = (x) => {
-  let pattern, dupe;
-
   if (!x) { return null; }
 
-  pattern = x.pattern.source;
-  dupe = JSON.parse(JSON.stringify(x));
+  const pattern = x.pattern.source;
+  const dupe = JSON.parse(JSON.stringify(x));
   dupe.pattern = pattern;
 
   return dupe;
 };
 
-types[VISA] = {
+types[constants.VISA] = {
   niceType: 'Visa',
-  type: VISA,
+  type: constants.VISA,
   pattern: /^4\d*$/,
   gaps: [4, 8, 12],
   lengths: [16],
   code: {
-    name: CVV,
-    size: 3
-  }
+    name: constants.CVV,
+    size: 3,
+  },
 };
 
-types[MASTERCARD] = {
+types[constants.MASTERCARD] = {
   niceType: 'MasterCard',
-  type: MASTERCARD,
+  type: constants.MASTERCARD,
   pattern: /^(5|5[1-5]\d*|2|22|222|222[1-9]\d*|2[3-6]\d*|27[0-1]\d*|2720\d*)$/,
   gaps: [4, 8, 12],
   lengths: [16],
   code: {
-    name: CVC,
-    size: 3
-  }
+    name: constants.CVC,
+    size: 3,
+  },
 };
 
-types[AMERICAN_EXPRESS] = {
+types[constants.AMERICAN_EXPRESS] = {
   niceType: 'American Express',
-  type: AMERICAN_EXPRESS,
+  type: constants.AMERICAN_EXPRESS,
   pattern: /^3([47]\d*)?$/,
   isAmex: true,
   gaps: [4, 10],
   lengths: [15],
   code: {
-    name: CID,
-    size: 4
-  }
+    name: constants.CID,
+    size: 4,
+  },
 };
 
-types[DINERS_CLUB] = {
+types[constants.DINERS_CLUB] = {
   niceType: 'Diners Club',
-  type: DINERS_CLUB,
+  type: constants.DINERS_CLUB,
   pattern: /^3((0([0-5]\d*)?)|[689]\d*)?$/,
   gaps: [4, 10],
   lengths: [14],
   code: {
-    name: CVV,
-    size: 3
-  }
+    name: constants.CVV,
+    size: 3,
+  },
 };
 
-types[DISCOVER] = {
+types[constants.DISCOVER] = {
   niceType: 'Discover',
-  type: DISCOVER,
+  type: constants.DISCOVER,
   pattern: /^6(0|01|011\d*|5\d*|4|4[4-9]\d*)?$/,
   gaps: [4, 8, 12],
   lengths: [16, 19],
   code: {
-    name: CID,
-    size: 3
-  }
+    name: constants.CID,
+    size: 3,
+  },
 };
 
-types[JCB] = {
+types[constants.JCB] = {
   niceType: 'JCB',
-  type: JCB,
+  type: constants.JCB,
   pattern: /^((2|21|213|2131\d*)|(1|18|180|1800\d*)|(3|35\d*))$/,
   gaps: [4, 8, 12],
   lengths: [16],
   code: {
-    name: CVV,
-    size: 3
-  }
+    name: constants.CVV,
+    size: 3,
+  },
 };
 
-types[UNIONPAY] = {
+types[constants.UNIONPAY] = {
   niceType: 'UnionPay',
-  type: UNIONPAY,
+  type: constants.UNIONPAY,
   pattern: /^6(2\d*)?$/,
   gaps: [4, 8, 12],
   lengths: [16, 17, 18, 19],
   code: {
-    name: CVN,
-    size: 3
-  }
+    name: constants.CVN,
+    size: 3,
+  },
 };
 
-types[MAESTRO] = {
+types[constants.MAESTRO] = {
   niceType: 'Maestro',
-  type: MAESTRO,
+  type: constants.MAESTRO,
   pattern: /^((5((0|[6-9])\d*)?)|(6|6[37]\d*))$/,
   gaps: [4, 8, 12],
   lengths: [12, 13, 14, 15, 16, 17, 18, 19],
   code: {
-    name: CVC,
-    size: 3
-  }
+    name: constants.CVC,
+    size: 3,
+  },
 };
 
 const CreditCardType = {
-  
-  getCardType(cardNumber){
-    let type, value, cards = [];
-    let result = {
+
+  getCardType(cardNumber) {
+    let cards = [];
+    const result = {
       cardType: false,
-      maxLength: DEFAULT_MAX_LENGTH,
-      minLength: DEFAULT_MIN_LENGTH
-    }
+      maxLength: constants.DEFAULT_MAX_LENGTH,
+      minLength: constants.DEFAULT_MIN_LENGTH,
+    };
 
     if (!(typeof cardNumber === 'string' || cardNumber instanceof String)) {
       return result;
     }
 
-    for (type in types) {
-      if (!types.hasOwnProperty(type)) { continue; }
+    cards = Object.values(types)
+      .filter(type => (cardNumber.length === 0 || type.pattern.test(cardNumber)));
 
-      value = types[type];
-
-      if (cardNumber.length === 0 || value.pattern.test(cardNumber)) {
-        cards.push(clone(value));
-      }
-    }
-
-    cards=cards.length === 0 ? false : cards;
-    result.cardType=(cards.length === 1) ? cards[0] : false;
-    result.maxLength=CreditCardType.getMaxLength(cards);
-    result.minLength=CreditCardType.getMinLength(cards);
+    cards = cards.length === 0 ? false : cards;
+    result.cardType = (cards.length === 1) ? cards[0] : false;
+    result.maxLength = CreditCardType.getMaxLength(cards);
+    result.minLength = CreditCardType.getMinLength(cards);
 
     return result;
   },
@@ -162,43 +139,38 @@ const CreditCardType = {
   },
 
   getMaxLength(cards) {
-    const maxLength=cards ? Math.max(...cards.map(card => card.lengths[card.lengths.length - 1])) : DEFAULT_MAX_LENGTH;
+    const maxLength = cards
+      ? Math.max(...cards.map(card => card.lengths[card.lengths.length - 1]))
+      : constants.DEFAULT_MAX_LENGTH;
     return maxLength;
   },
 
   getMinLength(cards) {
-    const minLength=cards ? Math.min(...cards.map(card => card.lengths[0])) : DEFAULT_MIN_LENGTH;
+    const minLength = cards
+      ? Math.min(...cards.map(card => card.lengths[0]))
+      : constants.DEFAULT_MIN_LENGTH;
     return minLength;
   },
 
   removeGaps(value) {
-    value=value.replace(/\s*/g, '');
-    value=new RegExp(/\d*/).exec(value);
-    value=!value ? '' : value[0];
-    return value.toString();
+    let result = value.replace(/\s*/g, '');
+    result = new RegExp(/\d*/).exec(result);
+    result = !result ? '' : result[0];
+    return result.toString();
   },
 
   addGaps(value, type) {
-    const gaps=type && type.gaps ? type.gaps.sort((a, b) => a - b).reverse() : DEFAULT_GAPS;
-    const tmpArr=value.split('');
-    for (const gap of gaps) {
+    const gaps = type && type.gaps
+      ? type.gaps.sort((a, b) => a - b).reverse()
+      : constants.DEFAULT_GAPS;
+    const tmpArr = value.split('');
+    gaps.forEach((gap) => {
       if (gap < value.length) {
         tmpArr.splice(gap, 0, ' ');
       }
-    }
+    });
     return tmpArr.join('');
-  }
-};
-
-CreditCardType.types = {
-  VISA: VISA,
-  MASTERCARD: MASTERCARD,
-  AMERICAN_EXPRESS: AMERICAN_EXPRESS,
-  DINERS_CLUB: DINERS_CLUB,
-  DISCOVER: DISCOVER,
-  JCB: JCB,
-  UNIONPAY: UNIONPAY,
-  MAESTRO: MAESTRO
+  },
 };
 
 export default CreditCardType;
