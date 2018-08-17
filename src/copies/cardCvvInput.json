@@ -1,0 +1,39 @@
+{
+  "CVV": {
+    "en": "CVV",
+    "es": "CVV",
+    "it": "IT_CVV"
+  },
+  "CVC": {
+    "en": "CVC",
+    "es": "CVC",
+    "it": "IT_CVC"
+  },
+  "CID": {
+    "en": "CID",
+    "es": "CID",
+    "it": "IT_CID"
+  },
+  "CVN": {
+    "en": "CVN",
+    "es": "CVN",
+    "it": "IT_CVN"
+  },
+  "errors": {
+    "required": {
+      "en": "EN_required",
+      "es": "ES_required",
+      "it": "IT_required"
+    },
+    "minLength": {
+      "en": "EN_minLength",
+      "es": "ES_minLength",
+      "it": "IT_minLength"
+    },
+    "pattern": {
+      "en": "EN_pattern",
+      "es": "ES_pattern",
+      "it": "IT_pattern"
+    }
+  }
+}

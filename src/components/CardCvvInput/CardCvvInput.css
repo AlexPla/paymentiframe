@@ -1,0 +1,104 @@
+/*
+* DIV
+*/
+.card-cvv-input__input-group {
+    padding: 12px 6px 0;
+    box-sizing: border-box;
+    margin-top: 25px;
+    width: 100%;
+}
+
+
+/*
+* INPUT FIELD
+*/
+.card-cvv-input__input {
+    font: inherit;
+    font-size: 14px;
+    font-weight: 300;
+    margin: 0;
+    padding: 10px 30px;
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+    border: none;
+    color: #000;
+    border-bottom: 1px solid #ccc;
+    -moz-appearance: textfield;
+    line-height: normal;
+}
+
+.card-cvv-input__input:focus {
+    outline: none;
+    border-color: #000;
+    transition: all .2s ease;
+    -moz-transition: .2s ease all;
+    -webkit-transition: all .2s ease;
+}
+
+.card-cvv-input__input_invalid {
+    border-color: #e55253;
+}
+
+.card-cvv-input__input_invalid:focus {
+    border-bottom: 1px solid #e55253;
+}
+
+/*
+* LABEL - PLACEHOLDER
+*/
+.card-cvv-input__label {
+    color: #666;
+    font-size: 14px;
+    font-weight: 200;
+    position: absolute;
+    pointer-events: none;
+    left: 35px;
+    top: 43px;
+    transition: all .2s ease;
+    -moz-transition: .2s ease all;
+    -webkit-transition: all .2s ease;
+}
+
+.card-cvv-input__input:focus~.card-cvv-input__label,
+.card-cvv-input__input_not-empty~.card-cvv-input__label {
+    top: 25px;
+    font-size: 10px;
+}
+
+
+/*
+* CARD ICON
+*/
+.card-cvv-input__icon {
+    fill: #666;
+    position: absolute;
+    top: 41px;
+    left: 6px;
+    cursor: default;
+    text-align: center;
+}
+
+.card-cvv-input__input:focus~.card-cvv-input__icon {
+    fill: #000;
+}
+
+
+/*
+* CLEAR BUTTON
+*/
+.card-cvv-input__clear-button {
+    fill: #666;
+    position: absolute;
+    right: 10px;
+    top: 45px;
+    cursor: pointer;
+}
+
+.card-cvv-input__error {
+    position: absolute;
+    font-size: 10px;
+    font-size: .714rem;
+    color: #e55253;
+    left: 5px;
+}

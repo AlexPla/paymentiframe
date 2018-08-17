@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import copies from '../../copies/cardHolderInput';
 import './CardHolderInput.css';
+import PropTypes from "prop-types";
 
 class CardHolderInput extends Component {
   
@@ -17,7 +18,7 @@ class CardHolderInput extends Component {
     this.onClearClick = this.onClearClick.bind(this);
   }
 
-  validateInput(input) {
+  getErrorMessage(input) {
     const pattern = new RegExp(/^[a-zA-Zñçáéíóúàèòïü´ÑÇÁÉÍÓÚÀÈÒÏÜ]+([\‒\-\-]+[a-zA-Zñçáéíóúàèòïü´ÑÇÁÉÍÓÚÀÈÒÏÜ]+)*([\s]+([a-zA-Zñçáéíóúàèòïü´ÑÇÁÉÍÓÚÀÈÒÏÜ]+([\‒\-\-]+[a-zA-Zñçáéíóúàèòïü´ÑÇÁÉÍÓÚÀÈÒÏÜ]+)*))*$/); // eslint-disable-line no-useless-escape
 
     switch (true) {
@@ -44,7 +45,7 @@ class CardHolderInput extends Component {
 
   onInput(e) {
     let card_holder = e.target.value;
-    const errorMessage = this.validateInput(card_holder);
+    const errorMessage = this.getErrorMessage(card_holder);
     this.updateAppState(card_holder,  errorMessage);
     this.setState({ errorMessage });
   }
@@ -60,7 +61,7 @@ class CardHolderInput extends Component {
 
   onBlur() {
     let card_holder = this.props.value.trim();
-    const errorMessage = this.validateInput(card_holder);
+    const errorMessage = this.getErrorMessage(card_holder);
     this.updateAppState(card_holder,  errorMessage);
     this.setState({
       errorDisabled: false,
@@ -100,5 +101,11 @@ class CardHolderInput extends Component {
     );
   }
 }
+
+CardHolderInput.propTypes = {
+  updateFields: PropTypes.func.isRequired,
+  updateErrors: PropTypes.func.isRequired,
+  value: PropTypes.string
+};
 
 export default CardHolderInput;

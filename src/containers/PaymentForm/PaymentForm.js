@@ -5,6 +5,7 @@ import { updateFields, updateErrors } from '../../actions';
 import CardHolderInput from '../../components/CardHolderInput/CardHolderInput';
 import CardNumberInput from '../../components/CardNumberInput/CardNumberInput';
 import CardExpDateInput from '../../components/CardExpDateInput/CardExpDateInput';
+import CardCvvInput from '../../components/CardCvvInput/CardCvvInput';
 import './PaymentForm.css';
 
 const getParamValue=(paramName) => {
@@ -27,7 +28,16 @@ class PaymentForm extends Component {
   }
 
   render() {
-    const { card_holder, card_number, card_type, card_expiration_month, card_expiration_year, updateFields, updateErrors } = this.props;
+    const {
+      card_holder,
+      card_number,
+      card_type,
+      card_expiration_month,
+      card_expiration_year,
+      card_cvv,
+      updateFields,
+      updateErrors
+    } = this.props;
     const { parentApp, lang } = this.state;
     const date = {
       month: card_expiration_month,
@@ -48,6 +58,9 @@ class PaymentForm extends Component {
         </div>
         <div className='payment-form__item grid grid_column grid_size-12'>
           <CardExpDateInput lang={ lang } updateFields={ updateFields } updateErrors={ updateErrors } value={ date }/>
+        </div>
+        <div className='payment-form__item grid grid_column grid_size-6'>
+          <CardCvvInput lang={ lang } updateFields={ updateFields } updateErrors={ updateErrors } value={ card_cvv } cardType={ card_type } />
         </div>
       </div>
     );
