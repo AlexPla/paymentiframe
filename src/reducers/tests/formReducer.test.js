@@ -1,38 +1,36 @@
+import * as constants from '@Constants/actionTypes';
 import formReducer from '../formReducer';
-import * as constants from '../../constants/actionTypes';
 
 describe('form reducer', () => {
   it('should return the initial state', () => {
     expect(formReducer(undefined, {})).toEqual({
-        card_holder: '',
-        card_number: '',
-        card_type: false,
-        card_expiration_year: '',
-        card_expiration_month: '',
-        card_cvv: '',
-        errors: {
-          card_holder: true,
-          card_number: true,
-          card_expiration: true,
-          card_cvv: true
-        }
-      }
-    );
+      cardHolder: '',
+      cardNumber: '',
+      cardType: false,
+      cardExpirationYear: '',
+      cardExpirationMonth: '',
+      cardCVV: '',
+      errors: {
+        cardHolder: true,
+        cardNumber: true,
+        cardExpiration: true,
+        cardCVV: true,
+      },
+    });
   });
 
   it('should handle UPDATE_FIELDS', () => {
     expect(
       formReducer({}, {
         type: constants.UPDATE_FIELDS,
-        newState: { 
-          card_number: '1',
-          card_type: {}
-        }
-      })
+        newState: {
+          cardNumber: '1',
+          cardType: {},
+        },
+      }),
     ).toEqual({
-        card_number: '1',
-        card_type: {}
-      }
-    );
+      cardNumber: '1',
+      cardType: {},
+    });
   });
-})
+});

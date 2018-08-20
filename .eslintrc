@@ -1,0 +1,24 @@
+{
+  "extends": "airbnb",
+  "parser": "babel-eslint",
+  "env": {
+     "browser": true,
+     "jest": true
+   },
+  "globals": { //set globals such as window
+     "window": true,
+     "document": true
+   },
+  "rules": { //you can override rules here
+    "import/no-unresolved": "off",
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "jsx-a11y/label-has-for": [ 2, {
+      "components": [ "Label" ],
+      "required": {
+          "every": [ "id" ]
+      },
+      "allowChildren": false
+    }], //removed nested rule since it's deprecated
+    "no-shadow": "off"
+  }
+}
