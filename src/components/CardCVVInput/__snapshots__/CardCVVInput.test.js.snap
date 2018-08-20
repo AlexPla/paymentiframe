@@ -5,9 +5,9 @@ exports[`Component CardHolderInput: should match snapshot 1`] = `
   className="card-cvv-input__input-group"
 >
   <input
-    autoComplete="on"
+    autoComplete="off"
     className="card-cvv-input__input false false"
-    name="cardHolderInput"
+    name="cardCVVInput"
     onBlur={[Function]}
     onInput={[Function]}
     type="password"
@@ -15,6 +15,7 @@ exports[`Component CardHolderInput: should match snapshot 1`] = `
   />
   <label
     className="card-cvv-input__label"
+    htmlFor="cardCVVInput"
   >
     CVV
   </label>

@@ -3,7 +3,7 @@ import { configure, mount } from 'enzyme';
 import toJson from "enzyme-to-json";
 import Adapter from 'enzyme-adapter-react-16';
 
-import CardCvvInput from './CardCvvInput';
+import CardCVVInput from './CardCVVInput';
 
 configure({ adapter: new Adapter() });
 
@@ -14,7 +14,7 @@ describe('Component CardHolderInput:', () => {
   beforeEach(function () {
     updateFieldsMock = jest.fn();
     updateErrorsMock = jest.fn();
-    component = mount(<CardCvvInput
+    component = mount(<CardCVVInput
       lang={ 'es' }
       updateFields={ updateFieldsMock }
       updateErrors={ updateErrorsMock }
@@ -37,7 +37,7 @@ describe('Component CardHolderInput:', () => {
         value: "123"
       }
     });
-    expect(updateFieldsMock.mock.calls[0][0]).toEqual({ card_cvv: '123' });
+    expect(updateFieldsMock.mock.calls[0][0]).toEqual({ cardCVV: '123' });
   });
 
   it('should validate input on input and clear state.errorMessage for proper name', () => {
@@ -87,7 +87,7 @@ describe('Component CardHolderInput:', () => {
       }
     });
     component.update();
-    expect(updateFieldsMock.mock.calls[0][0]).toEqual({ card_cvv: '1234' });
+    expect(updateFieldsMock.mock.calls[0][0]).toEqual({ cardCVV: '1234' });
   });
 
   it('should call updateErrorsMock with false error value if validation pass on user input', () => {
@@ -97,7 +97,7 @@ describe('Component CardHolderInput:', () => {
       }
     });
     component.update();
-    expect(updateErrorsMock.mock.calls[0][0]).toEqual({ key: 'card_cvv', value: false });
+    expect(updateErrorsMock.mock.calls[0][0]).toEqual({ key: 'cardCVV', value: false });
   });
 
   it('should not display clear button if input value is empty', () => {
@@ -117,7 +117,7 @@ describe('Component CardHolderInput:', () => {
     component.update();
     const clearButton = component.find('.card-cvv-input__clear-button');
     clearButton.prop('onClick')();
-    expect(updateFieldsMock.mock.calls[0][0]).toEqual({ card_cvv: '' });
+    expect(updateFieldsMock.mock.calls[0][0]).toEqual({ cardCVV: '' });
   });
 
   it('should set state.errorDisabled to false on clear button click', () => {
@@ -144,7 +144,7 @@ describe('Component CardHolderInput:', () => {
     const clearButton = component.find('.card-cvv-input__clear-button');
     clearButton.prop('onClick')();
     component.update();
-    expect(updateErrorsMock.mock.calls[0][0]).toEqual({ key: 'card_cvv', value: true });
+    expect(updateErrorsMock.mock.calls[0][0]).toEqual({ key: 'cardCVV', value: true });
   });
 
   it('should change state.errorDisabled to false on blur', () => {
