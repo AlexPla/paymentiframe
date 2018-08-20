@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import CardExpDateInput from './CardExpDateInput';
 import copies from '@Copies/cardExpDateInput';
+import CardExpDateInput from './CardExpDateInput';
 
 describe('Component CardExpDateInput:', () => {
   const initDate = { month: '', year: '' };

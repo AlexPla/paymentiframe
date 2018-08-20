@@ -18,6 +18,7 @@
           "every": [ "id" ]
       },
       "allowChildren": false
-    }] //removed nested rule since it's deprecated
+    }], //removed nested rule since it's deprecated
+    "no-shadow": "off"
   }
 }

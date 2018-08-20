@@ -1,4 +1,4 @@
-import { UPDATE_FIELDS, UPDATE_ERRORS } from '../constants/actionTypes';
+import * as constants from '@Constants/actionTypes';
 
 const initialState = {
   cardHolder: '',
@@ -20,10 +20,10 @@ export default function (state = initialState, action) {
   const newErrors = {};
 
   switch (action.type) {
-    case UPDATE_FIELDS:
+    case constants.UPDATE_FIELDS:
       nextState = Object.assign({}, state, action.newState);
       break;
-    case UPDATE_ERRORS:
+    case constants.UPDATE_ERRORS:
       newErrors[action.key] = action.value;
       Object.assign({}, state.errors, newErrors);
       nextState = Object.assign({}, state, { errors: newErrors });

@@ -20,6 +20,8 @@ class PaymentForm extends Component {
     cardType: false,
     cardExpirationMonth: '',
     cardExpirationYear: '',
+    updateFields: () => {},
+    updateErrors: () => {},
   }
 
   constructor(props, context) {
@@ -38,6 +40,8 @@ class PaymentForm extends Component {
       cardType,
       cardExpirationMonth,
       cardExpirationYear,
+      updateFields,
+      updateErrors,
     } = this.props;
     const { parentApp, lang } = this.state;
     const date = {
@@ -100,6 +104,8 @@ PaymentForm.propTypes = {
   ]),
   cardExpirationMonth: PropTypes.string,
   cardExpirationYear: PropTypes.string,
+  updateFields: PropTypes.func,
+  updateErrors: PropTypes.func,
 };
 
 const mapStateToProps = ({ form }) => form;

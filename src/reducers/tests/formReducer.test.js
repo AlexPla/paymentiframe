@@ -1,5 +1,5 @@
+import * as constants from '@Constants/actionTypes';
 import formReducer from '../formReducer';
-import { UPDATE_FIELDS } from '@Constants/actionTypes';
 
 describe('form reducer', () => {
   it('should return the initial state', () => {
@@ -22,7 +22,7 @@ describe('form reducer', () => {
   it('should handle UPDATE_FIELDS', () => {
     expect(
       formReducer({}, {
-        type: UPDATE_FIELDS,
+        type: constants.UPDATE_FIELDS,
         newState: {
           cardNumber: '1',
           cardType: {},
