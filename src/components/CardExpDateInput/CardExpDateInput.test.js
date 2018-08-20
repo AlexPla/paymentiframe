@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import copies from '@Copies/cardExpDateInput';
 import CardExpDateInput from './CardExpDateInput';
-import copies from '../../copies/cardExpDateInput';
 
 describe('Component CardExpDateInput:', () => {
   const initDate = { month: '', year: '' };
@@ -9,7 +9,7 @@ describe('Component CardExpDateInput:', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = mount(<CardExpDateInput lang={ 'es' } updateFields={ jest.fn() } updateErrors={ jest.fn() } value={ initDate }/>);
+    wrapper = mount(<CardExpDateInput lang="es" updateFields={jest.fn()} updateErrors={jest.fn()} value={initDate} />);
   });
 
   it('should mount', () => {
@@ -17,7 +17,7 @@ describe('Component CardExpDateInput:', () => {
   });
 
   /*
-  * SUCCESS 
+  * SUCCESS
   */
   it('should process correct input', () => {
     wrapper.find('.card-exp-date__input').prop('onInput')({ target: { value: '05 25' } });

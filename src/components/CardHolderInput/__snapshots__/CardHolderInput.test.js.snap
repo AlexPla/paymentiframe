@@ -7,7 +7,7 @@ exports[`Component CardHolderInput: should match snapshot 1`] = `
   <input
     autoComplete="on"
     className="card-holder-input__input false false"
-    name="cardHolderInput"
+    id="cardHolderInput"
     onBlur={[Function]}
     onInput={[Function]}
     type="text"
@@ -15,6 +15,7 @@ exports[`Component CardHolderInput: should match snapshot 1`] = `
   />
   <label
     className="card-holder-input__label"
+    htmlFor="cardHolderInput"
   >
     Titular
   </label>

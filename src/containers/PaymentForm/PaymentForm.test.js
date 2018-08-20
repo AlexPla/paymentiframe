@@ -8,12 +8,15 @@ const mockStore = configureStore();
 
 describe('Component PaymentForm:', () => {
   let wrapper;
-  
-  beforeEach(function () {
-    let store = mockStore({});
-    this.mainComponent = (<PaymentForm />);
-    this.provider = (<Provider store={store}>{this.mainComponent}</Provider>);
-    wrapper = shallow(this.provider, { lifecycleExperimental: true });
+  let store;
+  let mainComponent;
+  let provider;
+
+  beforeEach(() => {
+    store = mockStore({});
+    mainComponent = (<PaymentForm />);
+    provider = (<Provider store={store}>{mainComponent}</Provider>);
+    wrapper = shallow(provider, { lifecycleExperimental: true });
   });
 
   it('should mount', () => {
