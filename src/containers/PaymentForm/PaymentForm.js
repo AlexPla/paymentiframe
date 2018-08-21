@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { PropTypes } from 'prop-types';
-import { updateFields, updateErrors } from '@Actions';
+import { updateFields, updateErrors, showHelp } from '@Actions';
 import {
   CardHolderInput, CardNumberInput, CardExpDateInput, CardCVVInput,
 } from '@Components';
@@ -23,9 +22,6 @@ class PaymentForm extends Component {
     cardCVV: '',
     cardExpirationMonth: '',
     cardExpirationYear: '',
-    updateFields: () => {},
-    updateErrors: () => {},
-    showHelp: () => {},
   };
 
   constructor(props, context) {
@@ -121,13 +117,13 @@ PaymentForm.propTypes = {
   cardCVV: PropTypes.string,
   cardExpirationMonth: PropTypes.string,
   cardExpirationYear: PropTypes.string,
-  updateFields: PropTypes.func,
-  updateErrors: PropTypes.func,
-  showHelp: PropTypes.func,
+  updateFields: PropTypes.func.isRequired,
+  updateErrors: PropTypes.func.isRequired,
+  showHelp: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({ form }) => form;
+const mapStateToProps = ({ form }) => form || {};
 
-const mapDispatchToProps = dispatch => bindActionCreators({ updateFields, updateErrors }, dispatch);
+const mapDispatchToProps = { updateFields, updateErrors, showHelp };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PaymentForm);

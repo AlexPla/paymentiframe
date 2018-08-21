@@ -33,6 +33,7 @@ export default function (state = initialState, action) {
       break;
   }
 
+  /* istanbul ignore next */
   if (process.title === 'browser') {
     console.groupCollapsed(`REDUX Action: ${action.type}`);
     console.info('Current State: ', state);

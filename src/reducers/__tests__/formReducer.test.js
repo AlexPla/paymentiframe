@@ -33,4 +33,18 @@ describe('form reducer', () => {
       cardType: {},
     });
   });
+
+  it('should handle UPDATE_ERRORS', () => {
+    expect(
+      formReducer({}, {
+        type: constants.UPDATE_ERRORS,
+        key: 'cardHolder',
+        value: false,
+      }),
+    ).toEqual({
+      errors: {
+        cardHolder: false,
+      },
+    });
+  });
 });
