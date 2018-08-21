@@ -26,13 +26,13 @@ class CardCVVInput extends Component {
   }
 
   onInput(e) {
-    const pattern = new RegExp(/^[0-9]*$/);
+    const pattern = new RegExp(`^[0-9]{0,${this.getLengthLimit()}}$`);
     const cvv = e.target.value.trim();
-    if (!pattern.test(cvv) || cvv.length > this.getLengthLimit()) return null;
-    const errorMessage = this.getErrorMessage(cvv);
-    this.updateAppState(cvv, errorMessage);
-    this.setState({ errorMessage });
-    return null;
+    if (pattern.test(cvv)) {
+      const errorMessage = this.getErrorMessage(cvv);
+      this.updateAppState(cvv, errorMessage);
+      this.setState({ errorMessage });
+    }
   }
 
   onClearClick(errorDisabled = false) {

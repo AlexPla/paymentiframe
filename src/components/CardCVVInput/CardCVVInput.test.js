@@ -40,6 +40,15 @@ describe('Component CardHolderInput:', () => {
     expect(updateFieldsMock.mock.calls[0][0]).toEqual({ cardCVV: '123' });
   });
 
+  it('should not call updateFields method if input does not match pattern', () => {
+    input.prop('onInput')({
+      target: {
+        value: "a"
+      }
+    });
+    expect(updateFieldsMock.mock.calls.length).toBe(0);
+  });
+
   it('should validate input on input and clear state.errorMessage for proper name', () => {
     input.prop('onInput')({
       target: {
