@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import copies from '../../copies/cardCVVInput';
+import copies from '@Copies/cardCVVInput';
+import { CVV_LENGTH_DEFAULT, CVV_TYPE_DEFAULT } from '@Constants/creditCard';
 import './CardCVVInput.css';
-
-const CVV_LENGTH_DEFAULT = 3;
-const CVV_TYPE_DEFAULT = 'CVV';
 
 class CardCVVInput extends Component {
   static defaultProps = {
@@ -51,14 +49,14 @@ class CardCVVInput extends Component {
   }
 
   getErrorMessage(cvv) {
-    const pattern = new RegExp(/^[0-9]{3,4}$/);
+    const pattern = new RegExp(`^[0-9]{${this.getLengthLimit()}}$`);
     const { lang } = this.props;
 
     switch (true) {
       case cvv.length === 0:
         return copies.errors.required[lang];
-      case cvv.length < this.getLengthLimit() || !pattern.test(cvv):
-        return 'validation failed';
+      case !pattern.test(cvv):
+        return copies.errors.pattern[lang];
       default:
         return '';
     }
@@ -106,9 +104,7 @@ class CardCVVInput extends Component {
         { !errorDisabled && errorMessage
           && (
           <span className="card-cvv-input__error">
-            {' '}
-            { errorMessage }
-            {' '}
+            {` ${errorMessage} `}
           </span>
           )
         }

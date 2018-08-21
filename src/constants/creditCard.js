@@ -14,3 +14,6 @@ export const CVN = 'CVN';
 export const DEFAULT_GAPS = [12, 8, 4];
 export const DEFAULT_MIN_LENGTH = 12;
 export const DEFAULT_MAX_LENGTH = 16;
+
+export const CVV_LENGTH_DEFAULT = 3;
+export const CVV_TYPE_DEFAULT = CVV;

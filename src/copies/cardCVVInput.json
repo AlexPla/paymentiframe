@@ -25,11 +25,6 @@
       "es": "ES_required",
       "it": "IT_required"
     },
-    "minLength": {
-      "en": "EN_minLength",
-      "es": "ES_minLength",
-      "it": "IT_minLength"
-    },
     "pattern": {
       "en": "EN_pattern",
       "es": "ES_pattern",
