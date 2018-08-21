@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { PropTypes } from 'prop-types';
 import { updateFields, updateErrors } from '@Actions';
 import { CardHolderInput, CardNumberInput, CardExpDateInput } from '@Components';
@@ -20,8 +19,6 @@ class PaymentForm extends Component {
     cardType: false,
     cardExpirationMonth: '',
     cardExpirationYear: '',
-    updateFields: () => {},
-    updateErrors: () => {},
   }
 
   constructor(props, context) {
@@ -104,12 +101,12 @@ PaymentForm.propTypes = {
   ]),
   cardExpirationMonth: PropTypes.string,
   cardExpirationYear: PropTypes.string,
-  updateFields: PropTypes.func,
-  updateErrors: PropTypes.func,
+  updateFields: PropTypes.func.isRequired,
+  updateErrors: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({ form }) => form;
+const mapStateToProps = ({ form }) => form || {};
 
-const mapDispatchToProps = dispatch => bindActionCreators({ updateFields, updateErrors }, dispatch);
+const mapDispatchToProps = { updateFields, updateErrors };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PaymentForm);

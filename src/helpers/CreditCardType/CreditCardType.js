@@ -126,7 +126,6 @@ const CreditCardType = {
     cards = Object.values(types)
       .filter(type => (cardNumber.length === 0 || type.pattern.test(cardNumber)));
 
-    cards = cards.length === 0 ? false : cards;
     result.cardType = (cards.length === 1) ? cards[0] : false;
     result.maxLength = CreditCardType.getMaxLength(cards);
     result.minLength = CreditCardType.getMinLength(cards);
@@ -139,14 +138,14 @@ const CreditCardType = {
   },
 
   getMaxLength(cards) {
-    const maxLength = cards
+    const maxLength = (cards && cards.length > 0)
       ? Math.max(...cards.map(card => card.lengths[card.lengths.length - 1]))
       : constants.DEFAULT_MAX_LENGTH;
     return maxLength;
   },
 
   getMinLength(cards) {
-    const minLength = cards
+    const minLength = (cards && cards.length > 0)
       ? Math.min(...cards.map(card => card.lengths[0]))
       : constants.DEFAULT_MIN_LENGTH;
     return minLength;
@@ -154,8 +153,7 @@ const CreditCardType = {
 
   removeGaps(value) {
     let result = value.replace(/\s*/g, '');
-    result = new RegExp(/\d*/).exec(result);
-    result = !result ? '' : result[0];
+    [result] = new RegExp(/\d*/).exec(result);
     return result.toString();
   },
 

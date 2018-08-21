@@ -1,8 +1,8 @@
 import React from 'react';
 import configureStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
-import { shallow } from 'enzyme';
-import PaymentForm from './PaymentForm';
+import { mount } from 'enzyme';
+import PaymentForm from '../PaymentForm';
 
 const mockStore = configureStore();
 
@@ -16,10 +16,17 @@ describe('Component PaymentForm:', () => {
     store = mockStore({});
     mainComponent = (<PaymentForm />);
     provider = (<Provider store={store}>{mainComponent}</Provider>);
-    wrapper = shallow(provider, { lifecycleExperimental: true });
   });
 
   it('should mount', () => {
+    window.history.pushState({}, 'Test PaymentForm', '/test?app=legacy&lang=it');
+    wrapper = mount(provider, { lifecycleExperimental: true });
+    expect(wrapper).toBeDefined();
+  });
+
+  it('should not find params in url', () => {
+    window.history.pushState({}, 'Test PaymentForm', '/test?');
+    wrapper = mount(provider, { lifecycleExperimental: true });
     expect(wrapper).toBeDefined();
   });
 });

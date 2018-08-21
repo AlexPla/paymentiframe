@@ -2,7 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import toJson from 'enzyme-to-json';
 
-import CardHolderInput from './CardHolderInput';
+import CardHolderInput from '../CardHolderInput';
 
 let component;
 let input;

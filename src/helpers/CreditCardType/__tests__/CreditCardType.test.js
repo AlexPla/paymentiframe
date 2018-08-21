@@ -1,4 +1,5 @@
-import CreditCardType from './CreditCardType';
+import * as constants from '@Constants/creditCard';
+import CreditCardType from '../CreditCardType';
 
 describe('Credit card type:', () => {
   const VISA = 'visa';
@@ -9,6 +10,10 @@ describe('Credit card type:', () => {
   const JCB = 'jcb';
   const UNIONPAY = 'unionpay';
   const MAESTRO = 'maestro';
+
+  it('Expect null card to return no card info', () => {
+    expect(CreditCardType.getTypeInfo()).toBeNull();
+  });
 
   it('Expect VISA card to be correct', () => {
     const visaCard = CreditCardType.getTypeInfo(VISA);
@@ -113,5 +118,54 @@ describe('Credit card type:', () => {
       type: 'maestro',
     };
     expect(maestroCard).toEqual(maestroCardCardExpected);
+  });
+
+  it('should return card type', () => {
+    const masterCardNumber = '5585558555355585';
+    const masterCardType = {
+      cardType: {
+        code: { name: 'CVC', size: 3 },
+        gaps: [4, 8, 12],
+        lengths: [16],
+        niceType: 'MasterCard',
+        pattern: /^(5|5[1-5]\d*|2|22|222|222[1-9]\d*|2[3-6]\d*|27[0-1]\d*|2720\d*)$/,
+        type: 'mc',
+      },
+      maxLength: 16,
+      minLength: 16,
+    };
+    expect(CreditCardType.getCardType(masterCardNumber)).toEqual(masterCardType);
+  });
+
+  it('should not return card type', () => {
+    const integerCardNumber = 5585558555355585;
+    const defaultType = {
+      cardType: false,
+      maxLength: constants.DEFAULT_MAX_LENGTH,
+      minLength: constants.DEFAULT_MIN_LENGTH,
+    };
+    expect(CreditCardType.getCardType(integerCardNumber)).toEqual(defaultType);
+  });
+
+  it('should not return card type in case multiple types are possible', () => {
+    const ambiguousCardNumber = '5';
+    const ambiguousCardType = {
+      cardType: false,
+      maxLength: 19,
+      minLength: 12,
+    };
+    expect(CreditCardType.getCardType(ambiguousCardNumber)).toEqual(ambiguousCardType);
+  });
+
+  it('should get default max and min lengths', () => {
+    expect(CreditCardType.getMaxLength()).toEqual(constants.DEFAULT_MAX_LENGTH);
+    expect(CreditCardType.getMinLength()).toEqual(constants.DEFAULT_MIN_LENGTH);
+  });
+
+  it('should remove and add gaps', () => {
+    const cardNumberWithGaps = '5585 5585 5535 5585';
+    const cardNumberWOGaps = '5585558555355585';
+    expect(CreditCardType.removeGaps(cardNumberWithGaps)).toEqual(cardNumberWOGaps);
+    expect(CreditCardType.addGaps(cardNumberWOGaps)).toEqual(cardNumberWithGaps);
   });
 });

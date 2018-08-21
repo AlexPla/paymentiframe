@@ -1,4 +1,4 @@
-import ExpDateHelper from './ExpDateHelper';
+import ExpDateHelper from '../ExpDateHelper';
 
 describe('Helper ExpDateHelper: ', () => {
   it('should process correct date', () => {

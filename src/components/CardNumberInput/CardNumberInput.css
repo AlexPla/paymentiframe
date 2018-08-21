@@ -1,7 +1,7 @@
 /*
 * DIV
 */
-.card-number-input__input-group {
+.card-number__input-group {
   padding: 12px 6px 0;
   box-sizing: border-box;
   margin-top: 25px;
@@ -12,7 +12,7 @@
 /*
 * INPUT FIELD
 */
-.card-number-input__input {
+.card-number__input {
   font: inherit;
   font-size: 14px;
   font-weight: 300;
@@ -28,7 +28,7 @@
   line-height: normal;
 }
 
-.card-number-input__input:focus {
+.card-number__input:focus {
   outline: none;
   border-color: #000;
   transition: all .2s ease;
@@ -36,18 +36,18 @@
   -webkit-transition: all .2s ease;
 }
 
-.card-number-input__input_invalid {
+.card-number__input_invalid {
   border-color: #e55253;
 }
 
-.card-number-input__input_invalid:focus {
+.card-number__input_invalid:focus {
   border-bottom: 1px solid #e55253;
 }
 
 /*
 * LABEL - PLACEHOLDER 
 */
-.card-number-input__label {
+.card-number__label {
   color: #666;
   font-size: 14px;
   font-weight: 200;
@@ -60,8 +60,8 @@
   -webkit-transition: all .2s ease;
 }
  
-.card-number-input__input:focus~.card-number-input__label,
-.card-number-input__input_not-empty~.card-number-input__label {
+.card-number__input:focus~.card-number__label,
+.card-number__input_not-empty~.card-number__label {
   top: 25px;
   font-size: 10px;
 }
@@ -70,7 +70,7 @@
 /*
 * CARD ICON
 */
-.card-number-input__icon {
+.card-number__icon {
   fill: #666;
   position: absolute;
   top: 41px;
@@ -79,7 +79,7 @@
   text-align: center;
 }
 
-.card-number-input__input:focus~.card-number-input__icon {
+.card-number__input:focus~.card-number__icon {
   fill: #000;
 }
 
@@ -87,7 +87,7 @@
 /*
 * CLEAR BUTTON
 */
-.card-number-input__clear-button {
+.card-number__clear-button {
   fill: #666;
   position: absolute;
   right: 10px;
@@ -95,7 +95,7 @@
   cursor: pointer;
 }
 
-.card-number-input__error {
+.card-number__error {
   position: absolute;
   font-size: 10px;
   font-size: .714rem;
