@@ -87,12 +87,14 @@
 /*
 * CLEAR BUTTON
 */
-.card-cvv-input__clear-button {
+.card-cvv-input__help-button {
     fill: #666;
     position: absolute;
     right: 10px;
-    top: 45px;
+    top: 60px;
     cursor: pointer;
+    color: #000000;
+    enable-background:new 0 0 150 150;
 }
 
 .card-cvv-input__error {

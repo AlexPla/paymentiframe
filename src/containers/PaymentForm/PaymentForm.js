@@ -25,6 +25,7 @@ class PaymentForm extends Component {
     cardExpirationYear: '',
     updateFields: () => {},
     updateErrors: () => {},
+    showHelp: () => {},
   };
 
   constructor(props, context) {
@@ -46,6 +47,7 @@ class PaymentForm extends Component {
       cardExpirationYear,
       updateFields,
       updateErrors,
+      showHelp,
     } = this.props;
     const { parentApp, lang } = this.state;
     const date = {
@@ -89,6 +91,7 @@ class PaymentForm extends Component {
             lang={lang}
             updateFields={updateFields}
             updateErrors={updateErrors}
+            showHelp={showHelp}
             value={cardCVV}
             cardType={cardType}
           />
@@ -120,6 +123,7 @@ PaymentForm.propTypes = {
   cardExpirationYear: PropTypes.string,
   updateFields: PropTypes.func,
   updateErrors: PropTypes.func,
+  showHelp: PropTypes.func,
 };
 
 const mapStateToProps = ({ form }) => form;

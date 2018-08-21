@@ -7,17 +7,19 @@ import CardCVVInput from './CardCVVInput';
 
 configure({ adapter: new Adapter() });
 
-let component, input, updateFieldsMock, updateErrorsMock;
+let component, input, updateFieldsMock, updateErrorsMock, showHelpMock;
 
 describe('Component CardHolderInput:', () => {
 
   beforeEach(function () {
     updateFieldsMock = jest.fn();
     updateErrorsMock = jest.fn();
+    showHelpMock = jest.fn();
     component = mount(<CardCVVInput
       lang={ 'es' }
       updateFields={ updateFieldsMock }
       updateErrors={ updateErrorsMock }
+      showHelp={ showHelpMock }
       cardType={ false }
       value={ '' } />);
     input = component.find(".card-cvv-input__input");
@@ -109,51 +111,24 @@ describe('Component CardHolderInput:', () => {
     expect(updateErrorsMock.mock.calls[0][0]).toEqual({ key: 'cardCVV', value: false });
   });
 
-  it('should not display clear button if input value is empty', () => {
-    const clearButton = component.find('.card-cvv-input__clear-button');
-    expect(clearButton.length).toBe(0);
+  it('should set not class in style if input is not empty', () => {
+    component.setProps({
+      value: "123"
+    });
+    component.update();
+    const styleClass = component.find('.card-cvv-input__input_not-empty');
+    expect(styleClass.length).toBe(1);
   });
 
-  it('should display clear button if input value is not empty', () => {
-    component.setProps({ value: "123" });
-    component.update();
-    const clearButton = component.find('.card-cvv-input__clear-button');
+  it('should display help button', () => {
+    const clearButton = component.find('.card-cvv-input__help-button');
     expect(clearButton.length).not.toBe(0);
   });
 
-  it('should clear input on clear button click', () => {
-    component.setProps({ value: "123" });
-    component.update();
-    const clearButton = component.find('.card-cvv-input__clear-button');
+  it('should call showHelp method from props on help button click', () => {
+    const clearButton = component.find('.card-cvv-input__help-button');
     clearButton.prop('onClick')();
-    expect(updateFieldsMock.mock.calls[0][0]).toEqual({ cardCVV: '' });
-  });
-
-  it('should set state.errorDisabled to false on clear button click', () => {
-    component.setProps({ value: "123" });
-    component.update();
-    const clearButton = component.find('.card-cvv-input__clear-button');
-    clearButton.prop('onClick')();
-    component.update();
-    expect(component.state('errorDisabled')).toBe(false);
-  });
-
-  it('should set state.errorMessage with error for empty field on clear button click', () => {
-    component.setProps({ value: "123" });
-    component.update();
-    const clearButton = component.find('.card-cvv-input__clear-button');
-    clearButton.prop('onClick')();
-    component.update();
-    expect(component.state('errorMessage')).not.toBe('');
-  });
-
-  it('should call updateErrorsMock method from props and pass proper object if validation fails on user input or clear button', () => {
-    component.setProps({ value: "123" });
-    component.update();
-    const clearButton = component.find('.card-cvv-input__clear-button');
-    clearButton.prop('onClick')();
-    component.update();
-    expect(updateErrorsMock.mock.calls[0][0]).toEqual({ key: 'cardCVV', value: true });
+    expect(showHelpMock.mock.calls.length).not.toBe(0);
   });
 
   it('should change state.errorDisabled to false on blur', () => {
