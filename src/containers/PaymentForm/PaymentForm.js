@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
-import { updateFields, updateErrors } from '@Actions';
+import { updateFields, updateErrors, showHelp } from '@Actions';
 import {
   CardHolderInput, CardNumberInput, CardExpDateInput, CardCVVInput,
 } from '@Components';
@@ -124,6 +124,6 @@ PaymentForm.propTypes = {
 
 const mapStateToProps = ({ form }) => form || {};
 
-const mapDispatchToProps = { updateFields, updateErrors };
+const mapDispatchToProps = { updateFields, updateErrors, showHelp };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PaymentForm);

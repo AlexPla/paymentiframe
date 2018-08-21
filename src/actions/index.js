@@ -14,3 +14,9 @@ export function updateErrors({ key, value }) {
     value,
   };
 }
+
+export function showHelp() {
+  return {
+    type: constants.SHOW_HELP,
+  };
+}
