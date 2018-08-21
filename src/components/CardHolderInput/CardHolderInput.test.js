@@ -99,7 +99,7 @@ describe('Component CardHolderInput:', () => {
     expect(updateErrorsMock.mock.calls[0][0]).toEqual({ key: 'cardHolder', value: true });
   });
 
-  it('should call updateErrorsMock with true error value if validation pass on user input', () => {
+  it('should call updateErrorsMock with false error value if validation pass on user input', () => {
     input.prop('onInput')({
       target: {
         value: 'John Doe',

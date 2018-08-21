@@ -3,7 +3,9 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { PropTypes } from 'prop-types';
 import { updateFields, updateErrors } from '@Actions';
-import { CardHolderInput, CardNumberInput, CardExpDateInput } from '@Components';
+import {
+  CardHolderInput, CardNumberInput, CardExpDateInput, CardCVVInput,
+} from '@Components';
 import './PaymentForm.css';
 
 const getParamValue = (paramName) => {
@@ -18,11 +20,13 @@ class PaymentForm extends Component {
     cardHolder: '',
     cardNumber: '',
     cardType: false,
+    cardCVV: '',
     cardExpirationMonth: '',
     cardExpirationYear: '',
     updateFields: () => {},
     updateErrors: () => {},
-  }
+    showHelp: () => {},
+  };
 
   constructor(props, context) {
     super(props, context);
@@ -38,10 +42,12 @@ class PaymentForm extends Component {
       cardHolder,
       cardNumber,
       cardType,
+      cardCVV,
       cardExpirationMonth,
       cardExpirationYear,
       updateFields,
       updateErrors,
+      showHelp,
     } = this.props;
     const { parentApp, lang } = this.state;
     const date = {
@@ -80,6 +86,16 @@ class PaymentForm extends Component {
             value={date}
           />
         </div>
+        <div className="payment-form__item grid grid_column grid_size-6">
+          <CardCVVInput
+            lang={lang}
+            updateFields={updateFields}
+            updateErrors={updateErrors}
+            showHelp={showHelp}
+            value={cardCVV}
+            cardType={cardType}
+          />
+        </div>
       </div>
     );
   }
@@ -102,10 +118,12 @@ PaymentForm.propTypes = {
     }),
     PropTypes.bool,
   ]),
+  cardCVV: PropTypes.string,
   cardExpirationMonth: PropTypes.string,
   cardExpirationYear: PropTypes.string,
   updateFields: PropTypes.func,
   updateErrors: PropTypes.func,
+  showHelp: PropTypes.func,
 };
 
 const mapStateToProps = ({ form }) => form;
