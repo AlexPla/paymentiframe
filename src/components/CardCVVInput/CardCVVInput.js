@@ -103,9 +103,7 @@ class CardCVVInput extends Component {
 
         { !errorDisabled && errorMessage
           && (
-          <span className="card-cvv-input__error">
-            {` ${errorMessage} `}
-          </span>
+          <span className="card-cvv-input__error">{` ${errorMessage} `}</span>
           )
         }
       </div>

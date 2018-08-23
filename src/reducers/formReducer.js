@@ -7,6 +7,7 @@ const initialState = {
   cardExpirationMonth: '',
   cardExpirationYear: '',
   cardCVV: '',
+  zipCode: '',
   errors: {
     cardHolder: true,
     cardNumber: true,

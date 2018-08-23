@@ -101,7 +101,7 @@ class CardExpDateInput extends Component {
     const { value, lang } = this.props;
     const { errorMessage, errorDisabled } = this.state;
     const isEmpty = (value.month).toString().length === 0;
-    const visualValue = `${value.month}${value.year ? ` / ${value.year}` : ''}`;
+    const visualValue = ExpDateHelper.getVisualValue(value);
     return (
       <div className="card-exp-date__input-group">
         <input
@@ -126,11 +126,7 @@ class CardExpDateInput extends Component {
         }
         { !errorDisabled && errorMessage
           && (
-          <span className="card-exp-date__error">
-            {' '}
-            { errorMessage }
-            {' '}
-          </span>
+          <span className="card-exp-date__error">{` ${errorMessage} `}</span>
           )
         }
       </div>

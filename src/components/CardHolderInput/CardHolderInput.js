@@ -99,11 +99,7 @@ class CardHolderInput extends Component {
         }
         { !errorDisabled && errorMessage
           && (
-          <span className="card-holder-input__error">
-            {' '}
-            { errorMessage }
-            {' '}
-          </span>
+          <span className="card-holder-input__error">{` ${errorMessage} `}</span>
           )
         }
       </div>

@@ -29,4 +29,16 @@ describe('Component PaymentForm:', () => {
     wrapper = mount(provider, { lifecycleExperimental: true });
     expect(wrapper).toBeDefined();
   });
+
+  it('should display ZipCodeInput if lang parameter is mx', () => {
+    window.history.pushState({}, 'Test PaymentForm', '/test?lang=mx');
+    wrapper = mount(provider, { lifecycleExperimental: true });
+    expect(wrapper.find('.zip-code__input-group').length).toEqual(1);
+  });
+
+  it('should not display ZipCodeInput if lang parameter is not mx', () => {
+    window.history.pushState({}, 'Test PaymentForm', '/test?lang=es');
+    wrapper = mount(provider, { lifecycleExperimental: true });
+    expect(wrapper.find('.zip-code__input-group').length).toEqual(0);
+  });
 });
