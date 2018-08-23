@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import { updateFields, updateErrors, showHelp } from '@Actions';
 import {
-  CardHolderInput, CardNumberInput, CardExpDateInput, CardCVVInput,
+  CardHolderInput, CardNumberInput, CardExpDateInput, CardCVVInput, ZipCodeInput,
 } from '@Components';
 import './PaymentForm.css';
 
@@ -11,7 +11,8 @@ const getParamValue = (paramName) => {
   const url = window.location.search.substring(1);
   const qArray = url.split('&');
   const param = qArray.find(element => (element.split('=')[0] === paramName));
-  return param ? param[1] : null;
+  const value = param ? param.split('=')[1] : null;
+  return value;
 };
 
 class PaymentForm extends Component {
@@ -20,6 +21,7 @@ class PaymentForm extends Component {
     cardNumber: '',
     cardType: false,
     cardCVV: '',
+    zipCode: '',
     cardExpirationMonth: '',
     cardExpirationYear: '',
   };
@@ -39,6 +41,7 @@ class PaymentForm extends Component {
       cardNumber,
       cardType,
       cardCVV,
+      zipCode,
       cardExpirationMonth,
       cardExpirationYear,
       updateFields,
@@ -74,7 +77,7 @@ class PaymentForm extends Component {
             cardType={cardType}
           />
         </div>
-        <div className="payment-form__item grid grid_column grid_size-12">
+        <div className="payment-form__item grid grid_column grid_size-6">
           <CardExpDateInput
             lang={lang}
             updateFields={updateFields}
@@ -82,6 +85,17 @@ class PaymentForm extends Component {
             value={date}
           />
         </div>
+        { lang === 'mx'
+          && (
+            <div className="payment-form__item grid grid_column grid_size-6">
+              <ZipCodeInput
+                updateFields={updateFields}
+                updateErrors={updateErrors}
+                value={zipCode}
+              />
+            </div>
+          )
+        }
         <div className="payment-form__item grid grid_column grid_size-6">
           <CardCVVInput
             lang={lang}
@@ -115,6 +129,7 @@ PaymentForm.propTypes = {
     PropTypes.bool,
   ]),
   cardCVV: PropTypes.string,
+  zipCode: PropTypes.string,
   cardExpirationMonth: PropTypes.string,
   cardExpirationYear: PropTypes.string,
   updateFields: PropTypes.func.isRequired,

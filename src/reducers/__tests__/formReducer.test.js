@@ -10,6 +10,7 @@ describe('form reducer', () => {
       cardExpirationYear: '',
       cardExpirationMonth: '',
       cardCVV: '',
+      zipCode: '',
       errors: {
         cardHolder: true,
         cardNumber: true,

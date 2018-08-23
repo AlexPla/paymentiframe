@@ -11,6 +11,10 @@ const ExpDateHelper = {
     };
     return result;
   },
+
+  getVisualValue(value) {
+    return `${value.month}${value.year ? ` / ${value.year}` : ''}`;
+  },
 };
 
 export default ExpDateHelper;

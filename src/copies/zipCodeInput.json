@@ -1,0 +1,7 @@
+{
+  "placeholder": "MX_placeholder",
+  "errors": {
+    "required": "MX_required",
+    "minLength": "MX_minLength"
+  }
+}

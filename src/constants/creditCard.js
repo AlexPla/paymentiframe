@@ -17,3 +17,6 @@ export const DEFAULT_MAX_LENGTH = 16;
 
 export const CVV_LENGTH_DEFAULT = 3;
 export const CVV_TYPE_DEFAULT = CVV;
+
+export const ZIP_CODE_MAX_LENGTH = 10;
+export const ZIP_CODE_MIN_LENGTH = 5;
