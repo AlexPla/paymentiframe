@@ -121,7 +121,7 @@ describe('Credit card type:', () => {
   });
 
   it('should return card type', () => {
-    const masterCardNumber = '5585558555355585';
+    const masterCardNumber = '5585558555855583';
     const masterCardType = {
       cardType: {
         code: { name: 'CVC', size: 3 },
@@ -138,7 +138,7 @@ describe('Credit card type:', () => {
   });
 
   it('should not return card type', () => {
-    const integerCardNumber = 5585558555355585;
+    const integerCardNumber = 5585558555855583;
     const defaultType = {
       cardType: false,
       maxLength: constants.DEFAULT_MAX_LENGTH,
@@ -163,9 +163,19 @@ describe('Credit card type:', () => {
   });
 
   it('should remove and add gaps', () => {
-    const cardNumberWithGaps = '5585 5585 5535 5585';
-    const cardNumberWOGaps = '5585558555355585';
+    const cardNumberWithGaps = '5585 5585 5585 5583';
+    const cardNumberWOGaps = '5585558555855583';
     expect(CreditCardType.removeGaps(cardNumberWithGaps)).toEqual(cardNumberWOGaps);
     expect(CreditCardType.addGaps(cardNumberWOGaps)).toEqual(cardNumberWithGaps);
+  });
+
+  it('should validate correct luhn', () => {
+    const correctCardNumber = '5585558555855583';
+    expect(CreditCardType.luhnValidation(correctCardNumber)).toBeTruthy();
+  });
+
+  it('should validate incorrect luhn', () => {
+    const incorrectCardNumber = '49927398717';
+    expect(CreditCardType.luhnValidation(incorrectCardNumber)).toBeFalsy();
   });
 });
