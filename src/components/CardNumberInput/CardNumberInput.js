@@ -22,7 +22,7 @@ class CardNumberInput extends Component {
     let value = CreditCardType.removeGaps(e.target.value);
     const { cardType, maxLength, minLength } = CreditCardType.getCardType(value);
     let { errorDisabled } = this.state;
-    const { value: oldValue } = this.props;
+    const { value: oldValue, lang } = this.props;
 
     if (value.length > maxLength) {
       value = oldValue;
@@ -30,7 +30,7 @@ class CardNumberInput extends Component {
       errorDisabled = false;
     }
 
-    const errorMessage = this.validateInput(value, cardType, minLength);
+    const errorMessage = CreditCardType.validateInput(lang, value, cardType, minLength);
 
     this.updateAppState(value, cardType, errorMessage);
 
@@ -53,27 +53,14 @@ class CardNumberInput extends Component {
   }
 
   onBlur() {
-    const { value, cardType } = this.props;
+    const { value, cardType, lang } = this.props;
     const { minLength } = CreditCardType.getCardType(value);
-    const errorMessage = this.validateInput(value, cardType, minLength);
+    const errorMessage = CreditCardType.validateInput(lang, value, cardType, minLength);
 
     this.setState({
       errorMessage,
       errorDisabled: false,
     });
-  }
-
-  validateInput(value, cardType, minLength) {
-    const { lang } = this.props;
-    let error = '';
-    if (value.length === 0) {
-      error = copies.errors.required[lang];
-    } else if (value.length < minLength) {
-      error = copies.errors.minLength[lang];
-    } else if (!cardType || (cardType.pattern && !(new RegExp(cardType.pattern).test(value)))) {
-      error = copies.errors.pattern[lang];
-    }
-    return error;
   }
 
   updateAppState(value, cardType, errorMessage) {
@@ -143,7 +130,10 @@ CardNumberInput.propTypes = {
     PropTypes.shape({
       niceType: PropTypes.string,
       type: PropTypes.string.isRequired,
-      pattern: PropTypes.string.isRequired,
+      pattern: PropTypes.oneOfType([
+        PropTypes.instanceOf(RegExp),
+        PropTypes.string,
+      ]).isRequired,
       gaps: PropTypes.arrayOf(PropTypes.number).isRequired,
       lengths: PropTypes.arrayOf(PropTypes.number).isRequired,
       code: PropTypes.shape({

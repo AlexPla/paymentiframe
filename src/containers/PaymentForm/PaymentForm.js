@@ -118,7 +118,10 @@ PaymentForm.propTypes = {
     PropTypes.shape({
       niceType: PropTypes.string,
       type: PropTypes.string.isRequired,
-      pattern: PropTypes.string.isRequired,
+      pattern: PropTypes.oneOfType([
+        PropTypes.instanceOf(RegExp),
+        PropTypes.string,
+      ]).isRequired,
       gaps: PropTypes.arrayOf(PropTypes.number).isRequired,
       lengths: PropTypes.arrayOf(PropTypes.number).isRequired,
       code: PropTypes.shape({

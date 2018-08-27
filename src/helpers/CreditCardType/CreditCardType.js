@@ -1,4 +1,5 @@
 import * as constants from '@Constants/creditCard';
+import copies from '@Copies/cardNumberInput';
 
 const types = {};
 
@@ -168,6 +169,38 @@ const CreditCardType = {
       }
     });
     return tmpArr.join('');
+  },
+
+  luhnValidation(value) {
+    const backwardsValueArr = value.split('').reverse();
+    const checkDigit = parseInt(backwardsValueArr[0], 10);
+    const luhnSum = backwardsValueArr.reduce((sum, element, index) => {
+      let result = parseInt(element, 10);
+      if (index % 2 === 1) {
+        result = (result * 2 >= 10) ? ((result * 2) % 10) + 1 : result * 2;
+      }
+      return sum + result;
+    }, 0);
+    const luhnCheck = checkDigit === ((luhnSum - checkDigit) * 9) % 10;
+    return luhnCheck && (luhnSum % 10 === 0);
+  },
+
+  invalidPattern(value, cardType) {
+    const isLuhnValid = CreditCardType.luhnValidation(value);
+    const isTypeValid = cardType && cardType.pattern && (new RegExp(cardType.pattern).test(value));
+    return !isLuhnValid || !isTypeValid;
+  },
+
+  validateInput(lang, value, cardType, minLength) {
+    let error = '';
+    if (value.length === 0) {
+      error = copies.errors.required[lang];
+    } else if (value.length < minLength) {
+      error = copies.errors.minLength[lang];
+    } else if (CreditCardType.invalidPattern(value, cardType)) {
+      error = copies.errors.pattern[lang];
+    }
+    return error;
   },
 };
 
