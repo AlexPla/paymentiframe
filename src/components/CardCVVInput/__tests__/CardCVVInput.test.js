@@ -22,9 +22,9 @@ describe('Component CardHolderInput:', () => {
       lang="es"
       updateFields={updateFieldsMock}
       updateErrors={updateErrorsMock}
-      showHelp={showHelpMock}
       cardType={false}
       value=""
+      showHelp={showHelpMock}
     />);
     input = component.find('.card-cvv-input__input');
   });
@@ -125,14 +125,14 @@ describe('Component CardHolderInput:', () => {
   });
 
   it('should display help button', () => {
-    const clearButton = component.find('.card-cvv-input__help-button');
-    expect(clearButton.length).not.toBe(0);
+    const helpButton = component.find('.card-cvv-input__help-button');
+    expect(helpButton.length).not.toBe(0);
   });
 
-  it('should call showHelp method from props on help button click', () => {
-    const clearButton = component.find('.card-cvv-input__help-button');
-    clearButton.prop('onClick')();
-    expect(showHelpMock.mock.calls.length).not.toBe(0);
+  it('should call showHelp', () => {
+    const helpButton = component.find('.card-cvv-input__help-button');
+    helpButton.prop('onClick')();
+    expect(showHelpMock).toBeCalled();
   });
 
   it('should change state.errorDisabled to false on blur', () => {
