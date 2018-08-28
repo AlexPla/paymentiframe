@@ -22,9 +22,4 @@ describe('actions', () => {
     const expectedAction = Object.assign({}, pair, { type: constants.UPDATE_ERRORS });
     expect(actions.updateErrors(pair)).toEqual(expectedAction);
   });
-
-  it('should create an action to send event to the parent', () => {
-    const expectedAction = { type: constants.SHOW_HELP };
-    expect(actions.showHelp()).toEqual(expectedAction);
-  });
 });
