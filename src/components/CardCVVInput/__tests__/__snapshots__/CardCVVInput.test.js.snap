@@ -34,7 +34,7 @@ exports[`Component CardHolderInput: should match snapshot 1`] = `
   </svg>
   <span
     className="card-cvv-input__help-button"
-    onClick={[Function]}
+    onClick={[MockFunction]}
   >
      ? 
   </span>

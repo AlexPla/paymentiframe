@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
-import { updateFields, updateErrors, showHelp } from '@Actions';
+import { updateFields, updateErrors } from '@Actions';
 import {
   CardHolderInput, CardNumberInput, CardExpDateInput, CardCVVInput, ZipCodeInput,
 } from '@Components';
+import { EventEmitterHelper } from '@Helpers';
+import * as configs from '@Constants/configs';
 import './PaymentForm.css';
 
 const getParamValue = (paramName) => {
@@ -30,9 +32,16 @@ class PaymentForm extends Component {
     super(props, context);
 
     this.state = {
-      parentApp: getParamValue('app') || 'storefront',
-      lang: getParamValue('lang') || 'es',
+      parentApp: getParamValue('app') || configs.STOREFRONT,
+      lang: getParamValue('lang') || configs.SPAIN,
     };
+
+    this.showHelp = this.showHelp.bind(this);
+  }
+
+  showHelp() {
+    const { parentApp } = this.state;
+    EventEmitterHelper.sendCvvEvent(parentApp);
   }
 
   render() {
@@ -46,7 +55,6 @@ class PaymentForm extends Component {
       cardExpirationYear,
       updateFields,
       updateErrors,
-      showHelp,
     } = this.props;
     const { parentApp, lang } = this.state;
     const date = {
@@ -85,7 +93,7 @@ class PaymentForm extends Component {
             value={date}
           />
         </div>
-        { lang === 'mx'
+        { lang === configs.MEXICO
           && (
             <div className="payment-form__item grid grid_column grid_size-6">
               <ZipCodeInput
@@ -101,7 +109,7 @@ class PaymentForm extends Component {
             lang={lang}
             updateFields={updateFields}
             updateErrors={updateErrors}
-            showHelp={showHelp}
+            showHelp={this.showHelp}
             value={cardCVV}
             cardType={cardType}
           />
@@ -137,11 +145,10 @@ PaymentForm.propTypes = {
   cardExpirationYear: PropTypes.string,
   updateFields: PropTypes.func.isRequired,
   updateErrors: PropTypes.func.isRequired,
-  showHelp: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({ form }) => form || {};
 
-const mapDispatchToProps = { updateFields, updateErrors, showHelp };
+const mapDispatchToProps = { updateFields, updateErrors };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PaymentForm);
