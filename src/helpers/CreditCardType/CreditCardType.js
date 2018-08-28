@@ -171,7 +171,7 @@ const CreditCardType = {
     return tmpArr.join('');
   },
 
-  luhnValidation(value) {
+  isLuhnValid(value) {
     const backwardsValueArr = value.split('').reverse();
     const checkDigit = parseInt(backwardsValueArr[0], 10);
     const luhnSum = backwardsValueArr.reduce((sum, element, index) => {
@@ -185,19 +185,11 @@ const CreditCardType = {
     return luhnCheck && (luhnSum % 10 === 0);
   },
 
-  invalidPattern(value, cardType) {
-    const isLuhnValid = CreditCardType.luhnValidation(value);
-    const isTypeValid = cardType && cardType.pattern && (new RegExp(cardType.pattern).test(value));
-    return !isLuhnValid || !isTypeValid;
-  },
-
-  validateInput(lang, value, cardType, minLength) {
+  validateInput(lang, value) {
     let error = '';
     if (value.length === 0) {
       error = copies.errors.required[lang];
-    } else if (value.length < minLength) {
-      error = copies.errors.minLength[lang];
-    } else if (CreditCardType.invalidPattern(value, cardType)) {
+    } else if (!CreditCardType.isLuhnValid(value)) {
       error = copies.errors.pattern[lang];
     }
     return error;

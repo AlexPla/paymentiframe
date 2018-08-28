@@ -20,7 +20,7 @@ class CardNumberInput extends Component {
 
   onInput(e) {
     let value = CreditCardType.removeGaps(e.target.value);
-    const { cardType, maxLength, minLength } = CreditCardType.getCardType(value);
+    const { cardType, maxLength } = CreditCardType.getCardType(value);
     let { errorDisabled } = this.state;
     const { value: oldValue, lang } = this.props;
 
@@ -30,7 +30,7 @@ class CardNumberInput extends Component {
       errorDisabled = false;
     }
 
-    const errorMessage = CreditCardType.validateInput(lang, value, cardType, minLength);
+    const errorMessage = CreditCardType.validateInput(lang, value);
 
     this.updateAppState(value, cardType, errorMessage);
 
@@ -53,9 +53,8 @@ class CardNumberInput extends Component {
   }
 
   onBlur() {
-    const { value, cardType, lang } = this.props;
-    const { minLength } = CreditCardType.getCardType(value);
-    const errorMessage = CreditCardType.validateInput(lang, value, cardType, minLength);
+    const { value, lang } = this.props;
+    const errorMessage = CreditCardType.validateInput(lang, value);
 
     this.setState({
       errorMessage,

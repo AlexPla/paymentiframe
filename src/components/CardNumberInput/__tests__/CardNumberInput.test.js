@@ -50,16 +50,6 @@ describe('Component CardNumberInput:', () => {
     expect(wrapper.find('.card-number__error').length).toEqual(1);
   });
 
-  it('should process incorrect input -> minLength', () => {
-    // To enable error message display we must have a full-length input first
-    wrapper.find('.card-number__input').prop('onInput')({ target: { value: '5585 5585 5585 5583' } });
-    // Actual input
-    wrapper.find('.card-number__input').prop('onInput')({ target: { value: '5585 5585 5535 5' } });
-    wrapper.update();
-    expect(wrapper.state('errorMessage')).toEqual(copies.errors.minLength[lang]);
-    expect(wrapper.find('.card-number__error').length).toEqual(1);
-  });
-
   it('should process incorrect input -> pattern', () => {
     wrapper.find('.card-number__input').prop('onInput')({ target: { value: '9999 9999 9999 9999' } });
     wrapper.update();

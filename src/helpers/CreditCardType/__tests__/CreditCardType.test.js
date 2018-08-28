@@ -171,11 +171,11 @@ describe('Credit card type:', () => {
 
   it('should validate correct luhn', () => {
     const correctCardNumber = '5585558555855583';
-    expect(CreditCardType.luhnValidation(correctCardNumber)).toBeTruthy();
+    expect(CreditCardType.isLuhnValid(correctCardNumber)).toBeTruthy();
   });
 
   it('should validate incorrect luhn', () => {
     const incorrectCardNumber = '49927398717';
-    expect(CreditCardType.luhnValidation(incorrectCardNumber)).toBeFalsy();
+    expect(CreditCardType.isLuhnValid(incorrectCardNumber)).toBeFalsy();
   });
 });
