@@ -26,6 +26,12 @@ class PaymentForm extends Component {
     zipCode: '',
     cardExpirationMonth: '',
     cardExpirationYear: '',
+    errors: {
+      cardHolder: true,
+      cardNumber: true,
+      cardExpiration: true,
+      cardCVV: true,
+    },
   };
 
   constructor(props, context) {
@@ -37,6 +43,16 @@ class PaymentForm extends Component {
     };
 
     this.showHelp = this.showHelp.bind(this);
+  }
+
+  componentDidUpdate(prevProps) {
+    const { errors: prevErrors } = prevProps;
+    const { errors } = this.props;
+    const { parentApp } = this.state;
+    if (JSON.stringify(prevErrors) !== JSON.stringify(errors)
+      || Object.values(errors).every(value => !value)) {
+      EventEmitterHelper.sendChangeEvent(parentApp, this.props);
+    }
   }
 
   showHelp() {
@@ -143,6 +159,7 @@ PaymentForm.propTypes = {
   zipCode: PropTypes.string,
   cardExpirationMonth: PropTypes.string,
   cardExpirationYear: PropTypes.string,
+  errors: PropTypes.objectOf(PropTypes.bool),
   updateFields: PropTypes.func.isRequired,
   updateErrors: PropTypes.func.isRequired,
 };
