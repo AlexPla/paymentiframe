@@ -49,6 +49,9 @@ class PaymentForm extends Component {
     const { errors: prevErrors } = prevProps;
     const { errors } = this.props;
     const { parentApp } = this.state;
+    // Should only change if:
+    // 1. one of the fields change from error -> success or vice versa.
+    // 2. all fields are success and one of them changes of value (but keeps being success).
     if (JSON.stringify(prevErrors) !== JSON.stringify(errors)
       || Object.values(errors).every(value => !value)) {
       EventEmitterHelper.sendChangeEvent(parentApp, this.props);
