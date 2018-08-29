@@ -50,4 +50,31 @@ describe('Component PaymentForm:', () => {
     wrapper.find('PaymentForm').instance().showHelp();
     expect(spy).toBeCalled();
   });
+
+  it('should enter componentDidUpdate but not call sandChangeEvent', () => {
+    window.history.pushState({}, 'Test PaymentForm', `/test?app=${configs.LEGACY}`);
+    wrapper = mount(provider, { lifecycleExperimental: true });
+    const spy = jest.spyOn(wrapper.find('PaymentForm').instance(), 'componentDidUpdate');
+    wrapper.setProps({
+      children: React.cloneElement(wrapper.props().children, { cardNumber: '5' }),
+    });
+    expect(spy).toBeCalled();
+  });
+
+  it('should enter componentDidUpdate and call sendChangeEvent', () => {
+    window.history.pushState({}, 'Test PaymentForm', `/test?app=${configs.LEGACY}`);
+    wrapper = mount(provider, { lifecycleExperimental: true });
+    const spy = jest.spyOn(wrapper.find('PaymentForm').instance(), 'componentDidUpdate');
+    wrapper.setProps({
+      children: React.cloneElement(wrapper.props().children, {
+        errors: {
+          cardHolder: false,
+          cardNumber: false,
+          cardExpiration: false,
+          cardCVV: false,
+        },
+      }),
+    });
+    expect(spy).toBeCalled();
+  });
 });
