@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { CreditCardType } from '@Helpers';
 import copies from '@Copies/cardNumberInput';
 import './CardNumberInput.css';
+import images from '@Assets/images';
 
 class CardNumberInput extends Component {
   constructor(props, context) {
@@ -100,7 +101,7 @@ class CardNumberInput extends Component {
         { cardType && cardType.type
           && (
           <div className="card-number__card-type">
-            <span className={`card-number__card-type_icon card-number__card-type_icon_${cardType.type}`} />
+            <img className="card-number__card-type_icon" src={images[cardType.type]} srcSet={images[`${cardType.type}2x`]} alt="" />
           </div>
           )
         }
