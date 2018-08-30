@@ -19,6 +19,11 @@
     "es": "CVN",
     "it": "IT_CVN"
   },
+  "CVE": {
+    "en": "CVE",
+    "es": "CVE",
+    "it": "IT_CVE"
+  },
   "errors": {
     "required": {
       "en": "EN_required",

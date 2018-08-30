@@ -85,6 +85,23 @@
 
 
 /*
+* CARD TYPE ICON
+*/
+.card-number__card-type {
+  position: absolute;
+  right: 10px;
+  top: 47px;
+}
+
+.card-number__card-type_icon {
+  margin-right: 20px;
+  width: 30px;
+  height: 20px;
+  display: inline-block;
+}
+
+
+/*
 * CLEAR BUTTON
 */
 .card-number__clear-button {

@@ -125,6 +125,7 @@
     "setupTestFrameworkScriptFile": "<rootDir>/src/setupTests.js",
     "coveragePathIgnorePatterns": [
       "<rootDir>/src/index.js",
+      "<rootDir>/src/assets/images/index.js",
       "<rootDir>/src/components/index.js",
       "<rootDir>/src/containers/index.js",
       "<rootDir>/src/helpers/index.js",
