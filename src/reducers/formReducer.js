@@ -34,14 +34,5 @@ export default function (state = initialState, action) {
       break;
   }
 
-  /* istanbul ignore next */
-  if (process.title === 'browser') {
-    console.groupCollapsed(`REDUX Action: ${action.type}`);
-    console.info('Current State: ', state);
-    console.info('Action: ', action);
-    console.info('Next State: ', nextState);
-    console.groupEnd();
-  }
-
   return nextState;
 }

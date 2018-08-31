@@ -12,13 +12,13 @@ const EventEmitterHelper = {
   },
 
   sendChangeEvent(parentApp, props) {
-    // debug
-    if (typeof document !== 'undefined' && !window.alreadyListening) {
-      window.alreadyListening = true;
-      window.addEventListener('message', (m) => {
-        console.log('Message data: ', m.data);
-      }, false);
-    }
+    // // debug
+    // if (typeof document !== 'undefined' && !window.alreadyListening) {
+    //   window.alreadyListening = true;
+    //   window.addEventListener('message', (m) => {
+    //     console.log('Message data: ', m.data);
+    //   }, false);
+    // }
     const {
       cardHolder,
       cardNumber,
@@ -28,8 +28,8 @@ const EventEmitterHelper = {
       errors,
     } = props;
     // eslint-disable-next-line max-len
-    AdyenEncryptionHelper.encrypt(cardNumber, cardCVV, cardHolder, cardExpirationMonth, `20${cardExpirationYear}`) // todo: FIX YEAR in props to a full one
-      .then((cardEncryptedJson) => {
+    return AdyenEncryptionHelper.encrypt(cardNumber, cardCVV, cardHolder, cardExpirationMonth, `20${cardExpirationYear}`)
+      .then(([cardEncryptedJson]) => {
         const data = {
           cardBin: cardNumber.substring(0, 5),
           cardLastFour: cardNumber.slice(-4),

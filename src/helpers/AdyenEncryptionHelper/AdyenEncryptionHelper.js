@@ -1,42 +1,51 @@
-import { ADYEN_SCRIPT_URL, ADYEN_CLIENT_KEY } from '@Constants/configs';
+import * as CONFIG from '@Constants/configs';
 
 export default {
+  isNode: typeof process === 'object' && typeof process.versions === 'object' && typeof process.versions.node !== 'undefined',
+
   /**
    * Dynamically load Adyen encryption scripts and append it to body,
-   * @return {Promise}
+   * @return {Promise} resolve { Error }
    */
   downloadAdyenEncyprionScript() {
     return new Promise((resolve, reject) => {
-      if (typeof document !== 'undefined') {
-        const scriptTag = document.querySelector(`script[src="${ADYEN_SCRIPT_URL}"]`);
-        if (scriptTag) scriptTag.parentElement.removeChild(scriptTag);
+      if (!this.isNode) {
+        const scriptTag = document.querySelector(`script[src="${CONFIG.ADYEN_SCRIPT_URL}"]`); // todo: check to remove
+        if (scriptTag) scriptTag.parentElement.removeChild(scriptTag); // todo: check to remove
         const script = document.createElement('script');
-        script.src = ADYEN_SCRIPT_URL;
+        script.src = CONFIG.ADYEN_SCRIPT_URL;
         script.onload = () => {
-          resolve();
+          resolve(null);
         };
-        script.onerror = (err) => {
-          reject(err);
+        script.onerror = (error) => {
+          reject(error);
         };
+        setTimeout(() => {
+          reject(new Error(CONFIG.ADYEN_ERROR_TIMEOUT));
+        }, CONFIG.ADYEN_DOWNLOAD_TIMEOUT);
         document.body.appendChild(script);
       } else {
-        reject();
+        reject(new Error(CONFIG.ADYEN_ERROR_ENVIRONMENT));
       }
     });
   },
 
   /**
    * Protect card data with Adyen client side encryption,
-   * @return {Promise} with encrypted card data (card_encrypted_json)
+   * @return {Promise} resolved with encrypted card data and error [{String | Boolean}, {Error}]
    */
   async encrypt(number, cvc, holderName, expiryMonth, expiryYear) {
-    if (process.title !== 'browser') throw new Error('Adyen client side encryption is supported by browsers only');
-    if (typeof window.adyen === 'undefined') await this.downloadAdyenEncyprionScript();
-    const generationtime = new Date().toISOString();
-    const cardData = {
-      number, cvc, holderName, expiryMonth, expiryYear, generationtime,
-    };
-    const cseInstance = window.adyen.encrypt.createEncryption(ADYEN_CLIENT_KEY, {});
-    return cseInstance.encrypt(cardData);
+    try {
+      if (typeof window.adyen === 'undefined') await this.downloadAdyenEncyprionScript();
+      const generationtime = new Date().toISOString();
+      const cardData = {
+        number, cvc, holderName, expiryMonth, expiryYear, generationtime,
+      };
+      const cseInstance = window.adyen.encrypt.createEncryption(CONFIG.ADYEN_CLIENT_KEY, {});
+      return [cseInstance.encrypt(cardData), null];
+    } catch (error) {
+      if (!this.isNode) console.error(error);
+      return [false, error];
+    }
   },
 };
