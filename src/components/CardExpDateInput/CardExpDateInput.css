@@ -1,0 +1,142 @@
+/*
+* DIV
+*/
+.card-exp-date__input-group {
+  padding: 12px 6px 0;
+  box-sizing: border-box;
+  margin-top: 25px;
+  width: 100%;
+}
+
+
+/*
+* INPUT FIELD
+*/
+.card-exp-date__input {
+  font: inherit;
+  font-size: 14px;
+  font-weight: 300;
+  margin: 0;
+  padding: 10px 30px;
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  border: none;
+  color: #000;
+  border-bottom: 1px solid #ccc;
+  -moz-appearance: textfield;
+  line-height: normal;
+}
+
+.card-exp-date__input:focus {
+  outline: none;
+  border-color: #000;
+  transition: all .2s ease;
+  -moz-transition: .2s ease all;
+  -webkit-transition: all .2s ease;
+}
+
+.card-exp-date__input_invalid {
+  border-color: #e55253;
+}
+
+.card-exp-date__input_invalid:focus {
+  border-bottom: 1px solid #e55253;
+}
+
+/*
+* LABEL - PLACEHOLDER 
+*/
+.card-exp-date__label {
+  color: #666;
+  font-size: 14px;
+  font-weight: 200;
+  position: absolute;
+  pointer-events: none;
+  left: 35px;
+  top: 43px;
+  transition: all .2s ease;
+  -moz-transition: .2s ease all;
+  -webkit-transition: all .2s ease;
+}
+ 
+.card-exp-date__input:focus~.card-exp-date__label,
+.card-exp-date__input_not-empty~.card-exp-date__label {
+  top: 25px;
+  font-size: 10px;
+}
+
+
+/*
+* CARD ICON
+*/
+.card-exp-date__icon {
+  fill: #666;
+  position: absolute;
+  top: 41px;
+  left: 6px;
+  cursor: default;
+  text-align: center;
+}
+
+.card-exp-date__input:focus~.card-exp-date__icon {
+  fill: #000;
+}
+
+
+/*
+* CARD TYPE ICON
+*/
+.card-exp-date__card-type {
+  position: absolute;
+  right: 10px;
+  top: 47px;
+}
+
+.card-exp-date__card-type_icon {
+  margin-right: 20px;
+  width: 30px;
+  height: 20px;
+  display: inline-block;
+}
+
+
+/*
+* CLEAR BUTTON
+*/
+.card-exp-date__clear-button {
+  fill: #666;
+  position: absolute;
+  right: 10px;
+  top: 45px;
+  cursor: pointer;
+}
+
+
+/*
+* MM / YY PLACEHOLDER
+*/
+.card-exp-date__placeholder {
+  position: absolute;
+  font-size: 10px;
+  font-size: .714rem;
+  color: #666;
+  left: 5px;
+  display: none;
+}
+
+.card-exp-date__input:focus~.card-exp-date__placeholder {
+  display: block;
+}
+
+
+/*
+* ERROR MESSAGE
+*/
+.card-exp-date__error {
+  position: absolute;
+  font-size: 10px;
+  font-size: .714rem;
+  color: #e55253;
+  left: 5px;
+}

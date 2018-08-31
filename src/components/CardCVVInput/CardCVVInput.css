@@ -85,18 +85,26 @@
 
 
 /*
-* CLEAR BUTTON
+* HELP BUTTON
 */
 .card-cvv-input__help-button {
-    fill: #666;
+    color: #000;
     position: absolute;
     right: 10px;
-    top: 60px;
+    top: 45px;
     cursor: pointer;
-    color: #000000;
-    enable-background:new 0 0 150 150;
+    font-size: 14px;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    border-radius: 50%;
+    background: #cdcdcd;
 }
 
+
+/*
+* ERROR MESSAGE
+*/
 .card-cvv-input__error {
     position: absolute;
     font-size: 10px;

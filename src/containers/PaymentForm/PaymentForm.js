@@ -104,25 +104,27 @@ class PaymentForm extends Component {
             cardType={cardType}
           />
         </div>
-        <div className="payment-form__item grid grid_column grid_size-6">
-          <CardExpDateInput
-            lang={lang}
-            updateFields={updateFields}
-            updateErrors={updateErrors}
-            value={date}
-          />
+        <div className="grid grid_row">
+          <div className="payment-form__item grid grid_column grid_size-6">
+            <CardExpDateInput
+              lang={lang}
+              updateFields={updateFields}
+              updateErrors={updateErrors}
+              value={date}
+            />
+          </div>
+          { lang === configs.MEXICO
+            && (
+              <div className="payment-form__item grid grid_column grid_size-6">
+                <ZipCodeInput
+                  updateFields={updateFields}
+                  updateErrors={updateErrors}
+                  value={zipCode}
+                />
+              </div>
+            )
+          }
         </div>
-        { lang === configs.MEXICO
-          && (
-            <div className="payment-form__item grid grid_column grid_size-6">
-              <ZipCodeInput
-                updateFields={updateFields}
-                updateErrors={updateErrors}
-                value={zipCode}
-              />
-            </div>
-          )
-        }
         <div className="payment-form__item grid grid_column grid_size-6">
           <CardCVVInput
             lang={lang}

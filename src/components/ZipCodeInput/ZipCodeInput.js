@@ -91,8 +91,12 @@ class ZipCodeInput extends Component {
           noValidate
         />
         <label htmlFor="ZipCodeInput" className="zip-code__label">{ copies.placeholder }</label>
-        <svg className="zip-code__icon" version="1.1" xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 150 150" preserveAspectRatio="xMidYMid meet">
-          <path d="m 122.2875,10.431249 -94.574999,0 C 11.653125,10.431249 0,22.131249 0,38.246874 L 0,111.175 C 0,127.3 11.653125,139 27.712501,139 l 94.574999,0 C 138.34687,139 150,127.3 150,111.175 l 0,-72.928126 C 150,22.131249 138.34687,10.431249 122.2875,10.431249 l 0,0 z m 20.56875,39.28125 -135.7125,0 0,-11.465625 c 0,-11.98125 8.653125,-20.68125 20.568751,-20.68125 l 94.574999,0 c 11.91563,0 20.56875,8.7 20.56875,20.68125 l 0,11.465625 0,0 z m -20.56875,82.143751 -94.574999,0 c -11.915626,0 -20.568751,-8.70938 -20.568751,-20.68125 l 0,-40.031251 135.72188,0 0,40.040621 c -0.009,11.97188 -8.6625,20.67188 -20.57813,20.67188 l 0,0 z" />
+        <svg className="zip-code__icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" preserveAspectRatio="xMidYMid meet">
+          <g fill="none" fillRule="evenodd">
+            <path d="M14.5 18.5h2v-17h-13v17h2v-2h9v2z" />
+            <path d="M5.5 3.5h9v2h-9zM6.5 8.5v5h7v-5h-7z" />
+            <path strokeLinejoin="round" d="M7 9c1.5 1.333 2.5 2 3 2s1.5-.667 3-2" />
+          </g>
         </svg>
         { !isEmpty
           && (
