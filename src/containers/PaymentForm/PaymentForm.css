@@ -16,14 +16,31 @@
 }
 
 .grid_column {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
   -ms-flex-direction: column;
   flex-direction: column;
 }
 
+.grid_row {
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
 .grid_size-12 {
+  -webkit-box-flex: 0;
   -ms-flex: 0 0 100%;
   flex: 0 0 100%;
   max-width: 100%;
+}
+
+.grid_size-6 {
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 50%;
+  flex: 0 0 50%;
+  max-width: 50%;
 }
 
 .payment-form__item {

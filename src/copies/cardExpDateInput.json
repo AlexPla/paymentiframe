@@ -2,28 +2,38 @@
   "placeholder": {
     "en": "EN_placeholder",
     "es": "ES_placeholder",
-    "it": "IT_placeholder"
+    "it": "IT_placeholder",
+    "mx": "MX_placeholder",
+    "br": "BR_placeholder"
   },
   "errors": {
     "required": {
       "en": "EN_required",
       "es": "ES_required",
-      "it": "IT_required"
+      "it": "IT_required",
+      "mx": "MX_required",
+      "br": "BR_required"
     },
     "incomplete": {
       "en": "EN_incomplete",
       "es": "ES_incomplete",
-      "it": "IT_incomplete"
+      "it": "IT_incomplete",
+      "mx": "MX_incomplete",
+      "br": "BR_incomplete"
     },
     "pattern": {
       "en": "EN_pattern",
       "es": "ES_pattern",
-      "it": "IT_pattern"
+      "it": "IT_pattern",
+      "mx": "MX_pattern",
+      "br": "BR_pattern"
     },
     "posterior": {
       "en": "EN_posterior",
       "es": "ES_posterior",
-      "it": "IT_posterior"
+      "it": "IT_posterior",
+      "mx": "MX_posterior",
+      "br": "BR_posterior"
     }
   }
 }
