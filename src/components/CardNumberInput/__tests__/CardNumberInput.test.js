@@ -20,7 +20,7 @@ describe('Component CardNumberInput:', () => {
   };
 
   beforeEach(() => {
-    wrapper = shallow(<CardNumberInput lang="es" updateFields={jest.fn()} updateErrors={jest.fn()} value="" cardType={cardType} />);
+    wrapper = shallow(<CardNumberInput lang="es" parentApp="storefront" updateFields={jest.fn()} updateErrors={jest.fn()} value="" cardType={cardType} />);
   });
 
   it('should mount', () => {

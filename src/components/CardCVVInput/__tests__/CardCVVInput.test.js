@@ -1,6 +1,5 @@
 import React from 'react';
 import { configure, mount } from 'enzyme';
-import toJson from 'enzyme-to-json';
 import Adapter from 'enzyme-adapter-react-16';
 
 import CardCVVInput from '../CardCVVInput';
@@ -20,6 +19,7 @@ describe('Component CardHolderInput:', () => {
     showHelpMock = jest.fn();
     component = mount(<CardCVVInput
       lang="es"
+      parentApp="storefront"
       updateFields={updateFieldsMock}
       updateErrors={updateErrorsMock}
       cardType={false}
@@ -31,10 +31,6 @@ describe('Component CardHolderInput:', () => {
 
   it('should mount', () => {
     expect(component).toBeDefined();
-  });
-
-  it('should match snapshot', () => {
-    expect(toJson(component, { mode: 'deep' })).toMatchSnapshot();
   });
 
   it('should call updateFields method from props and pass proper object with new field value as an argument', () => {
@@ -115,12 +111,12 @@ describe('Component CardHolderInput:', () => {
     expect(updateErrorsMock.mock.calls[0][0]).toEqual({ key: 'cardCVV', value: false });
   });
 
-  it('should set not class in style if input is not empty', () => {
+  it('should not set class in style if input is not empty', () => {
     component.setProps({
       value: '123',
     });
     component.update();
-    const styleClass = component.find('.card-cvv-input__input_not-empty');
+    const styleClass = component.find('.card-cvv-input__input__not-empty');
     expect(styleClass.length).toBe(1);
   });
 

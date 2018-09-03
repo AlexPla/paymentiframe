@@ -22,15 +22,9 @@ jest.mock('@Constants/configs', () => (mockedConfig));
 const AdyenEncryptionHelper = require('../AdyenEncryptionHelper').default;
 
 describe('Adyen encryption helper:', () => {
-  let number,
-    cvc,
-    holderName,
-    expiryMonth,
-    expiryYear,
-    helper;
+  let helper;
 
   beforeEach(() => {
-    [number, cvc, holderName, expiryMonth, expiryYear] = ['5585558555855583', '737', 'John Doe', '08', '2020'];
     helper = { ...AdyenEncryptionHelper };
     window.adyen = undefined;
   });
@@ -83,9 +77,7 @@ describe('Adyen encryption helper:', () => {
     return expect(helper.encrypt()).resolves.toEqual(mockedEncryptedResponceOk);
   });
 
-  it('should return false and error in Node.js environment', () => {
-    return expect(helper.encrypt()).resolves.toEqual(mockedEncryptedResponceKo);
-  });
+  it('should return false and error in Node.js environment', () => expect(helper.encrypt()).resolves.toEqual(mockedEncryptedResponceKo));
 
   it('should log error in Browser environment', () => {
     helper.isNode = false;

@@ -1,7 +1,5 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import toJson from 'enzyme-to-json';
-
 import CardHolderInput from '../CardHolderInput';
 
 let component;
@@ -15,6 +13,7 @@ describe('Component CardHolderInput:', () => {
     updateErrorsMock = jest.fn();
     component = mount(<CardHolderInput
       lang="es"
+      parentApp="storefront"
       updateFields={updateFieldsMock}
       updateErrors={updateErrorsMock}
       value=""
@@ -24,10 +23,6 @@ describe('Component CardHolderInput:', () => {
 
   it('should mount', () => {
     expect(component).toBeDefined();
-  });
-
-  it('should match snapshot', () => {
-    expect(toJson(component, { mode: 'deep' })).toMatchSnapshot();
   });
 
   it('should call updateFields method from props and pass proper object with new field value as an argument', () => {

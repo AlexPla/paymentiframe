@@ -34,6 +34,13 @@
     "mx": "MX_CVE",
     "br": "BR_CVE"
   },
+  "placeholder": {
+    "en": "EN_placeholder",
+    "es": "ES_placeholder",
+    "it": "IT_placeholder",
+    "mx": "MX_placeholder",
+    "br": "BR_placeholder"
+  },
   "errors": {
     "required": {
       "en": "EN_required",

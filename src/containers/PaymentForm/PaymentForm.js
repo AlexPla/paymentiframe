@@ -81,22 +81,24 @@ class PaymentForm extends Component {
       year: cardExpirationYear,
     };
     return (
-      <div className="PaymentForm">
-        <header className="PaymentForm-header">
-          <h1 className="PaymentForm-title">
+      <div className={`payment-form payment-form__${parentApp}`}>
+        <header className="payment-form__header">
+          <h1 className="payment-form__title">
             { parentApp }
           </h1>
         </header>
-        <div className="payment-form__item grid grid_column grid_size-12">
+        <div className="grid grid_column grid_size-12">
           <CardHolderInput
+            parentApp={parentApp}
             lang={lang}
             updateFields={updateFields}
             updateErrors={updateErrors}
             value={cardHolder}
           />
         </div>
-        <div className="payment-form__item grid grid_column grid_size-12">
+        <div className="grid grid_column grid_size-12">
           <CardNumberInput
+            parentApp={parentApp}
             lang={lang}
             updateFields={updateFields}
             updateErrors={updateErrors}
@@ -105,8 +107,9 @@ class PaymentForm extends Component {
           />
         </div>
         <div className="grid grid_row">
-          <div className="payment-form__item grid grid_column grid_size-6">
+          <div className="grid grid_column grid_size-6">
             <CardExpDateInput
+              parentApp={parentApp}
               lang={lang}
               updateFields={updateFields}
               updateErrors={updateErrors}
@@ -115,8 +118,9 @@ class PaymentForm extends Component {
           </div>
           { lang === configs.MEXICO
             && (
-              <div className="payment-form__item grid grid_column grid_size-6">
+              <div className="grid grid_column grid_size-6">
                 <ZipCodeInput
+                  parentApp={parentApp}
                   updateFields={updateFields}
                   updateErrors={updateErrors}
                   value={zipCode}
@@ -125,8 +129,9 @@ class PaymentForm extends Component {
             )
           }
         </div>
-        <div className="payment-form__item grid grid_column grid_size-6">
+        <div className="grid grid_column grid_size-6">
           <CardCVVInput
+            parentApp={parentApp}
             lang={lang}
             updateFields={updateFields}
             updateErrors={updateErrors}
