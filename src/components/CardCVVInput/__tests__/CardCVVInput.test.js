@@ -136,4 +136,21 @@ describe('Component CardHolderInput:', () => {
     component.update();
     expect(component.state('errorDisabled')).toBe(false);
   });
+
+  it('should load webmobile help button', () => {
+    updateFieldsMock = jest.fn();
+    updateErrorsMock = jest.fn();
+    showHelpMock = jest.fn();
+    component = mount(<CardCVVInput
+      lang="es"
+      parentApp="webmobile"
+      updateFields={updateFieldsMock}
+      updateErrors={updateErrorsMock}
+      cardType={false}
+      value=""
+      showHelp={showHelpMock}
+    />);
+
+    expect(component.find('.card-cvv-input__help-button').text()).toEqual('¿Qué es?');
+  });
 });

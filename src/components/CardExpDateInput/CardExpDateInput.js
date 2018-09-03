@@ -119,6 +119,7 @@ class CardExpDateInput extends Component {
           onInput={this.onInput}
           onBlur={this.onBlur}
           noValidate
+          placeholder={(parentApp !== configs.STOREFRONT) ? 'mm / aa' : null}
         />
         { parentApp === configs.STOREFRONT
           && <label htmlFor="cardExpDateInput" className="card-exp-date__label__storefront">{ copies.placeholder[lang] }</label>
@@ -146,7 +147,7 @@ class CardExpDateInput extends Component {
           </svg>
           )
         }
-        { (errorDisabled || !errorMessage)
+        { parentApp === configs.STOREFRONT && (errorDisabled || !errorMessage)
           && (
           <span className="card-exp-date__placeholder">mm / aa</span>
           )

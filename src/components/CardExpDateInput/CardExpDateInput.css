@@ -8,7 +8,8 @@
   width: 100%;
 }
 
-.card-exp-date__input-group__legacy {
+.card-exp-date__input-group__legacy,
+.card-exp-date__input-group__webmobile {
   padding: 0 6px;
 }
 
@@ -35,14 +36,23 @@
   border-bottom: 1px solid #ccc;
 }
 
-.card-exp-date__input__legacy {
+.card-exp-date__input__legacy,
+.card-exp-date__input__webmobile {
   background: #fff;
   border: 1px solid #ccc;
   display: block;
   font-weight: 200;
   font-size: 12px;
+}
+
+.card-exp-date__input__legacy {
   outline: none;
   padding: 4px;
+}
+
+.card-exp-date__input__webmobile {
+  font-size: 14px;
+  padding: 12px 8px;
 }
 
 .card-exp-date__input:focus {
@@ -129,6 +139,11 @@
 .card-exp-date__clear-button__legacy {
   right: 12px;
   top: 54.5px;
+}
+
+.card-exp-date__clear-button__webmobile {
+  right: 17px;
+  top: 64px;
 }
 
 

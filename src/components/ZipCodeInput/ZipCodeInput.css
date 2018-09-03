@@ -8,7 +8,8 @@
   width: 100%;
 }
 
-.zip-code__input-group__legacy {
+.zip-code__input-group__legacy,
+.zip-code__input-group__webmobile {
   padding: 0 6px;
 }
 
@@ -35,14 +36,23 @@
   border-bottom: 1px solid #ccc;
 }
 
-.zip-code__input__legacy {
+.zip-code__input__legacy,
+.zip-code__input__webmobile {
   background: #fff;
   border: 1px solid #ccc;
   display: block;
   font-weight: 200;
   font-size: 12px;
+}
+
+.zip-code__input__legacy {
   outline: none;
   padding: 4px;
+}
+
+.zip-code__input__webmobile {
+  font-size: 14px;
+  padding: 12px 8px;
 }
 
 .zip-code__input:focus {
@@ -145,6 +155,11 @@
 .zip-code__clear-button__legacy {
   right: 12px;
   top: 54.5px;
+}
+
+.zip-code__clear-button__webmobile {
+  right: 17px;
+  top: 64px;
 }
 
 
