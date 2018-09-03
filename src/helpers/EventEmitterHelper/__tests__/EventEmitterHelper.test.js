@@ -24,7 +24,9 @@ describe('Helper EventEmitterHelper: ', () => {
   it('should send change event to Legacy', () => {
     window.parent.PRV = { Event: { emit: jest.fn() } };
     const spy = jest.spyOn(window.parent.PRV.Event, 'emit');
-    EventEmitterHelper.sendChangeEvent(LEGACY, { cardNumber: '0123456789' });
-    expect(spy).toHaveBeenCalled();
+    return EventEmitterHelper.sendChangeEvent(LEGACY, { cardNumber: '0123456789' })
+      .then(() => {
+        expect(spy).toHaveBeenCalled();
+      });
   });
 });
