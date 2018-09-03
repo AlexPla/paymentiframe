@@ -4,8 +4,12 @@
 .zip-code__input-group {
   padding: 12px 6px 0;
   box-sizing: border-box;
-  margin-top: 25px;
+  margin-top: 23px;
   width: 100%;
+}
+
+.zip-code__input-group__legacy {
+  padding: 0 6px;
 }
 
 
@@ -17,15 +21,28 @@
   font-size: 14px;
   font-weight: 300;
   margin: 0;
-  padding: 10px 30px;
   box-sizing: border-box;
   display: block;
   width: 100%;
-  border: none;
   color: #000;
-  border-bottom: 1px solid #ccc;
   -moz-appearance: textfield;
   line-height: normal;
+}
+
+.zip-code__input__storefront {
+  padding: 10px 30px;
+  border: none;
+  border-bottom: 1px solid #ccc;
+}
+
+.zip-code__input__legacy {
+  background: #fff;
+  border: 1px solid #ccc;
+  display: block;
+  font-weight: 200;
+  font-size: 12px;
+  outline: none;
+  padding: 4px;
 }
 
 .zip-code__input:focus {
@@ -41,13 +58,13 @@
 }
 
 .zip-code__input_invalid:focus {
-  border-bottom: 1px solid #e55253;
+  border-color: #e55253;
 }
 
 /*
 * LABEL - PLACEHOLDER 
 */
-.zip-code__label {
+.zip-code__label__storefront {
   color: #666;
   font-size: 14px;
   font-weight: 200;
@@ -59,21 +76,31 @@
   -moz-transition: .2s ease all;
   -webkit-transition: all .2s ease;
 }
- 
-.zip-code__input:focus~.zip-code__label,
-.zip-code__input_not-empty~.zip-code__label {
+
+.zip-code__label__legacy {
+  color: #000000;
+  font-size: 12px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+}
+
+.zip-code__input__storefront:focus~.zip-code__label__storefront,
+.zip-code__input__not-empty~.zip-code__label__storefront {
   top: 25px;
   font-size: 10px;
 }
 
 
 /*
-* CARD ICON
+* ICON
 */
 .zip-code__icon {
   stroke: #666;
   position: absolute;
-  top: 41px;
+  top: 44px;
   left: 6px;
   cursor: default;
   text-align: center;
@@ -107,11 +134,23 @@
 .zip-code__clear-button {
   fill: #666;
   position: absolute;
-  right: 10px;
-  top: 45px;
   cursor: pointer;
 }
 
+.zip-code__clear-button__storefront {
+  right: 10px;
+  top: 48px;
+}
+
+.zip-code__clear-button__legacy {
+  right: 12px;
+  top: 54.5px;
+}
+
+
+/*
+* ERROR
+*/
 .zip-code__error {
   position: absolute;
   font-size: 10px;

@@ -7,7 +7,7 @@ describe('Component ZipCodeInput:', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = shallow(<ZipCodeInput updateFields={jest.fn()} updateErrors={jest.fn()} value="" />);
+    wrapper = shallow(<ZipCodeInput parentApp="legacy" updateFields={jest.fn()} updateErrors={jest.fn()} value="" />);
   });
 
   it('should mount', () => {

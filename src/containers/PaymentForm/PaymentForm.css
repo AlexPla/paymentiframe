@@ -1,3 +1,11 @@
+.payment-form {
+  padding-bottom: 17px;
+}
+
+.payment-form__legacy {
+  background-color: #f4f4f4;
+}
+
 .grid {
   position: relative;
   box-sizing: border-box;
@@ -41,8 +49,4 @@
   -ms-flex: 0 0 50%;
   flex: 0 0 50%;
   max-width: 50%;
-}
-
-.payment-form__item {
-  padding-top: 3px;
 }

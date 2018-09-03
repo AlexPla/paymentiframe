@@ -2,10 +2,9 @@
 * DIV
 */
 .card-holder-input__input-group {
-    padding: 12px 6px 0;
-    box-sizing: border-box;
-    margin-top: 25px;
-    width: 100%;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 12px 6px 0;
 }
 
 
@@ -13,57 +12,80 @@
 * INPUT FIELD
 */
 .card-holder-input__input {
-    font: inherit;
-    font-size: 14px;
-    font-weight: 300;
-    margin: 0;
-    padding: 10px 30px;
-    box-sizing: border-box;
-    display: block;
-    width: 100%;
-    border: none;
-    color: #000;
-    border-bottom: 1px solid #ccc;
-    -moz-appearance: textfield;
-    line-height: normal;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 300;
+  margin: 0;
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  color: #000;
+  -moz-appearance: textfield;
+  line-height: normal;
+}
+
+.card-holder-input__input__storefront {
+  padding: 10px 30px;
+  border: none;
+  border-bottom: 1px solid #ccc;
+}
+
+.card-holder-input__input__legacy {
+  background: #fff;
+  border: 1px solid #ccc;
+  display: block;
+  font-weight: 200;
+  font-size: 12px;
+  outline: none;
+  padding: 4px;
 }
 
 .card-holder-input__input:focus {
-    outline: none;
-    border-color: #000;
-    transition: all .2s ease;
-    -moz-transition: .2s ease all;
-    -webkit-transition: all .2s ease;
+  outline: none;
+  border-color: #000;
+  transition: all .2s ease;
+  -moz-transition: .2s ease all;
+  -webkit-transition: all .2s ease;
 }
 
 .card-holder-input__input_invalid {
-    border-color: #e55253;
+  border-color: #e55253;
 }
 
 .card-holder-input__input_invalid:focus {
-    border-bottom: 1px solid #e55253;
+  border-color: #e55253;
 }
 
 /*
 * LABEL - PLACEHOLDER
 */
-.card-holder-input__label {
-    color: #666;
-    font-size: 14px;
-    font-weight: 200;
-    position: absolute;
-    pointer-events: none;
-    left: 35px;
-    top: 43px;
-    transition: all .2s ease;
-    -moz-transition: .2s ease all;
-    -webkit-transition: all .2s ease;
+.card-holder-input__label__storefront {
+  color: #666;
+  font-size: 14px;
+  font-weight: 200;
+  position: absolute;
+  pointer-events: none;
+  left: 35px;
+  top: 23px;
+  transition: all .2s ease;
+  -moz-transition: .2s ease all;
+  -webkit-transition: all .2s ease;
 }
 
-.card-holder-input__input:focus~.card-holder-input__label,
-.card-holder-input__input_not-empty~.card-holder-input__label {
-    top: 25px;
-    font-size: 10px;
+.card-holder-input__label__legacy {
+  color: #000000;
+  font-size: 12px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+}
+
+.card-holder-input__input__storefront:focus~.card-holder-input__label__storefront,
+.card-holder-input__input__not-empty~.card-holder-input__label__storefront {
+  top: 2px;
+  font-size: 10px;
 }
 
 
@@ -71,16 +93,16 @@
 * CARD ICON
 */
 .card-holder-input__icon {
-    fill: #666;
-    position: absolute;
-    top: 41px;
-    left: 6px;
-    cursor: default;
-    text-align: center;
+  fill: #666;
+  position: absolute;
+  top: 22px;
+  left: 6px;
+  cursor: default;
+  text-align: center;
 }
 
 .card-holder-input__input:focus~.card-holder-input__icon {
-    fill: #000;
+  fill: #000;
 }
 
 
@@ -88,17 +110,29 @@
 * CLEAR BUTTON
 */
 .card-holder-input__clear-button {
-    fill: #666;
-    position: absolute;
-    right: 10px;
-    top: 45px;
-    cursor: pointer;
+  fill: #666;
+  position: absolute;
+  cursor: pointer;
 }
 
+.card-holder-input__clear-button__storefront {
+  right: 10px;
+  top: 25px;
+}
+
+.card-holder-input__clear-button__legacy {
+  right: 12px;
+  top: 43.5px;
+}
+
+
+/*
+* ERROR
+*/
 .card-holder-input__error {
-    position: absolute;
-    font-size: 10px;
-    font-size: .714rem;
-    color: #e55253;
-    left: 5px;
+  position: absolute;
+  font-size: 10px;
+  font-size: .714rem;
+  color: #e55253;
+  left: 5px;
 }
