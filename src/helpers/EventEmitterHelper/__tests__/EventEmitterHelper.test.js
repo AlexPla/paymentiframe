@@ -29,4 +29,10 @@ describe('Helper EventEmitterHelper: ', () => {
         expect(spy).toHaveBeenCalled();
       });
   });
+
+  it('should send height event', () => {
+    const spy = jest.spyOn(window.parent, 'postMessage');
+    EventEmitterHelper.sendHeightEvent(0);
+    expect(spy).toHaveBeenCalled();
+  });
 });
