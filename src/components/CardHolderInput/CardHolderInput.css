@@ -30,14 +30,23 @@
   border-bottom: 1px solid #ccc;
 }
 
-.card-holder-input__input__legacy {
+.card-holder-input__input__legacy,
+.card-holder-input__input__webmobile {
   background: #fff;
   border: 1px solid #ccc;
   display: block;
   font-weight: 200;
   font-size: 12px;
+}
+
+.card-holder-input__input__legacy {
   outline: none;
   padding: 4px;
+}
+
+.card-holder-input__input__webmobile {
+  font-size: 14px;
+  padding: 12px 8px;
 }
 
 .card-holder-input__input:focus {
@@ -67,9 +76,9 @@
   pointer-events: none;
   left: 35px;
   top: 23px;
-  transition: all .2s ease;
-  -moz-transition: .2s ease all;
   -webkit-transition: all .2s ease;
+  -moz-transition: .2s ease all;
+  transition: all .2s ease;
 }
 
 .card-holder-input__label__legacy {
@@ -123,6 +132,11 @@
 .card-holder-input__clear-button__legacy {
   right: 12px;
   top: 43.5px;
+}
+
+.card-holder-input__clear-button__webmobile {
+  right: 17px;
+  top: 53px;
 }
 
 

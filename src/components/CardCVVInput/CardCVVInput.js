@@ -108,7 +108,12 @@ class CardCVVInput extends Component {
           </svg>
           )
         }
-        <span className={`card-cvv-input__help-button card-cvv-input__help-button__${parentApp}`} onClick={showHelp}> ? </span>
+        { parentApp !== configs.LEGACY_WEBMOBILE
+          && <span className={`card-cvv-input__help-button card-cvv-input__help-button__${parentApp}`} onClick={showHelp}> ? </span>
+        }
+        { parentApp === configs.LEGACY_WEBMOBILE
+          && <span className={`card-cvv-input__help-button card-cvv-input__help-button__${parentApp}`} onClick={showHelp}>¿Qué es?</span>
+        }
         { !errorDisabled && errorMessage
           && (
           <span className="card-cvv-input__error">{` ${errorMessage} `}</span>

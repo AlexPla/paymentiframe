@@ -82,11 +82,6 @@ class PaymentForm extends Component {
     };
     return (
       <div className={`payment-form payment-form__${parentApp}`}>
-        <header className="payment-form__header">
-          <h1 className="payment-form__title">
-            { parentApp }
-          </h1>
-        </header>
         <div className="grid grid_column grid_size-12">
           <CardHolderInput
             parentApp={parentApp}

@@ -8,7 +8,8 @@
   padding: 12px 6px 0;
 }
 
-.card-number__input-group__legacy {
+.card-number__input-group__legacy,
+.card-number__input-group__webmobile {
   padding: 0 6px;
 }
 
@@ -35,14 +36,23 @@
   border-bottom: 1px solid #ccc;
 }
 
-.card-number__input__legacy {
+.card-number__input__legacy,
+.card-number__input__webmobile {
   background: #fff;
   border: 1px solid #ccc;
   display: block;
   font-weight: 200;
   font-size: 12px;
+}
+
+.card-number__input__legacy {
   outline: none;
   padding: 4px;
+}
+
+.card-number__input__webmobile {
+  font-size: 14px;
+  padding: 12px 8px;
 }
 
 .card-number__input:focus {
@@ -127,6 +137,11 @@
   top: 52px;
 }
 
+.card-number__card-type__webmobile {
+  right: 20px;
+  top: 62px;
+}
+
 .card-number__card-type_icon {
   margin-right: 20px;
   width: 30px;
@@ -152,6 +167,11 @@
 .card-number__clear-button__legacy {
   right: 12px;
   top: 54.5px;
+}
+
+.card-number__clear-button__webmobile {
+  right: 17px;
+  top: 64.5px;
 }
 
 
