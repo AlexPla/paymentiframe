@@ -12,13 +12,6 @@ const EventEmitterHelper = {
   },
 
   sendChangeEvent(parentApp, props) {
-    // // debug
-    // if (typeof document !== 'undefined' && !window.alreadyListening) {
-    //   window.alreadyListening = true;
-    //   window.addEventListener('message', (m) => {
-    //     console.log('Message data: ', m.data);
-    //   }, false);
-    // }
     const {
       cardHolder,
       cardNumber,
@@ -44,6 +37,11 @@ const EventEmitterHelper = {
           window.parent.postMessage({ id: 'piframe_change', data }, '*'); // todo change. DANGER to use. https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage#Security_concerns
         }
       });
+  },
+
+  sendHeightEvent(height) {
+    const data = { height };
+    window.parent.postMessage({ id: 'piframe_height', data }, '*'); // todo change. DANGER to use. https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage#Security_concerns
   },
 };
 
