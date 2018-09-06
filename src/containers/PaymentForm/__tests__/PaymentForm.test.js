@@ -3,6 +3,7 @@ import configureStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
 import { mount } from 'enzyme';
 import * as configs from '@Constants/configs';
+import * as constants from '@Constants/creditCard';
 import PaymentForm from '../PaymentForm';
 
 const mockStore = configureStore();
@@ -31,9 +32,25 @@ describe('Component PaymentForm:', () => {
     expect(wrapper).toBeDefined();
   });
 
-  it('should display ZipCodeInput if lang parameter is mx', () => {
+  it('should display ZipCodeInput if lang parameter is mx and card type is Amex', () => {
     window.history.pushState({}, 'Test PaymentForm', `/test?lang=${configs.MEXICO}`);
     wrapper = mount(provider, { lifecycleExperimental: true });
+    wrapper.setProps({
+      children: React.cloneElement(wrapper.props().children, {
+        cardType: {
+          niceType: 'American Express',
+          type: constants.AMERICAN_EXPRESS,
+          pattern: /^3[47]\d*$/,
+          isAmex: true,
+          gaps: [4, 10],
+          lengths: [15],
+          code: {
+            name: constants.CID,
+            size: 4,
+          },
+        },
+      }),
+    });
     expect(wrapper.find('.zip-code__input-group').length).toEqual(1);
   });
 

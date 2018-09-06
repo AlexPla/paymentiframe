@@ -86,4 +86,9 @@ describe('Adyen encryption helper:', () => {
       expect(loggedError).toHaveBeenCalled();
     });
   });
+
+  it('should use production encryption key when in production', () => {
+    window.adyen = mockedAdyen;
+    return expect(helper.encrypt(true)).resolves.toEqual(mockedEncryptedResponceOk);
+  });
 });
