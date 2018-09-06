@@ -11,7 +11,7 @@ const EventEmitterHelper = {
     }
   },
 
-  sendChangeEvent(parentApp, props) {
+  sendChangeEvent(parentApp, prod, props) {
     const {
       cardHolder,
       cardNumber,
@@ -21,7 +21,7 @@ const EventEmitterHelper = {
       errors,
     } = props;
     // eslint-disable-next-line max-len
-    return AdyenEncryptionHelper.encrypt(cardNumber, cardCVV, cardHolder, cardExpirationMonth, `20${cardExpirationYear}`)
+    return AdyenEncryptionHelper.encrypt(prod, cardNumber, cardCVV, cardHolder, cardExpirationMonth, `20${cardExpirationYear}`)
       .then(([cardEncryptedJson]) => {
         const data = {
           cardBin: cardNumber.substring(0, 5),

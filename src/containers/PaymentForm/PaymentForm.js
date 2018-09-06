@@ -7,6 +7,7 @@ import {
 } from '@Components';
 import { EventEmitterHelper } from '@Helpers';
 import * as configs from '@Constants/configs';
+import * as cardConstants from '@Constants/creditCard';
 import './PaymentForm.css';
 
 const getParamValue = (paramName) => {
@@ -40,6 +41,7 @@ class PaymentForm extends Component {
     this.state = {
       parentApp: getParamValue('app') || configs.STOREFRONT,
       lang: getParamValue('lang') || configs.SPAIN,
+      prod: Boolean(getParamValue('prod')),
     };
 
     this.showHelp = this.showHelp.bind(this);
@@ -47,19 +49,21 @@ class PaymentForm extends Component {
 
   // Need to send event with height of a form
   componentDidMount() {
+    const { parentApp, prod } = this.state;
     EventEmitterHelper.sendHeightEvent(document.body.scrollHeight);
+    EventEmitterHelper.sendChangeEvent(parentApp, prod, this.props);
   }
 
   componentDidUpdate(prevProps) {
     const { errors: prevErrors } = prevProps;
     const { errors } = this.props;
-    const { parentApp } = this.state;
+    const { parentApp, prod } = this.state;
     // Should only change if:
     // 1. one of the fields change from error -> success or vice versa.
     // 2. all fields are success and one of them changes of value (but keeps being success).
     if (JSON.stringify(prevErrors) !== JSON.stringify(errors)
       || Object.values(errors).every(value => !value)) {
-      EventEmitterHelper.sendChangeEvent(parentApp, this.props);
+      EventEmitterHelper.sendChangeEvent(parentApp, prod, this.props);
     }
   }
 
@@ -116,7 +120,7 @@ class PaymentForm extends Component {
               value={date}
             />
           </div>
-          { lang === configs.MEXICO
+          { lang === configs.MEXICO && cardType.type === cardConstants.AMERICAN_EXPRESS
             && (
               <div className="grid grid_column grid_size-6">
                 <ZipCodeInput

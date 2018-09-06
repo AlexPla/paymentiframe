@@ -34,14 +34,15 @@ export default {
    * Protect card data with Adyen client side encryption,
    * @return {Promise} resolved with encrypted card data and error [{String | Boolean}, {Error}]
    */
-  async encrypt(number, cvc, holderName, expiryMonth, expiryYear) {
+  async encrypt(prod, number, cvc, holderName, expiryMonth, expiryYear) {
     try {
       if (typeof window.adyen === 'undefined') await this.downloadAdyenEncyprionScript();
       const generationtime = new Date().toISOString();
       const cardData = {
         number, cvc, holderName, expiryMonth, expiryYear, generationtime,
       };
-      const cseInstance = window.adyen.encrypt.createEncryption(CONFIG.ADYEN_CLIENT_KEY, {});
+      const key = prod ? CONFIG.ADYEN_CLIENT_KEY_PROD : CONFIG.ADYEN_CLIENT_KEY_TEST;
+      const cseInstance = window.adyen.encrypt.createEncryption(key, {});
       return [cseInstance.encrypt(cardData), null];
     } catch (error) {
       if (!this.isNode) console.error(error);
