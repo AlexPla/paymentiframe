@@ -50,7 +50,15 @@ class PaymentForm extends Component {
   // Need to send event with height of a form
   componentDidMount() {
     const { parentApp, prod } = this.state;
-    EventEmitterHelper.sendHeightEvent(document.body.scrollHeight);
+    if (document.fonts) {
+      // if tool is available, use it
+      document.fonts.ready.then(() => {
+        EventEmitterHelper.sendHeightEvent(document.body.scrollHeight);
+      });
+    } else {
+      // if not, set a timeout
+      setTimeout(() => EventEmitterHelper.sendHeightEvent(document.body.scrollHeight), 0);
+    }
     EventEmitterHelper.sendChangeEvent(parentApp, prod, this.props);
   }
 
