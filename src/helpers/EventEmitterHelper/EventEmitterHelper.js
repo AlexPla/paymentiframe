@@ -1,17 +1,11 @@
-import * as configs from '@Constants/configs';
 import { AdyenEncryptionHelper } from '@Helpers';
 
 const EventEmitterHelper = {
-  sendCvvEvent(parentApp) {
-    if ([configs.LEGACY, configs.LEGACY_WEBMOBILE].indexOf(parentApp) !== -1
-      && window.parent.PRV) {
-      window.parent.PRV.Event.emit('piframe_cvv_help');
-    } else {
-      window.parent.postMessage({ id: 'piframe_cvv_help' }, '*'); // todo change. DANGER to use. https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage#Security_concerns
-    }
+  sendCvvEvent() {
+    window.parent.postMessage({ id: 'piframe_cvv_help' }, '*'); // todo change. DANGER to use. https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage#Security_concerns
   },
 
-  sendChangeEvent(parentApp, prod, props) {
+  sendChangeEvent(prod, props) {
     const {
       cardHolder,
       cardNumber,
@@ -30,12 +24,7 @@ const EventEmitterHelper = {
           cardHolder,
           errors,
         };
-        if ([configs.LEGACY, configs.LEGACY_WEBMOBILE].indexOf(parentApp) !== -1
-          && window.parent.PRV) {
-          window.parent.PRV.Event.emit('piframe_change', '', data);
-        } else {
-          window.parent.postMessage({ id: 'piframe_change', data }, '*'); // todo change. DANGER to use. https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage#Security_concerns
-        }
+        window.parent.postMessage({ id: 'piframe_change', data }, '*'); // todo change. DANGER to use. https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage#Security_concerns
       });
   },
 
