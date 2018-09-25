@@ -43,33 +43,26 @@ class PaymentForm extends Component {
       lang: getParamValue('lang') || configs.SPAIN,
       prod: Boolean(getParamValue('prod')),
     };
-
-    this.showHelp = this.showHelp.bind(this);
   }
 
   // Need to send event with height of a form
   componentDidMount() {
-    const { parentApp, prod } = this.state;
+    const { prod } = this.state;
     EventEmitterHelper.sendHeightEvent(document.body.scrollHeight);
-    EventEmitterHelper.sendChangeEvent(parentApp, prod, this.props);
+    EventEmitterHelper.sendChangeEvent(prod, this.props);
   }
 
   componentDidUpdate(prevProps) {
     const { errors: prevErrors } = prevProps;
     const { errors } = this.props;
-    const { parentApp, prod } = this.state;
+    const { prod } = this.state;
     // Should only change if:
     // 1. one of the fields change from error -> success or vice versa.
     // 2. all fields are success and one of them changes of value (but keeps being success).
     if (JSON.stringify(prevErrors) !== JSON.stringify(errors)
       || Object.values(errors).every(value => !value)) {
-      EventEmitterHelper.sendChangeEvent(parentApp, prod, this.props);
+      EventEmitterHelper.sendChangeEvent(prod, this.props);
     }
-  }
-
-  showHelp() {
-    const { parentApp } = this.state;
-    EventEmitterHelper.sendCvvEvent(parentApp);
   }
 
   render() {
@@ -139,7 +132,7 @@ class PaymentForm extends Component {
             lang={lang}
             updateFields={updateFields}
             updateErrors={updateErrors}
-            showHelp={this.showHelp}
+            showHelp={EventEmitterHelper.sendCvvEvent}
             value={cardCVV}
             cardType={cardType}
           />

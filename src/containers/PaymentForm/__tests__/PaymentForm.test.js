@@ -60,14 +60,6 @@ describe('Component PaymentForm:', () => {
     expect(wrapper.find('.zip-code__input-group').length).toEqual(0);
   });
 
-  it('should call showHelp', () => {
-    window.history.pushState({}, 'Test PaymentForm', `/test?app=${configs.LEGACY}`);
-    wrapper = mount(provider, { lifecycleExperimental: true });
-    const spy = jest.spyOn(wrapper.find('PaymentForm').instance(), 'showHelp');
-    wrapper.find('PaymentForm').instance().showHelp();
-    expect(spy).toBeCalled();
-  });
-
   it('should enter componentDidUpdate but not call sandChangeEvent', () => {
     window.history.pushState({}, 'Test PaymentForm', `/test?app=${configs.LEGACY}`);
     wrapper = mount(provider, { lifecycleExperimental: true });
