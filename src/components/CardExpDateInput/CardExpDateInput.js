@@ -103,7 +103,7 @@ class CardExpDateInput extends Component {
 
     updateErrors({
       key: 'cardExpiration',
-      value: Boolean(errorMessage),
+      value: errorMessage,
     });
   }
 

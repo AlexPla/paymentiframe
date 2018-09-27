@@ -20,7 +20,7 @@ describe('Component CardNumberInput:', () => {
   };
 
   beforeEach(() => {
-    wrapper = shallow(<CardNumberInput lang="es" parentApp="storefront" updateFields={jest.fn()} updateErrors={jest.fn()} value="" cardType={cardType} />);
+    wrapper = shallow(<CardNumberInput lang="es" parentApp="storefront" updateFields={jest.fn()} updateErrors={jest.fn()} focusExpDate={jest.fn()} value="" cardType={cardType} />);
   });
 
   it('should mount', () => {
@@ -46,8 +46,8 @@ describe('Component CardNumberInput:', () => {
     // Actual input
     wrapper.find('.card-number__input').prop('onInput')({ target: { value: '' } });
     wrapper.update();
-    expect(wrapper.state('errorMessage')).toEqual(copies.errors.required[lang]);
-    expect(wrapper.find('.card-number__error').length).toEqual(1);
+    expect(wrapper.state('errorMessage')).toEqual('');
+    expect(wrapper.find('.card-number__error').length).toEqual(0);
   });
 
   it('should process incorrect input -> pattern', () => {
@@ -64,13 +64,13 @@ describe('Component CardNumberInput:', () => {
     // To enable the button we must enter some input
     wrapper.setProps({ value: '5' });
     expect(wrapper.find('.card-number__clear-button').length).toEqual(1);
-    wrapper.find('.card-number__clear-button').prop('onClick')();
+    wrapper.find('.card-number__clear-button').prop('onMouseDown')();
     // Click changes app state and passes it as propsw
     wrapper.setProps({ value: '' });
-    expect(wrapper.state('errorMessage')).toEqual(copies.errors.required[lang]);
+    expect(wrapper.state('errorMessage')).toEqual('');
     expect(wrapper.state('errorDisabled')).toEqual(false);
     expect(wrapper.find('.card-number__input').props().value).toEqual('');
-    expect(wrapper.find('.card-number__error').length).toEqual(1);
+    expect(wrapper.find('.card-number__error').length).toEqual(0);
   });
 
   /*
@@ -78,12 +78,12 @@ describe('Component CardNumberInput:', () => {
   */
   it('should show error message on lose of focus', () => {
     // To enable the button we must enter some input
-    wrapper.setProps({ value: '' });
+    wrapper.setProps({ value: '9999' });
     wrapper.find('.card-number__input').prop('onBlur')();
     wrapper.update();
-    expect(wrapper.state('errorMessage')).toEqual(copies.errors.required[lang]);
+    expect(wrapper.state('errorMessage')).toEqual(copies.errors.pattern[lang]);
     expect(wrapper.state('errorDisabled')).toEqual(false);
-    expect(wrapper.find('.card-number__input').props().value).toEqual('');
+    expect(wrapper.find('.card-number__input').props().value).toEqual('9999');
     expect(wrapper.find('.card-number__error').length).toEqual(1);
   });
 

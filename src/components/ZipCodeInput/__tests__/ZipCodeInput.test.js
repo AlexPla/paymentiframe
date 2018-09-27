@@ -33,8 +33,8 @@ describe('Component ZipCodeInput:', () => {
     // Actual input
     wrapper.find('.zip-code__input').prop('onInput')({ target: { value: '' } });
     wrapper.update();
-    expect(wrapper.state('errorMessage')).toEqual(copies.errors.required);
-    expect(wrapper.find('.zip-code__error').length).toEqual(1);
+    expect(wrapper.state('errorMessage')).toEqual('');
+    expect(wrapper.find('.zip-code__error').length).toEqual(0);
   });
 
   it('should process incorrect input -> minLength', () => {
@@ -54,13 +54,13 @@ describe('Component ZipCodeInput:', () => {
     // To enable the button we must enter some input
     wrapper.setProps({ value: '0' });
     expect(wrapper.find('.zip-code__clear-button').length).toEqual(1);
-    wrapper.find('.zip-code__clear-button').prop('onClick')();
+    wrapper.find('.zip-code__clear-button').prop('onMouseDown')();
     // Click changes app state and passes it as props
     wrapper.setProps({ value: '' });
-    expect(wrapper.state('errorMessage')).toEqual(copies.errors.required);
+    expect(wrapper.state('errorMessage')).toEqual('');
     expect(wrapper.state('errorDisabled')).toEqual(false);
     expect(wrapper.find('.zip-code__input').props().value).toEqual('');
-    expect(wrapper.find('.zip-code__error').length).toEqual(1);
+    expect(wrapper.find('.zip-code__error').length).toEqual(0);
   });
 
   /*
@@ -68,12 +68,12 @@ describe('Component ZipCodeInput:', () => {
   */
   it('should show error message on lose of focus', () => {
     // To enable the button we must enter some input
-    wrapper.setProps({ value: '' });
+    wrapper.setProps({ value: '12' });
     wrapper.find('.zip-code__input').prop('onBlur')();
     wrapper.update();
-    expect(wrapper.state('errorMessage')).toEqual(copies.errors.required);
+    expect(wrapper.state('errorMessage')).toEqual(copies.errors.minLength);
     expect(wrapper.state('errorDisabled')).toEqual(false);
-    expect(wrapper.find('.zip-code__input').props().value).toEqual('');
+    expect(wrapper.find('.zip-code__input').props().value).toEqual('12');
     expect(wrapper.find('.zip-code__error').length).toEqual(1);
   });
 

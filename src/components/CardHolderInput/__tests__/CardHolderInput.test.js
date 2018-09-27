@@ -31,7 +31,7 @@ describe('Component CardHolderInput:', () => {
         value: 'changed',
       },
     });
-    expect(updateFieldsMock.mock.calls[0][0]).toEqual({ cardHolder: 'changed' });
+    expect(updateFieldsMock.mock.calls[0][0]).toEqual({ cardHolder: 'CHANGED' });
   });
 
   it('should validate input on input and clear state.errorMessage for proper name', () => {
@@ -51,7 +51,7 @@ describe('Component CardHolderInput:', () => {
       },
     });
     component.update();
-    expect(component.state('errorMessage')).not.toBe('');
+    expect(component.state('errorMessage')).toBe('');
   });
 
   it('should validate input on input and set state.errorMessage if holder name length is less then 2 symbols', () => {
@@ -120,7 +120,7 @@ describe('Component CardHolderInput:', () => {
     component.setProps({ value: 'John Doe' });
     component.update();
     const clearButton = component.find('.card-holder-input__clear-button');
-    clearButton.prop('onClick')();
+    clearButton.prop('onMouseDown')();
     expect(updateFieldsMock.mock.calls[0][0]).toEqual({ cardHolder: '' });
   });
 
@@ -128,7 +128,7 @@ describe('Component CardHolderInput:', () => {
     component.setProps({ value: 'John Doe' });
     component.update();
     const clearButton = component.find('.card-holder-input__clear-button');
-    clearButton.prop('onClick')();
+    clearButton.prop('onMouseDown')();
     component.update();
     expect(component.state('errorDisabled')).toBe(false);
   });
@@ -137,16 +137,16 @@ describe('Component CardHolderInput:', () => {
     component.setProps({ value: 'John Doe' });
     component.update();
     const clearButton = component.find('.card-holder-input__clear-button');
-    clearButton.prop('onClick')();
+    clearButton.prop('onMouseDown')();
     component.update();
-    expect(component.state('errorMessage')).not.toBe('');
+    expect(component.state('errorMessage')).toBe('');
   });
 
   it('should call updateErrorsMock method from props and pass proper object if validation fails on user input or clear button', () => {
     component.setProps({ value: 'John Doe' });
     component.update();
     const clearButton = component.find('.card-holder-input__clear-button');
-    clearButton.prop('onClick')();
+    clearButton.prop('onMouseDown')();
     component.update();
     expect(updateErrorsMock.mock.calls[0][0]).toEqual({ key: 'cardHolder', value: true });
   });
@@ -158,9 +158,9 @@ describe('Component CardHolderInput:', () => {
   });
 
   it('should change trim input value on blur', () => {
-    component.setProps({ value: 'John Doe ' });
+    component.setProps({ value: 'JOHN DOE ' });
     component.update();
     input.prop('onBlur')();
-    expect(updateFieldsMock.mock.calls[0][0]).toEqual({ cardHolder: 'John Doe' });
+    expect(updateFieldsMock.mock.calls[0][0]).toEqual({ cardHolder: 'JOHN DOE' });
   });
 });

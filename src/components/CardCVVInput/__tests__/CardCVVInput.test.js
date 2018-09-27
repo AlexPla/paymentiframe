@@ -68,7 +68,7 @@ describe('Component CardHolderInput:', () => {
       },
     });
     component.update();
-    expect(component.state('errorMessage')).not.toBe('');
+    expect(component.state('errorMessage')).toBe('');
   });
 
 

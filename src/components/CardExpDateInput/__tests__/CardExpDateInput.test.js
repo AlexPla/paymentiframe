@@ -35,8 +35,8 @@ describe('Component CardExpDateInput:', () => {
     // Actual input
     wrapper.find('.card-exp-date__input').prop('onInput')({ target: { value: '' } });
     wrapper.update();
-    expect(wrapper.state('errorMessage')).toEqual(copies.errors.required[lang]);
-    expect(wrapper.find('.card-exp-date__error').length).toEqual(1);
+    expect(wrapper.state('errorMessage')).toEqual('');
+    expect(wrapper.find('.card-exp-date__error').length).toEqual(0);
   });
 
   it('should process incorrect input -> incomplete', () => {
@@ -75,14 +75,15 @@ describe('Component CardExpDateInput:', () => {
   it('should clear input on button click', () => {
     // To enable the button we must enter some input
     wrapper.setProps({ value: { month: '0', year: '' } });
+    wrapper.find('.card-exp-date__input').prop('onFocus')();
     expect(wrapper.find('.card-exp-date__clear-button').length).toEqual(1);
-    wrapper.find('.card-exp-date__clear-button').prop('onClick')();
+    wrapper.find('.card-exp-date__clear-button').prop('onMouseDown')();
     // Click changes app state and passes it as propsw
     wrapper.setProps({ value: initDate });
-    expect(wrapper.state('errorMessage')).toEqual(copies.errors.required[lang]);
+    expect(wrapper.state('errorMessage')).toEqual('');
     expect(wrapper.state('errorDisabled')).toEqual(false);
     expect(wrapper.find('.card-exp-date__input').props().value).toEqual('');
-    expect(wrapper.find('.card-exp-date__error').length).toEqual(1);
+    expect(wrapper.find('.card-exp-date__error').length).toEqual(0);
   });
 
   /*
