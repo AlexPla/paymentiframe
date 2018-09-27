@@ -10,12 +10,15 @@ class CardExpDateInput extends Component {
   constructor(props, context) {
     super(props, context);
 
+    this.expDateInput = React.createRef();
+
     this.state = {
       errorMessage: '',
       errorDisabled: true,
     };
 
     this.onInput = this.onInput.bind(this);
+    this.onFocus = this.onFocus.bind(this);
     this.onBlur = this.onBlur.bind(this);
     this.onClearClick = this.onClearClick.bind(this);
   }
@@ -36,7 +39,7 @@ class CardExpDateInput extends Component {
     this.updateAppState(value.month, value.year, errorMessage);
 
     this.setState({
-      errorMessage,
+      errorMessage: this.visualError(errorMessage),
       errorDisabled,
     });
   }
@@ -48,15 +51,20 @@ class CardExpDateInput extends Component {
     this.updateAppState('', '', errorMessage);
 
     this.setState({
-      errorMessage,
+      errorMessage: this.visualError(errorMessage),
       errorDisabled: false,
     });
   }
 
-  onBlur() {
-    const { value } = this.props;
-    const errorMessage = this.validateInput(value);
+  onFocus() {
+    const { lang } = this.props;
+    this.expDateInput.current.placeholder = copies.help[lang];
+  }
 
+  onBlur() {
+    const { value, parentApp } = this.props;
+    this.expDateInput.current.placeholder = (parentApp === configs.STOREFRONT) ? '' : this.expDateInput.current.placeholder;
+    const errorMessage = this.visualError(this.validateInput(value));
     this.setState({
       errorMessage,
       errorDisabled: false,
@@ -94,8 +102,14 @@ class CardExpDateInput extends Component {
     });
 
     updateErrors({
-      cardExpiration: Boolean(errorMessage),
+      key: 'cardExpiration',
+      value: Boolean(errorMessage),
     });
+  }
+
+  visualError(errorMessage) {
+    const { lang } = this.props;
+    return errorMessage === copies.errors.required[lang] ? '' : errorMessage;
   }
 
   render() {
@@ -117,16 +131,18 @@ class CardExpDateInput extends Component {
           id="cardExpDateInput"
           value={visualValue}
           onInput={this.onInput}
+          onFocus={this.onFocus}
           onBlur={this.onBlur}
           noValidate
-          placeholder={(parentApp !== configs.STOREFRONT) ? 'mm / aa' : null}
+          placeholder={(parentApp !== configs.STOREFRONT) ? copies.help[lang] : ''}
+          ref={this.expDateInput}
         />
         { parentApp === configs.STOREFRONT
           && <label htmlFor="cardExpDateInput" className="card-exp-date__label__storefront">{ copies.placeholder[lang] }</label>
         }
         { parentApp === configs.STOREFRONT
           && (
-          <svg className="card-exp-date__icon" width="20px" height="20px" viewBox="0 0 150 150" preserveAspectRatio="xMidYMid meet" version="1.1" xmlns="http://www.w3.org/2000/svg">
+          <svg className={`card-exp-date__icon ${!errorDisabled && errorMessage && 'card-exp-date__icon_invalid'}`} width="20px" height="20px" viewBox="0 0 150 150" preserveAspectRatio="xMidYMid meet" version="1.1" xmlns="http://www.w3.org/2000/svg">
             <g id="Page-1" stroke="none" strokeWidth="1" fillRule="evenodd">
               <g id="calendar" fillRule="nonzero">
                 <g transform="translate(15.000000, 15.000000)">
@@ -142,14 +158,9 @@ class CardExpDateInput extends Component {
         }
         { !isEmpty
           && (
-          <svg className={`card-exp-date__clear-button card-exp-date__clear-button__${parentApp}`} onClick={this.onClearClick} version="1.1" xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 150 150" preserveAspectRatio="xMidYMid meet">
+          <svg className={`card-exp-date__clear-button card-exp-date__clear-button__${parentApp}`} onMouseDown={this.onClearClick} version="1.1" xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 150 150" preserveAspectRatio="xMidYMid meet">
             <path d="M75.253125,1.021875 C34.10625,1.021875 0.76875,34.359375 0.76875,75.50625 C0.76875,116.653125 34.10625,150 75.253125,150 C116.41875,150 149.7375,116.6625 149.7375,75.515625 C149.7375,34.36875 116.41875,1.021875 75.253125,1.021875 L75.253125,1.021875 Z M107.85,97.715625 L97.4625,108.09375 L75.253125,85.884375 L53.053125,108.09375 L42.675,97.715625 L64.875,75.515625 L42.675,53.30625 L53.053125,42.928125 L75.2625,65.1375 L97.4625,42.928125 L107.85,53.30625 L85.640625,75.515625 L107.85,97.715625 L107.85,97.715625 Z" />
           </svg>
-          )
-        }
-        { parentApp === configs.STOREFRONT && (errorDisabled || !errorMessage)
-          && (
-          <span className="card-exp-date__placeholder">mm / aa</span>
           )
         }
         { !errorDisabled && errorMessage

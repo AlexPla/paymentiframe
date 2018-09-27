@@ -81,6 +81,10 @@
   transition: all .2s ease;
 }
 
+.card-holder-input__input:focus~.card-holder-input__label__storefront {
+  color: #000;
+}
+
 .card-holder-input__label__legacy {
   color: #000000;
   font-size: 12px;
@@ -114,14 +118,23 @@
   fill: #000;
 }
 
+.card-holder-input__icon_invalid {
+  fill: #e55253;
+}
+
+.card-holder-input__input:focus~.card-holder-input__icon_invalid {
+  fill: #e55253;
+}
+
 
 /*
 * CLEAR BUTTON
 */
 .card-holder-input__clear-button {
-  fill: #666;
+  fill: #999;
   position: absolute;
   cursor: pointer;
+  display: none;
 }
 
 .card-holder-input__clear-button__storefront {
@@ -137,6 +150,10 @@
 .card-holder-input__clear-button__webmobile {
   right: 17px;
   top: 53px;
+}
+
+.card-holder-input__input:focus~.card-holder-input__clear-button {
+  display: block;
 }
 
 

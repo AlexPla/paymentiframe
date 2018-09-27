@@ -38,11 +38,15 @@ class PaymentForm extends Component {
   constructor(props, context) {
     super(props, context);
 
+    this.expDateInput = React.createRef();
+
     this.state = {
       parentApp: getParamValue('app') || configs.STOREFRONT,
       lang: getParamValue('lang') || configs.SPAIN,
       prod: Boolean(getParamValue('prod')),
     };
+
+    this.focusExpDate = this.focusExpDate.bind(this);
   }
 
   // Need to send event with height of a form
@@ -63,6 +67,10 @@ class PaymentForm extends Component {
       || Object.values(errors).every(value => !value)) {
       EventEmitterHelper.sendChangeEvent(prod, this.props);
     }
+  }
+
+  focusExpDate() {
+    this.expDateInput.current.expDateInput.current.focus();
   }
 
   render() {
@@ -99,6 +107,7 @@ class PaymentForm extends Component {
             lang={lang}
             updateFields={updateFields}
             updateErrors={updateErrors}
+            focusExpDate={this.focusExpDate}
             value={cardNumber}
             cardType={cardType}
           />
@@ -111,6 +120,7 @@ class PaymentForm extends Component {
               updateFields={updateFields}
               updateErrors={updateErrors}
               value={date}
+              ref={this.expDateInput}
             />
           </div>
           { lang === configs.MEXICO && cardType.type === cardConstants.AMERICAN_EXPRESS
