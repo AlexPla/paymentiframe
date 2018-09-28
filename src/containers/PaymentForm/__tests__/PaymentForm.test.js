@@ -1,6 +1,5 @@
 import React from 'react';
 import configureStore from 'redux-mock-store';
-import JSDOM from 'jest';
 import { Provider } from 'react-redux';
 import { mount } from 'enzyme';
 import * as configs from '@Constants/configs';
