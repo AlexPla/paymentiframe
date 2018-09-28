@@ -1,5 +1,6 @@
 import React from 'react';
 import configureStore from 'redux-mock-store';
+import JSDOM from 'jest';
 import { Provider } from 'react-redux';
 import { mount } from 'enzyme';
 import * as configs from '@Constants/configs';
@@ -13,6 +14,7 @@ describe('Component PaymentForm:', () => {
   let store;
   let mainComponent;
   let provider;
+  const preUrl = 'iframe-pci-es.privalia-test.com';
 
   beforeEach(() => {
     store = mockStore({});
@@ -21,19 +23,25 @@ describe('Component PaymentForm:', () => {
   });
 
   it('should mount', () => {
-    window.history.pushState({}, 'Test PaymentForm', `/test?app=${configs.LEGACY}&lang=${configs.ITALY}`);
+    window.history.pushState({}, 'Test PaymentForm', `/${preUrl}/test?app=${configs.LEGACY}&lang=${configs.ITALY}`);
     wrapper = mount(provider, { lifecycleExperimental: true });
     expect(wrapper).toBeDefined();
   });
 
   it('should not find params in url', () => {
-    window.history.pushState({}, 'Test PaymentForm', '/test?');
+    window.history.pushState({}, 'Test PaymentForm', `/${preUrl}/test?`);
     wrapper = mount(provider, { lifecycleExperimental: true });
     expect(wrapper).toBeDefined();
   });
 
+  it('should set prod to false when test url', () => {
+    window.history.pushState({}, 'Test PaymentForm', '/urldepro.com');
+    wrapper = mount(provider, { lifecycleExperimental: true });
+    expect(wrapper.find('PaymentForm').instance().state.prod).toBe(true);
+  });
+
   it('should display ZipCodeInput if lang parameter is mx and card type is Amex', () => {
-    window.history.pushState({}, 'Test PaymentForm', `/test?lang=${configs.MEXICO}`);
+    window.history.pushState({}, 'Test PaymentForm', `/${preUrl}/test?lang=${configs.MEXICO}`);
     wrapper = mount(provider, { lifecycleExperimental: true });
     wrapper.setProps({
       children: React.cloneElement(wrapper.props().children, {
@@ -55,13 +63,13 @@ describe('Component PaymentForm:', () => {
   });
 
   it('should not display ZipCodeInput if lang parameter is not mx', () => {
-    window.history.pushState({}, 'Test PaymentForm', `/test?lang=${configs.SPAIN}`);
+    window.history.pushState({}, 'Test PaymentForm', `/${preUrl}/test?lang=${configs.SPAIN}`);
     wrapper = mount(provider, { lifecycleExperimental: true });
     expect(wrapper.find('.zip-code__input-group').length).toEqual(0);
   });
 
   it('should enter componentDidUpdate but not call sandChangeEvent', () => {
-    window.history.pushState({}, 'Test PaymentForm', `/test?app=${configs.LEGACY}`);
+    window.history.pushState({}, 'Test PaymentForm', `/${preUrl}/test?app=${configs.LEGACY}`);
     wrapper = mount(provider, { lifecycleExperimental: true });
     const spy = jest.spyOn(wrapper.find('PaymentForm').instance(), 'componentDidUpdate');
     wrapper.setProps({
@@ -71,7 +79,7 @@ describe('Component PaymentForm:', () => {
   });
 
   it('should enter componentDidUpdate and call sendChangeEvent', () => {
-    window.history.pushState({}, 'Test PaymentForm', `/test?app=${configs.LEGACY}`);
+    window.history.pushState({}, 'Test PaymentForm', `/${preUrl}/test?app=${configs.LEGACY}`);
     wrapper = mount(provider, { lifecycleExperimental: true });
     const spy = jest.spyOn(wrapper.find('PaymentForm').instance(), 'componentDidUpdate');
     wrapper.setProps({

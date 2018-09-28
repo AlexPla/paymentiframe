@@ -93,7 +93,7 @@
       "<rootDir>/src/**/?(*.)(spec|test).{js,jsx,mjs}"
     ],
     "testEnvironment": "node",
-    "testURL": "http://localhost",
+    "testURL": "http://jest/iframe-pci-es.privalia-test.com",
     "transform": {
       "^.+\\.(js|jsx|mjs)$": "<rootDir>/node_modules/babel-jest",
       "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",

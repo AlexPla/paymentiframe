@@ -18,6 +18,11 @@ const getParamValue = (paramName) => {
   return value;
 };
 
+const getEnv = () => {
+  const url = window.location.href;
+  return url.indexOf('test') === -1 && url.indexOf('localhost') === -1;
+};
+
 class PaymentForm extends Component {
   static defaultProps = {
     cardHolder: '',
@@ -41,7 +46,7 @@ class PaymentForm extends Component {
     this.state = {
       parentApp: getParamValue('app') || configs.STOREFRONT,
       lang: getParamValue('lang') || configs.SPAIN,
-      prod: Boolean(getParamValue('prod')),
+      prod: getEnv(),
     };
   }
 
