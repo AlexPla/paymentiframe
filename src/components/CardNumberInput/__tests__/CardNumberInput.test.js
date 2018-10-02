@@ -46,15 +46,13 @@ describe('Component CardNumberInput:', () => {
     // Actual input
     wrapper.find('.card-number__input').prop('onInput')({ target: { value: '' } });
     wrapper.update();
-    expect(wrapper.state('errorMessage')).toEqual('');
-    expect(wrapper.find('.card-number__error').length).toEqual(0);
+    expect(wrapper.state('errorMessage')).toEqual(copies.errors.required[lang]);
   });
 
   it('should process incorrect input -> pattern', () => {
     wrapper.find('.card-number__input').prop('onInput')({ target: { value: '9999 9999 9999 9999' } });
     wrapper.update();
     expect(wrapper.state('errorMessage')).toEqual(copies.errors.pattern[lang]);
-    expect(wrapper.find('.card-number__error').length).toEqual(1);
   });
 
   /*
@@ -67,10 +65,19 @@ describe('Component CardNumberInput:', () => {
     wrapper.find('.card-number__clear-button').prop('onMouseDown')();
     // Click changes app state and passes it as propsw
     wrapper.setProps({ value: '' });
-    expect(wrapper.state('errorMessage')).toEqual('');
-    expect(wrapper.state('errorDisabled')).toEqual(false);
+    expect(wrapper.state('errorMessage')).toEqual(copies.errors.required[lang]);
+    expect(wrapper.state('errorDisabled')).toEqual(true);
     expect(wrapper.find('.card-number__input').props().value).toEqual('');
     expect(wrapper.find('.card-number__error').length).toEqual(0);
+  });
+
+  /*
+  * FOCUS
+  */
+  it('should set state.errorDisabled to true on focus', () => {
+    wrapper.setProps({ value: '9999' });
+    wrapper.find('.card-number__input').prop('onFocus')();
+    expect(wrapper.state('errorDisabled')).toBe(true);
   });
 
   /*
@@ -78,10 +85,10 @@ describe('Component CardNumberInput:', () => {
   */
   it('should show error message on lose of focus', () => {
     // To enable the button we must enter some input
-    wrapper.setProps({ value: '9999' });
+    wrapper.setProps({ value: '9999', cardType: false });
+    wrapper.setState({ errorMessage: copies.errors.pattern[lang] });
     wrapper.find('.card-number__input').prop('onBlur')();
     wrapper.update();
-    expect(wrapper.state('errorMessage')).toEqual(copies.errors.pattern[lang]);
     expect(wrapper.state('errorDisabled')).toEqual(false);
     expect(wrapper.find('.card-number__input').props().value).toEqual('9999');
     expect(wrapper.find('.card-number__error').length).toEqual(1);

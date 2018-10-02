@@ -14,15 +14,18 @@ class CardHolderInput extends Component {
     };
 
     this.onInput = this.onInput.bind(this);
+    this.onFocus = this.onFocus.bind(this);
     this.onBlur = this.onBlur.bind(this);
     this.onClearClick = this.onClearClick.bind(this);
   }
 
   onInput(e) {
-    const cardHolder = e.target.value.toUpperCase();
-    const errorMessage = this.validateInput(cardHolder);
-    this.updateAppState(cardHolder, errorMessage);
-    this.setState({ errorMessage: this.visualError(errorMessage) });
+    const cardHolder = e.target.value.trim().toUpperCase();
+    if (cardHolder.length <= 100) {
+      const errorMessage = this.validateInput(cardHolder);
+      this.updateAppState(cardHolder, errorMessage);
+      this.setState({ errorMessage });
+    }
   }
 
   onClearClick() {
@@ -30,37 +33,32 @@ class CardHolderInput extends Component {
     const errorMessage = copies.errors.required[lang];
     this.updateAppState('', errorMessage);
     this.setState({
-      errorMessage: this.visualError(errorMessage),
-      errorDisabled: false,
+      errorMessage,
+      errorDisabled: true,
     });
   }
 
+  onFocus() {
+    this.setState({ errorDisabled: true });
+  }
+
   onBlur() {
-    let { value: cardHolder } = this.props;
-    cardHolder = cardHolder.trim();
-    const errorMessage = this.validateInput(cardHolder);
-    this.updateAppState(cardHolder, errorMessage);
-    this.setState({
-      errorDisabled: false,
-      errorMessage: this.visualError(errorMessage),
-    });
+    const { value } = this.props;
+    this.setState({ errorDisabled: !value });
   }
 
   validateInput(input) {
     const pattern = new RegExp(/^[a-zA-Zñçáéíóúàèòïü´ÑÇÁÉÍÓÚÀÈÒÏÜ]+([\‒\-\-]+[a-zA-Zñçáéíóúàèòïü´ÑÇÁÉÍÓÚÀÈÒÏÜ]+)*([\s]+([a-zA-Zñçáéíóúàèòïü´ÑÇÁÉÍÓÚÀÈÒÏÜ]+([\‒\-\-]+[a-zA-Zñçáéíóúàèòïü´ÑÇÁÉÍÓÚÀÈÒÏÜ]+)*))*$/); // eslint-disable-line no-useless-escape
     const { lang } = this.props;
-    switch (true) {
-      case input.length === 0:
-        return copies.errors.required[lang];
-      case input.length < 2:
-        return 'systemMessages.SM18';
-      case input.length > 100:
-        return 'maximum length exceeded';
-      case !pattern.test(input):
-        return 'systemMessages.SM26';
-      default:
-        return '';
+    let error = '';
+    if (input.length === 0) {
+      error = copies.errors.required[lang];
+    } else if (input.length === 1) {
+      error = copies.errors.minLength[lang];
+    } else if (!pattern.test(input)) {
+      error = copies.errors.pattern[lang];
     }
+    return error;
   }
 
   updateAppState(cardHolder, errorMessage) {
@@ -68,13 +66,8 @@ class CardHolderInput extends Component {
     updateFields({ cardHolder });
     updateErrors({
       key: 'cardHolder',
-      value: !!errorMessage,
+      value: errorMessage,
     });
-  }
-
-  visualError(errorMessage) {
-    const { lang } = this.props;
-    return errorMessage === copies.errors.required[lang] ? '' : errorMessage;
   }
 
   render() {
@@ -93,6 +86,7 @@ class CardHolderInput extends Component {
           id="cardHolderInput"
           value={value}
           onInput={this.onInput}
+          onFocus={this.onFocus}
           onBlur={this.onBlur}
         />
         { parentApp === configs.STOREFRONT

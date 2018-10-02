@@ -25,50 +25,40 @@ class CardExpDateInput extends Component {
 
   onInput(e) {
     let value = ExpDateHelper.extractValueFromVisualValue(e.target.value);
-    let { errorDisabled } = this.state;
     const { value: oldValue } = this.props;
 
     if (e.target.value.length > 7) {
       value = oldValue;
-    } else if (value.month.length === 2 && value.year.length === 2) {
-      errorDisabled = false;
+    } else if (e.target.value.substr(-2) === ' /') {
+      // if it's backspace and we're hitting it after the slash, remove the last digit of month
+      value.month = value.month.substr(0, 1);
     }
 
     const errorMessage = this.validateInput(value);
-
     this.updateAppState(value.month, value.year, errorMessage);
-
-    this.setState({
-      errorMessage: this.visualError(errorMessage),
-      errorDisabled,
-    });
+    this.setState({ errorMessage });
   }
 
   onClearClick() {
     const { lang } = this.props;
     const errorMessage = copies.errors.required[lang];
-
     this.updateAppState('', '', errorMessage);
-
     this.setState({
-      errorMessage: this.visualError(errorMessage),
-      errorDisabled: false,
+      errorMessage,
+      errorDisabled: true,
     });
   }
 
   onFocus() {
     const { lang } = this.props;
     this.expDateInput.current.placeholder = copies.help[lang];
+    this.setState({ errorDisabled: true });
   }
 
   onBlur() {
     const { value, parentApp } = this.props;
     this.expDateInput.current.placeholder = (parentApp === configs.STOREFRONT) ? '' : this.expDateInput.current.placeholder;
-    const errorMessage = this.visualError(this.validateInput(value));
-    this.setState({
-      errorMessage,
-      errorDisabled: false,
-    });
+    this.setState({ errorDisabled: !value.month });
   }
 
   validateInput(value) {
@@ -105,11 +95,6 @@ class CardExpDateInput extends Component {
       key: 'cardExpiration',
       value: errorMessage,
     });
-  }
-
-  visualError(errorMessage) {
-    const { lang } = this.props;
-    return errorMessage === copies.errors.required[lang] ? '' : errorMessage;
   }
 
   render() {

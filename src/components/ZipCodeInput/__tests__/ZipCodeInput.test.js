@@ -33,8 +33,7 @@ describe('Component ZipCodeInput:', () => {
     // Actual input
     wrapper.find('.zip-code__input').prop('onInput')({ target: { value: '' } });
     wrapper.update();
-    expect(wrapper.state('errorMessage')).toEqual('');
-    expect(wrapper.find('.zip-code__error').length).toEqual(0);
+    expect(wrapper.state('errorMessage')).toEqual(copies.errors.required);
   });
 
   it('should process incorrect input -> minLength', () => {
@@ -44,7 +43,6 @@ describe('Component ZipCodeInput:', () => {
     wrapper.find('.zip-code__input').prop('onInput')({ target: { value: '0102' } });
     wrapper.update();
     expect(wrapper.state('errorMessage')).toEqual(copies.errors.minLength);
-    expect(wrapper.find('.zip-code__error').length).toEqual(1);
   });
 
   /*
@@ -57,10 +55,19 @@ describe('Component ZipCodeInput:', () => {
     wrapper.find('.zip-code__clear-button').prop('onMouseDown')();
     // Click changes app state and passes it as props
     wrapper.setProps({ value: '' });
-    expect(wrapper.state('errorMessage')).toEqual('');
-    expect(wrapper.state('errorDisabled')).toEqual(false);
+    expect(wrapper.state('errorMessage')).toEqual(copies.errors.required);
+    expect(wrapper.state('errorDisabled')).toEqual(true);
     expect(wrapper.find('.zip-code__input').props().value).toEqual('');
     expect(wrapper.find('.zip-code__error').length).toEqual(0);
+  });
+
+  /*
+  * FOCUS
+  */
+  it('should set state.errorDisabled to true on focus', () => {
+    wrapper.setProps({ value: '12' });
+    wrapper.find('.zip-code__input').prop('onFocus')();
+    expect(wrapper.state('errorDisabled')).toBe(true);
   });
 
   /*
@@ -68,10 +75,10 @@ describe('Component ZipCodeInput:', () => {
   */
   it('should show error message on lose of focus', () => {
     // To enable the button we must enter some input
-    wrapper.setProps({ value: '12' });
+    wrapper.setProps({ value: '12', parentApp: 'storefront' });
+    wrapper.setState({ errorMessage: copies.errors.minLength });
     wrapper.find('.zip-code__input').prop('onBlur')();
     wrapper.update();
-    expect(wrapper.state('errorMessage')).toEqual(copies.errors.minLength);
     expect(wrapper.state('errorDisabled')).toEqual(false);
     expect(wrapper.find('.zip-code__input').props().value).toEqual('12');
     expect(wrapper.find('.zip-code__error').length).toEqual(1);

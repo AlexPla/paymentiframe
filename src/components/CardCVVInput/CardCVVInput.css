@@ -142,24 +142,23 @@
 * SHOW BUTTON
 */
 .card-cvv-input__show-button {
-  fill: #999;
   position: absolute;
   cursor: pointer;
 }
 
 .card-cvv-input__show-button__storefront {
-  right: 15px;
-  top: 50px;
+  right: 18px;
+  top: 48px;
 }
 
 .card-cvv-input__show-button__legacy {
-  right: 12px;
-  top: 55.5px;
+  right: 11px;
+  top: 53.5px;
 }
 
 .card-cvv-input__show-button__webmobile {
-  right: 17px;
-  top: 66px;
+  right: 19px;
+  top: 63.5px;
 }
 
 
@@ -171,33 +170,30 @@
   position: absolute;
   cursor: pointer;
   text-align: center;
+  font-size: 14px;
+  width: 21px;
+  height: 21px;
+  border-radius: 50%;
+  background: #cdcdcd;
+  padding-left: 1px;
 }
 
 .card-cvv-input__help-button__storefront {
-  right: -22px;
+  right: -20px;
   top: 47px;
-  font-size: 14px;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: #cdcdcd;
 }
 
 .card-cvv-input__help-button__legacy {
-  right: -11px;
-  top: 57px;
-  font-size: 9px;
-  font-weight: bold;
-  width: 12px;
-  height: 12px;
-  background: #fff;
+  right: -16px;
+  top: 55px;
+  width: 17px;
+  height: 17px;
+  font-size: 12px;
 }
 
 .card-cvv-input__help-button__webmobile {
-  right: -69px;
+  right: -19px;
   top: 63px;
-  font-size: 14px;
-  text-decoration: underline;
 }
 
 

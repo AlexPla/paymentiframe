@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import copies from '@Copies/zipCodeInput';
-import { ZIP_CODE_MAX_LENGTH, ZIP_CODE_MIN_LENGTH } from '@Constants/creditCard';
+import { ZIP_CODE_MAX_LENGTH } from '@Constants/creditCard';
 import { ZipCodeHelper } from '@Helpers';
 import * as configs from '@Constants/configs';
 import './ZipCodeInput.css';
@@ -16,66 +16,51 @@ class ZipCodeInput extends Component {
     };
 
     this.onInput = this.onInput.bind(this);
+    this.onFocus = this.onFocus.bind(this);
     this.onBlur = this.onBlur.bind(this);
     this.onClearClick = this.onClearClick.bind(this);
   }
 
   onInput(e) {
     let value = ZipCodeHelper.extractValueFromVisualValue(e.target.value);
-    let { errorDisabled } = this.state;
     const { value: oldValue } = this.props;
 
     if (value.length > ZIP_CODE_MAX_LENGTH) {
       value = oldValue;
-    } else if (value.length >= ZIP_CODE_MIN_LENGTH) {
-      errorDisabled = false;
     }
 
-    let errorMessage = ZipCodeHelper.validateInput(value);
-
+    const errorMessage = ZipCodeHelper.validateInput(value);
     this.updateAppState(value, errorMessage);
-
-    errorMessage = errorMessage === copies.errors.required ? '' : errorMessage;
-
-    this.setState({
-      errorMessage,
-      errorDisabled,
-    });
+    this.setState({ errorMessage });
   }
 
   onClearClick() {
-    let errorMessage = copies.errors.required;
+    const errorMessage = copies.errors.required;
 
     this.updateAppState('', false, errorMessage);
 
-    errorMessage = errorMessage === copies.errors.required ? '' : errorMessage;
-
     this.setState({
       errorMessage,
-      errorDisabled: false,
+      errorDisabled: true,
     });
+  }
+
+  onFocus() {
+    this.setState({ errorDisabled: true });
   }
 
   onBlur() {
     const { value } = this.props;
-    let errorMessage = ZipCodeHelper.validateInput(value);
-    errorMessage = errorMessage === copies.errors.required ? '' : errorMessage;
-
-    this.setState({
-      errorMessage,
-      errorDisabled: false,
-    });
+    this.setState({ errorDisabled: !value });
   }
 
   updateAppState(value, errorMessage) {
     const { updateFields, updateErrors } = this.props;
-    updateFields({
-      zipCode: value,
-    });
+    updateFields({ zipCode: value });
 
     updateErrors({
       key: 'zipCode',
-      value: Boolean(errorMessage),
+      value: errorMessage,
     });
   }
 
@@ -97,6 +82,7 @@ class ZipCodeInput extends Component {
           id="zipCodeInput"
           value={value}
           onInput={this.onInput}
+          onFocus={this.onFocus}
           onBlur={this.onBlur}
           noValidate
         />

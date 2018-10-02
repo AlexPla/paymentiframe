@@ -16,6 +16,7 @@ class CardNumberInput extends Component {
     };
 
     this.onInput = this.onInput.bind(this);
+    this.onFocus = this.onFocus.bind(this);
     this.onBlur = this.onBlur.bind(this);
     this.onClearClick = this.onClearClick.bind(this);
   }
@@ -23,24 +24,17 @@ class CardNumberInput extends Component {
   onInput(e) {
     let value = CreditCardType.removeGaps(e.target.value);
     const { cardType, maxLength } = CreditCardType.getCardType(value);
-    let { errorDisabled } = this.state;
     const { value: oldValue, lang, focusExpDate } = this.props;
 
     if (value.length > maxLength) {
       value = oldValue;
     } else if (value.length === maxLength) {
-      errorDisabled = false;
       focusExpDate();
     }
 
     const errorMessage = CreditCardType.validateInput(lang, value);
-
     this.updateAppState(value, cardType, errorMessage);
-
-    this.setState({
-      errorMessage: this.visualError(errorMessage),
-      errorDisabled,
-    });
+    this.setState({ errorMessage });
   }
 
   onClearClick() {
@@ -50,19 +44,18 @@ class CardNumberInput extends Component {
     this.updateAppState('', false, errorMessage);
 
     this.setState({
-      errorMessage: this.visualError(errorMessage),
-      errorDisabled: false,
+      errorMessage,
+      errorDisabled: true,
     });
   }
 
-  onBlur() {
-    const { value, lang } = this.props;
-    const errorMessage = this.visualError(CreditCardType.validateInput(lang, value));
+  onFocus() {
+    this.setState({ errorDisabled: true });
+  }
 
-    this.setState({
-      errorMessage,
-      errorDisabled: false,
-    });
+  onBlur() {
+    const { value } = this.props;
+    this.setState({ errorDisabled: !value });
   }
 
   updateAppState(value, cardType, errorMessage) {
@@ -74,13 +67,8 @@ class CardNumberInput extends Component {
 
     updateErrors({
       key: 'cardNumber',
-      value: Boolean(errorMessage),
+      value: errorMessage,
     });
-  }
-
-  visualError(errorMessage) {
-    const { lang } = this.props;
-    return errorMessage === copies.errors.required[lang] ? '' : errorMessage;
   }
 
   render() {
@@ -112,6 +100,7 @@ class CardNumberInput extends Component {
           id="cardNumberInput"
           value={visualValue}
           onInput={this.onInput}
+          onFocus={this.onFocus}
           onBlur={this.onBlur}
           noValidate
         />

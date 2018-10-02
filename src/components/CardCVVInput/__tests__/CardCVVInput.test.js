@@ -1,17 +1,19 @@
 import React from 'react';
 import { configure, mount } from 'enzyme';
+import copies from '@Copies/cardCVVInput';
 import Adapter from 'enzyme-adapter-react-16';
 
 import CardCVVInput from '../CardCVVInput';
 
 configure({ adapter: new Adapter() });
 
-describe('Component CardHolderInput:', () => {
+describe('Component CardCVVInput:', () => {
   let component;
   let input;
   let updateFieldsMock;
   let updateErrorsMock;
   let showHelpMock;
+  const lang = 'es';
 
   beforeEach(() => {
     updateFieldsMock = jest.fn();
@@ -68,7 +70,7 @@ describe('Component CardHolderInput:', () => {
       },
     });
     component.update();
-    expect(component.state('errorMessage')).toBe('');
+    expect(component.state('errorMessage')).toBe(copies.errors.required[lang]);
   });
 
 
@@ -108,7 +110,7 @@ describe('Component CardHolderInput:', () => {
       },
     });
     component.update();
-    expect(updateErrorsMock.mock.calls[0][0]).toEqual({ key: 'cardCVV', value: false });
+    expect(updateErrorsMock.mock.calls[0][0]).toEqual({ key: 'cardCVV', value: '' });
   });
 
   it('should not set class in style if input is not empty', () => {
@@ -132,25 +134,38 @@ describe('Component CardHolderInput:', () => {
   });
 
   it('should change state.errorDisabled to false on blur', () => {
+    component.setProps({ value: '123' });
     input.prop('onBlur')();
     component.update();
     expect(component.state('errorDisabled')).toBe(false);
   });
 
-  it('should load webmobile help button', () => {
-    updateFieldsMock = jest.fn();
-    updateErrorsMock = jest.fn();
-    showHelpMock = jest.fn();
-    component = mount(<CardCVVInput
-      lang="es"
-      parentApp="webmobile"
-      updateFields={updateFieldsMock}
-      updateErrors={updateErrorsMock}
-      cardType={false}
-      value=""
-      showHelp={showHelpMock}
-    />);
+  it('should change state.errorDisabled to true on focus', () => {
+    component.setState({ errorDisabled: false });
+    input.prop('onFocus')();
+    component.update();
+    expect(component.state('errorDisabled')).toBe(true);
+  });
 
-    expect(component.find('.card-cvv-input__help-button').text()).toEqual('¿Qué es?');
+  it('should change masked state on click on eye', () => {
+    component.setProps({ value: '123' });
+    component.setState({ masked: true });
+    component.find('.card-cvv-input__show-button').prop('onClick')();
+    component.update();
+    expect(component.state('masked')).toBeFalsy();
+  });
+
+  /*
+  * BLUR
+  */
+  it('should show error message on lose of focus', () => {
+    // To enable the button we must enter some input
+    component.setProps({ value: '12' });
+    component.setState({ errorMessage: copies.errors.pattern[lang] });
+    component.find('.card-cvv-input__input').prop('onBlur')();
+    component.update();
+    expect(component.state('errorDisabled')).toEqual(false);
+    expect(component.find('.card-cvv-input__input').props().value).toEqual('12');
+    expect(component.find('.card-cvv-input__error').length).toEqual(1);
   });
 });
