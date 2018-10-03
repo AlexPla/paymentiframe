@@ -15,7 +15,7 @@ class CardHolderInput extends Component {
   }
 
   onInput = (e) => {
-    const cardHolder = e.target.value.trim().toUpperCase();
+    const cardHolder = e.target.value.toUpperCase();
     if (cardHolder.length <= 100) {
       const errorMessage = this.validateInput(cardHolder);
       this.updateAppState(cardHolder, errorMessage);
