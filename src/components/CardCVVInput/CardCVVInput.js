@@ -20,12 +20,9 @@ class CardCVVInput extends Component {
       masked: true,
     };
     this.lastCardType = CVV_TYPE_DEFAULT;
-    this.onInput = this.onInput.bind(this);
-    this.onFocus = this.onFocus.bind(this);
-    this.onBlur = this.onBlur.bind(this);
   }
 
-  onInput(e) {
+  onInput = (e) => {
     const pattern = new RegExp(`^[0-9]{0,${this.getLengthLimit()}}$`);
     const cvv = e.target.value.trim();
     if (pattern.test(cvv)) {
@@ -35,11 +32,9 @@ class CardCVVInput extends Component {
     }
   }
 
-  onFocus() {
-    this.setState({ errorDisabled: true });
-  }
+  onFocus = () => this.setState({ errorDisabled: true });
 
-  onBlur() {
+  onBlur = () => {
     const { value } = this.props;
     this.setState({ errorDisabled: !value });
   }
@@ -48,7 +43,7 @@ class CardCVVInput extends Component {
     this.setState(prevState => ({ masked: !prevState.masked }));
   }
 
-  getErrorMessage(cvv) {
+  getErrorMessage = (cvv) => {
     const pattern = new RegExp(`^[0-9]{${this.getLengthLimit()}}$`);
     const { lang } = this.props;
     let error = '';
@@ -61,12 +56,12 @@ class CardCVVInput extends Component {
     return error;
   }
 
-  getLengthLimit() {
+  getLengthLimit = () => {
     const { cardType } = this.props;
     return cardType ? cardType.code.size : CVV_LENGTH_DEFAULT;
   }
 
-  updateAppState(cardCVV, errorMessage) {
+  updateAppState = (cardCVV, errorMessage) => {
     const { updateFields, updateErrors } = this.props;
     updateFields({ cardCVV });
     updateErrors({

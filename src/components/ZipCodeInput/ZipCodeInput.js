@@ -14,27 +14,19 @@ class ZipCodeInput extends Component {
       errorMessage: '',
       errorDisabled: true,
     };
-
-    this.onInput = this.onInput.bind(this);
-    this.onFocus = this.onFocus.bind(this);
-    this.onBlur = this.onBlur.bind(this);
-    this.onClearClick = this.onClearClick.bind(this);
   }
 
-  onInput(e) {
-    let value = ZipCodeHelper.extractValueFromVisualValue(e.target.value);
-    const { value: oldValue } = this.props;
-
-    if (value.length > ZIP_CODE_MAX_LENGTH) {
-      value = oldValue;
-    }
+  onInput = (e) => {
+    const { value: prevValue } = this.props;
+    const newValue = ZipCodeHelper.extractValueFromVisualValue(e.target.value);
+    const value = (newValue.length > ZIP_CODE_MAX_LENGTH) ? prevValue : newValue;
 
     const errorMessage = ZipCodeHelper.validateInput(value);
     this.updateAppState(value, errorMessage);
     this.setState({ errorMessage });
   }
 
-  onClearClick() {
+  onClearClick = () => {
     const errorMessage = copies.errors.required;
 
     this.updateAppState('', false, errorMessage);
@@ -45,16 +37,14 @@ class ZipCodeInput extends Component {
     });
   }
 
-  onFocus() {
-    this.setState({ errorDisabled: true });
-  }
+  onFocus= () => this.setState({ errorDisabled: true });
 
-  onBlur() {
+  onBlur = () => {
     const { value } = this.props;
     this.setState({ errorDisabled: !value });
   }
 
-  updateAppState(value, errorMessage) {
+  updateAppState = (value, errorMessage) => {
     const { updateFields, updateErrors } = this.props;
     updateFields({ zipCode: value });
 

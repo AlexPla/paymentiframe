@@ -14,14 +14,9 @@ class CardNumberInput extends Component {
       errorMessage: '',
       errorDisabled: true,
     };
-
-    this.onInput = this.onInput.bind(this);
-    this.onFocus = this.onFocus.bind(this);
-    this.onBlur = this.onBlur.bind(this);
-    this.onClearClick = this.onClearClick.bind(this);
   }
 
-  onInput(e) {
+  onInput = (e) => {
     let value = CreditCardType.removeGaps(e.target.value);
     const { cardType, maxLength } = CreditCardType.getCardType(value);
     const { value: oldValue, lang, focusExpDate } = this.props;
@@ -37,7 +32,7 @@ class CardNumberInput extends Component {
     this.setState({ errorMessage });
   }
 
-  onClearClick() {
+  onClearClick = () => {
     const { lang } = this.props;
     const errorMessage = copies.errors.required[lang];
 
@@ -49,16 +44,14 @@ class CardNumberInput extends Component {
     });
   }
 
-  onFocus() {
-    this.setState({ errorDisabled: true });
-  }
+  onFocus = () => this.setState({ errorDisabled: true });
 
-  onBlur() {
+  onBlur = () => {
     const { value } = this.props;
     this.setState({ errorDisabled: !value });
   }
 
-  updateAppState(value, cardType, errorMessage) {
+  updateAppState = (value, cardType, errorMessage) => {
     const { updateFields, updateErrors } = this.props;
     updateFields({
       cardNumber: value,

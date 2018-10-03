@@ -33,8 +33,6 @@ class PaymentForm extends Component {
       lang: getParamValue('lang') || configs.SPAIN,
       prod: Boolean(getParamValue('prod')),
     };
-
-    this.focusExpDate = this.focusExpDate.bind(this);
   }
 
   // Need to send event with height of a form
@@ -42,9 +40,8 @@ class PaymentForm extends Component {
     const { lang } = this.state;
     const { initErrors } = this.props;
     EventEmitterHelper.sendHeightEvent(document.body.scrollHeight);
-    // Set initial array of errors
-    // (all fields required in correct language)
-    // Send first change event when finished
+    // Set initial array of errors (all fields required in correct language)
+    // It'll change app state so will enter componentDidUpdate and send first change event
     initErrors([
       {
         key: 'cardCVV',
@@ -78,9 +75,7 @@ class PaymentForm extends Component {
     }
   }
 
-  focusExpDate() {
-    this.expDateInput.current.expDateInput.current.focus();
-  }
+  focusExpDate = () => this.expDateInput.current.expDateInput.current.focus();
 
   render() {
     const {

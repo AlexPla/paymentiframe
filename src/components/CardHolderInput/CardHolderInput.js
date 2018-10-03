@@ -12,14 +12,9 @@ class CardHolderInput extends Component {
       errorMessage: '',
       errorDisabled: true,
     };
-
-    this.onInput = this.onInput.bind(this);
-    this.onFocus = this.onFocus.bind(this);
-    this.onBlur = this.onBlur.bind(this);
-    this.onClearClick = this.onClearClick.bind(this);
   }
 
-  onInput(e) {
+  onInput = (e) => {
     const cardHolder = e.target.value.trim().toUpperCase();
     if (cardHolder.length <= 100) {
       const errorMessage = this.validateInput(cardHolder);
@@ -28,7 +23,7 @@ class CardHolderInput extends Component {
     }
   }
 
-  onClearClick() {
+  onClearClick = () => {
     const { lang } = this.props;
     const errorMessage = copies.errors.required[lang];
     this.updateAppState('', errorMessage);
@@ -38,16 +33,14 @@ class CardHolderInput extends Component {
     });
   }
 
-  onFocus() {
-    this.setState({ errorDisabled: true });
-  }
+  onFocus = () => this.setState({ errorDisabled: true });
 
-  onBlur() {
+  onBlur = () => {
     const { value } = this.props;
     this.setState({ errorDisabled: !value });
   }
 
-  validateInput(input) {
+  validateInput = (input) => {
     const pattern = new RegExp(/^[a-zA-Zñçáéíóúàèòïü´ÑÇÁÉÍÓÚÀÈÒÏÜ]+([\‒\-\-]+[a-zA-Zñçáéíóúàèòïü´ÑÇÁÉÍÓÚÀÈÒÏÜ]+)*([\s]+([a-zA-Zñçáéíóúàèòïü´ÑÇÁÉÍÓÚÀÈÒÏÜ]+([\‒\-\-]+[a-zA-Zñçáéíóúàèòïü´ÑÇÁÉÍÓÚÀÈÒÏÜ]+)*))*$/); // eslint-disable-line no-useless-escape
     const { lang } = this.props;
     let error = '';
@@ -61,7 +54,7 @@ class CardHolderInput extends Component {
     return error;
   }
 
-  updateAppState(cardHolder, errorMessage) {
+  updateAppState = (cardHolder, errorMessage) => {
     const { updateFields, updateErrors } = this.props;
     updateFields({ cardHolder });
     updateErrors({

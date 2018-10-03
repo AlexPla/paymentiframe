@@ -16,14 +16,9 @@ class CardExpDateInput extends Component {
       errorMessage: '',
       errorDisabled: true,
     };
-
-    this.onInput = this.onInput.bind(this);
-    this.onFocus = this.onFocus.bind(this);
-    this.onBlur = this.onBlur.bind(this);
-    this.onClearClick = this.onClearClick.bind(this);
   }
 
-  onInput(e) {
+  onInput = (e) => {
     let value = ExpDateHelper.extractValueFromVisualValue(e.target.value);
     const { value: oldValue } = this.props;
 
@@ -39,7 +34,7 @@ class CardExpDateInput extends Component {
     this.setState({ errorMessage });
   }
 
-  onClearClick() {
+  onClearClick = () => {
     const { lang } = this.props;
     const errorMessage = copies.errors.required[lang];
     this.updateAppState('', '', errorMessage);
@@ -49,19 +44,19 @@ class CardExpDateInput extends Component {
     });
   }
 
-  onFocus() {
+  onFocus = () => {
     const { lang } = this.props;
     this.expDateInput.current.placeholder = copies.help[lang];
     this.setState({ errorDisabled: true });
   }
 
-  onBlur() {
+  onBlur = () => {
     const { value, parentApp } = this.props;
     this.expDateInput.current.placeholder = (parentApp === configs.STOREFRONT) ? '' : this.expDateInput.current.placeholder;
     this.setState({ errorDisabled: !value.month });
   }
 
-  validateInput(value) {
+  validateInput = (value) => {
     const { lang } = this.props;
     let error = '';
     if (!value.month && !value.year) {
@@ -84,7 +79,7 @@ class CardExpDateInput extends Component {
     return error;
   }
 
-  updateAppState(month, year, errorMessage) {
+  updateAppState = (month, year, errorMessage) => {
     const { updateFields, updateErrors } = this.props;
     updateFields({
       cardExpirationMonth: month,
