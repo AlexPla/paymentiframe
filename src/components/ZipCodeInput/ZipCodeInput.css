@@ -87,6 +87,10 @@
   -webkit-transition: all .2s ease;
 }
 
+.zip-code__input:focus~.zip-code__label__storefront {
+  color: #000;
+}
+
 .zip-code__label__legacy {
   color: #000000;
   font-size: 12px;
@@ -120,6 +124,14 @@
   stroke: #000;
 }
 
+.zip-code__icon_invalid {
+  stroke: #e55253;
+}
+
+.zip-code__input:focus~.zip-code__icon_invalid {
+  stroke: #e55253;
+}
+
 
 /*
 * CARD TYPE ICON
@@ -142,9 +154,10 @@
 * CLEAR BUTTON
 */
 .zip-code__clear-button {
-  fill: #666;
+  fill: #999;
   position: absolute;
   cursor: pointer;
+  display: none;
 }
 
 .zip-code__clear-button__storefront {
@@ -160,6 +173,10 @@
 .zip-code__clear-button__webmobile {
   right: 17px;
   top: 64px;
+}
+
+.zip-code__input:focus~.zip-code__clear-button {
+  display: block;
 }
 
 

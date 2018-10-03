@@ -6,6 +6,13 @@
     "mx": "MX_placeholder",
     "br": "BR_placeholder"
   },
+  "help": {
+    "en": "EN_help",
+    "es": "ES_help",
+    "it": "IT_help",
+    "mx": "MX_help",
+    "br": "BR_help"
+  },
   "errors": {
     "required": {
       "en": "EN_required",

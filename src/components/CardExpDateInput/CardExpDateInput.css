@@ -88,6 +88,10 @@
   -webkit-transition: all .2s ease;
 }
 
+.card-exp-date__input:focus~.card-exp-date__label__storefront {
+  color: #000;
+}
+
 .card-exp-date__label__legacy {
   color: #000000;
   font-size: 12px;
@@ -121,14 +125,23 @@
   fill: #000;
 }
 
+.card-exp-date__icon_invalid {
+  fill: #e55253;
+}
+
+.card-exp-date__input:focus~.card-exp-date__icon_invalid {
+  fill: #e55253;
+}
+
 
 /*
 * CLEAR BUTTON
 */
 .card-exp-date__clear-button {
-  fill: #666;
+  fill: #999;
   position: absolute;
   cursor: pointer;
+  display: none;
 }
 
 .card-exp-date__clear-button__storefront {
@@ -144,6 +157,10 @@
 .card-exp-date__clear-button__webmobile {
   right: 17px;
   top: 64px;
+}
+
+.card-exp-date__input:focus~.card-exp-date__clear-button {
+  display: block;
 }
 
 

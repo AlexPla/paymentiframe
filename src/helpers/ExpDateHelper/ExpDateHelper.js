@@ -13,7 +13,7 @@ const ExpDateHelper = {
   },
 
   getVisualValue(value) {
-    return `${value.month}${value.year ? ` / ${value.year}` : ''}`;
+    return `${value.month}${value.month.length === 2 ? ' / ' : ''}${value.year ? value.year : ''}`;
   },
 };
 

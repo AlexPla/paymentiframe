@@ -71,6 +71,18 @@
   border-color: #e55253;
 }
 
+.card-number__input-left-padding__storefront {
+  padding-left: 40px;
+}
+
+.card-number__input-left-padding__legacy {
+  padding-left: 40px;
+}
+
+.card-number__input-left-padding__webmobile {
+  padding-left: 45px;
+}
+
 /*
 * LABEL - PLACEHOLDER 
 */
@@ -85,6 +97,10 @@
   transition: all .2s ease;
   -moz-transition: .2s ease all;
   -webkit-transition: all .2s ease;
+}
+
+.card-number__input:focus~.card-number__label__storefront {
+  color: #000;
 }
 
 .card-number__label__legacy {
@@ -120,13 +136,20 @@
   fill: #000;
 }
 
+.card-number__icon_invalid {
+  fill: #e55253;
+}
+
+.card-number__input:focus~.card-number__icon_invalid {
+  fill: #e55253;
+}
+
 
 /*
 * CARD TYPE ICON
 */
 .card-number__card-type {
   position: absolute;
-  right: 10px;
 }
 
 .card-number__card-type__storefront {
@@ -135,10 +158,11 @@
 
 .card-number__card-type__legacy {
   top: 52px;
+  left: 10px;
 }
 
 .card-number__card-type__webmobile {
-  right: 20px;
+  left: 15px;
   top: 62px;
 }
 
@@ -154,9 +178,10 @@
 * CLEAR BUTTON
 */
 .card-number__clear-button {
-  fill: #666;
+  fill: #999;
   position: absolute;
   cursor: pointer;
+  display: none;
 }
 
 .card-number__clear-button__storefront {
@@ -172,6 +197,10 @@
 .card-number__clear-button__webmobile {
   right: 17px;
   top: 64.5px;
+}
+
+.card-number__input:focus~.card-number__clear-button {
+  display: block;
 }
 
 

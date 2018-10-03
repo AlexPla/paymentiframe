@@ -1,4 +1,5 @@
 // ACTIONTYPES CONSTANTS
+export const INIT_ERRORS = 'INIT_ERRORS';
 export const UPDATE_FIELDS = 'UPDATE_FIELDS';
 export const UPDATE_ERRORS = 'UPDATE_ERRORS';
 export const SHOW_HELP = 'SHOW_HELP';

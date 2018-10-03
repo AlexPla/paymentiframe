@@ -14,13 +14,6 @@
       "mx": "MX_required",
       "br": "BR_required"
     },
-    "minLength": {
-      "en": "EN_minLength",
-      "es": "ES_minLength",
-      "it": "IT_minLength",
-      "mx": "MX_minLength",
-      "br": "BR_minLength"
-    },
     "pattern": {
       "en": "EN_pattern",
       "es": "ES_pattern",

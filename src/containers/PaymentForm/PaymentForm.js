@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
-import { updateFields, updateErrors } from '@Actions';
+import { initErrors, updateFields, updateErrors } from '@Actions';
 import {
   CardHolderInput, CardNumberInput, CardExpDateInput, CardCVVInput, ZipCodeInput,
 } from '@Components';
 import { EventEmitterHelper } from '@Helpers';
 import * as configs from '@Constants/configs';
 import * as cardConstants from '@Constants/creditCard';
+import cardCVVCopies from '@Copies/cardCVVInput';
+import cardExpDateCopies from '@Copies/cardExpDateInput';
+import cardHolderCopies from '@Copies/cardHolderInput';
+import cardNumberCopies from '@Copies/cardNumberInput';
 import './PaymentForm.css';
 
 const getParamValue = (paramName) => {
@@ -24,24 +28,10 @@ const getEnv = () => {
 };
 
 class PaymentForm extends Component {
-  static defaultProps = {
-    cardHolder: '',
-    cardNumber: '',
-    cardType: false,
-    cardCVV: '',
-    zipCode: '',
-    cardExpirationMonth: '',
-    cardExpirationYear: '',
-    errors: {
-      cardHolder: true,
-      cardNumber: true,
-      cardExpiration: true,
-      cardCVV: true,
-    },
-  };
-
   constructor(props, context) {
     super(props, context);
+
+    this.expDateInput = React.createRef();
 
     this.state = {
       parentApp: getParamValue('app') || configs.STOREFRONT,
@@ -52,9 +42,29 @@ class PaymentForm extends Component {
 
   // Need to send event with height of a form
   componentDidMount() {
-    const { prod } = this.state;
+    const { lang } = this.state;
+    const { initErrors } = this.props;
     EventEmitterHelper.sendHeightEvent(document.body.scrollHeight);
-    EventEmitterHelper.sendChangeEvent(prod, this.props);
+    // Set initial array of errors (all fields required in correct language)
+    // It'll change app state so will enter componentDidUpdate and send first change event
+    initErrors([
+      {
+        key: 'cardCVV',
+        value: cardCVVCopies.errors.required[lang],
+      },
+      {
+        key: 'cardExpiration',
+        value: cardExpDateCopies.errors.required[lang],
+      },
+      {
+        key: 'cardHolder',
+        value: cardHolderCopies.errors.required[lang],
+      },
+      {
+        key: 'cardNumber',
+        value: cardNumberCopies.errors.required[lang],
+      },
+    ]);
   }
 
   componentDidUpdate(prevProps) {
@@ -64,11 +74,13 @@ class PaymentForm extends Component {
     // Should only change if:
     // 1. one of the fields change from error -> success or vice versa.
     // 2. all fields are success and one of them changes of value (but keeps being success).
-    if (JSON.stringify(prevErrors) !== JSON.stringify(errors)
-      || Object.values(errors).every(value => !value)) {
+    if (errors.length === 0
+      || JSON.stringify(prevErrors) !== JSON.stringify(errors)) {
       EventEmitterHelper.sendChangeEvent(prod, this.props);
     }
   }
+
+  focusExpDate = () => this.expDateInput.current.expDateInput.current.focus();
 
   render() {
     const {
@@ -104,6 +116,7 @@ class PaymentForm extends Component {
             lang={lang}
             updateFields={updateFields}
             updateErrors={updateErrors}
+            focusExpDate={this.focusExpDate}
             value={cardNumber}
             cardType={cardType}
           />
@@ -116,6 +129,7 @@ class PaymentForm extends Component {
               updateFields={updateFields}
               updateErrors={updateErrors}
               value={date}
+              ref={this.expDateInput}
             />
           </div>
           { lang === configs.MEXICO && cardType.type === cardConstants.AMERICAN_EXPRESS
@@ -148,8 +162,8 @@ class PaymentForm extends Component {
 }
 
 PaymentForm.propTypes = {
-  cardHolder: PropTypes.string,
-  cardNumber: PropTypes.string,
+  cardHolder: PropTypes.string.isRequired,
+  cardNumber: PropTypes.string.isRequired,
   cardType: PropTypes.oneOfType([
     PropTypes.shape({
       niceType: PropTypes.string,
@@ -166,18 +180,19 @@ PaymentForm.propTypes = {
       }),
     }),
     PropTypes.bool,
-  ]),
-  cardCVV: PropTypes.string,
-  zipCode: PropTypes.string,
-  cardExpirationMonth: PropTypes.string,
-  cardExpirationYear: PropTypes.string,
-  errors: PropTypes.objectOf(PropTypes.bool),
+  ]).isRequired,
+  cardCVV: PropTypes.string.isRequired,
+  zipCode: PropTypes.string.isRequired,
+  cardExpirationMonth: PropTypes.string.isRequired,
+  cardExpirationYear: PropTypes.string.isRequired,
+  errors: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)).isRequired,
+  initErrors: PropTypes.func.isRequired,
   updateFields: PropTypes.func.isRequired,
   updateErrors: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({ form }) => form || {};
 
-const mapDispatchToProps = { updateFields, updateErrors };
+const mapDispatchToProps = { initErrors, updateFields, updateErrors };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PaymentForm);
