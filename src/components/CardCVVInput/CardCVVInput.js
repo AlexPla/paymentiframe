@@ -130,7 +130,7 @@ class CardCVVInput extends Component {
           onBlur={this.onBlur}
         />
         { parentApp === configs.STOREFRONT
-          && <label htmlFor="cardCVVInput" className="card-cvv-input__label__storefront">{ copies[code][lang] }</label>
+          && <label htmlFor="cardCVVInput" className="card-cvv-input__label__storefront">{ code }</label>
         }
         { !isEmpty && this.renderEye(parentApp, masked) }
         { parentApp === configs.STOREFRONT && this.renderIcon(errorDisabled, errorMessage) }

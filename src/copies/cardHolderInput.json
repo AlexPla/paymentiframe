@@ -2,31 +2,31 @@
   "holder": {
     "en": "Holder",
     "es": "Titular",
-    "it": "IT_holder",
-    "mx": "MX_holder",
-    "br": "BR_holder"
+    "it": "Titolare",
+    "br": "Titular",
+    "mx": "Titular"
   },
   "errors": {
     "required": {
       "en": "EN_required",
-      "es": "ES_required",
-      "it": "IT_required",
-      "mx": "MX_required",
-      "br": "BR_required"
+      "es": "Escribe el titular de la tarjeta.",
+      "it": "Scrivi il nome del titolare della carta.",
+      "br": "Escreva o nome do titular do cartão.",
+      "mx": "Escribe el titular de la tarjeta."
     },
     "minLength": {
       "en": "EN_minLength",
-      "es": "ES_minLength",
-      "it": "IT_minLength",
-      "mx": "MX_minLength",
-      "br": "BR_minLength"
+      "es": "El nombre del titular debe tener dos o más caracteres.",
+      "it": "Il nome del titolare deve contenere almeno due caratteri.",
+      "br": "O nome do titular deve ter duas letras ou mais.",
+      "mx": "El nombre del titular debe tener dos o más caracteres."
     },
     "pattern": {
       "en": "EN_pattern",
-      "es": "ES_pattern",
-      "it": "IT_pattern",
-      "mx": "MX_pattern",
-      "br": "BR_pattern"
+      "es": "Hay un carácter no válido en el nombre. Por favor, revísalo.",
+      "it": "Carattere non valido nel nome. Per favore, controlla di averlo scritto correttamente.",
+      "br": "Existe algum erro no nome. Por favor, revise e tente outra vez.",
+      "mx": "Hay un carácter no válido en el nombre. Por favor, revísalo."
     }
   }
 }
