@@ -77,7 +77,7 @@ class CardHolderInput extends Component {
     const { errorMessage, errorDisabled } = this.state;
     const isEmpty = (value).toString().length === 0;
     return (
-      <div className="card-holder-input__input-group">
+      <div className={`card-holder-input__input-group card-holder-input__input-group__${parentApp}`}>
         { parentApp !== configs.STOREFRONT
           && <label htmlFor="cardHolderInput" className="card-holder-input__label__legacy">{ copies.holder[lang] }</label>
         }
