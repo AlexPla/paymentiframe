@@ -7,6 +7,10 @@
   padding: 12px 6px 0;
 }
 
+.card-holder-input__input-group__storefront {
+  margin-top: 23px;
+}
+
 
 /*
 * INPUT FIELD
@@ -75,7 +79,7 @@
   position: absolute;
   pointer-events: none;
   left: 35px;
-  top: 23px;
+  top: 46px;
   -webkit-transition: all .2s ease;
   -moz-transition: .2s ease all;
   transition: all .2s ease;
@@ -97,7 +101,7 @@
 
 .card-holder-input__input__storefront:focus~.card-holder-input__label__storefront,
 .card-holder-input__input__not-empty~.card-holder-input__label__storefront {
-  top: 2px;
+  top: 25px;
   font-size: 10px;
 }
 
@@ -108,7 +112,7 @@
 .card-holder-input__icon {
   fill: #666;
   position: absolute;
-  top: 22px;
+  top: 45px;
   left: 6px;
   cursor: default;
   text-align: center;
@@ -139,7 +143,7 @@
 
 .card-holder-input__clear-button__storefront {
   right: 10px;
-  top: 25px;
+  top: 48px;
 }
 
 .card-holder-input__clear-button__legacy {

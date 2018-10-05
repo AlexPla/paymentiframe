@@ -14,6 +14,7 @@ describe('Component PaymentForm:', () => {
   let mainComponent;
   let provider;
   const preUrl = 'iframe-pci-es.privalia-test.com';
+  let spy;
 
   beforeEach(() => {
     store = mockStore({});
@@ -70,7 +71,7 @@ describe('Component PaymentForm:', () => {
   it('should enter componentDidUpdate but not call sandChangeEvent', () => {
     window.history.pushState({}, 'Test PaymentForm', `/${preUrl}/test?app=${configs.LEGACY}`);
     wrapper = mount(provider, { lifecycleExperimental: true });
-    const spy = jest.spyOn(wrapper.find('PaymentForm').instance(), 'componentDidUpdate');
+    spy = jest.spyOn(wrapper.find('PaymentForm').instance(), 'componentDidUpdate');
     wrapper.setProps({
       children: React.cloneElement(wrapper.props().children, { cardNumber: '5', errors: [{ key: 'cardNumber', value: 'error' }] }),
     });
@@ -80,7 +81,7 @@ describe('Component PaymentForm:', () => {
   it('should enter componentDidUpdate and call sendChangeEvent', () => {
     window.history.pushState({}, 'Test PaymentForm', `/${preUrl}/test?app=${configs.LEGACY}`);
     wrapper = mount(provider, { lifecycleExperimental: true });
-    const spy = jest.spyOn(wrapper.find('PaymentForm').instance(), 'componentDidUpdate');
+    spy = jest.spyOn(wrapper.find('PaymentForm').instance(), 'componentDidUpdate');
     wrapper.setProps({
       children: React.cloneElement(wrapper.props().children, { errors: [] }),
     });
@@ -90,7 +91,7 @@ describe('Component PaymentForm:', () => {
   it('should enter componentDidUpdate and call sendChangeEvent, some errors exist', () => {
     window.history.pushState({}, 'Test PaymentForm', `/test?app=${configs.LEGACY}`);
     wrapper = mount(provider, { lifecycleExperimental: true });
-    const spy = jest.spyOn(wrapper.find('PaymentForm').instance(), 'componentDidUpdate');
+    spy = jest.spyOn(wrapper.find('PaymentForm').instance(), 'componentDidUpdate');
     wrapper.setProps({
       children: React.cloneElement(wrapper.props().children, { errors: [{ key: 'cardNumber', value: 'error2' }] }),
     });
@@ -98,8 +99,21 @@ describe('Component PaymentForm:', () => {
   });
 
   it('should give focus to expiration date when focusExpDate called', () => {
-    const spy = jest.spyOn(wrapper.find('.card-exp-date__input').instance(), 'focus');
+    spy = jest.spyOn(wrapper.find('.card-exp-date__input').instance(), 'focus');
     wrapper.find('CardNumberInput').prop('focusExpDate')();
     expect(spy).toBeCalled();
+  });
+
+  it('should mount and send height event when document.fonts available', () => {
+    window.history.pushState({}, 'Test PaymentForm', `/${preUrl}/test?app=${configs.LEGACY}&lang=${configs.ITALY}`);
+    wrapper = mount(provider, { lifecycleExperimental: true });
+    spy = jest.spyOn(wrapper.find('PaymentForm').instance(), 'sendHeightEvent');
+    document.fonts = {
+      ready: new Promise((resolve) => {
+        resolve();
+        expect(spy).toBeCalled();
+      }),
+    };
+    wrapper.find('PaymentForm').instance().componentDidMount();
   });
 });
