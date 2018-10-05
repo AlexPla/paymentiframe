@@ -5,7 +5,6 @@ import { mount } from 'enzyme';
 import * as configs from '@Constants/configs';
 import * as constants from '@Constants/creditCard';
 import PaymentForm from '../PaymentForm';
-import { resolve } from 'path';
 
 const mockStore = configureStore();
 
