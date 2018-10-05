@@ -5,6 +5,7 @@ import { mount } from 'enzyme';
 import * as configs from '@Constants/configs';
 import * as constants from '@Constants/creditCard';
 import PaymentForm from '../PaymentForm';
+import { resolve } from 'path';
 
 const mockStore = configureStore();
 
@@ -13,27 +14,35 @@ describe('Component PaymentForm:', () => {
   let store;
   let mainComponent;
   let provider;
+  const preUrl = 'iframe-pci-es.privalia-test.com';
+  let spy;
 
   beforeEach(() => {
     store = mockStore({});
-    mainComponent = (<PaymentForm />);
+    mainComponent = (<PaymentForm cardHolder="" cardNumber="" cardType={false} cardCVV="" zipCode="" cardExpirationMonth="" cardExpirationYear="" errors={[{ key: 'cardNumber', value: 'error' }]} />);
     provider = (<Provider store={store}>{mainComponent}</Provider>);
   });
 
   it('should mount', () => {
-    window.history.pushState({}, 'Test PaymentForm', `/test?app=${configs.LEGACY}&lang=${configs.ITALY}`);
+    window.history.pushState({}, 'Test PaymentForm', `/${preUrl}/test?app=${configs.LEGACY}&lang=${configs.ITALY}`);
     wrapper = mount(provider, { lifecycleExperimental: true });
     expect(wrapper).toBeDefined();
   });
 
   it('should not find params in url', () => {
-    window.history.pushState({}, 'Test PaymentForm', '/test?');
+    window.history.pushState({}, 'Test PaymentForm', `/${preUrl}/test?`);
     wrapper = mount(provider, { lifecycleExperimental: true });
     expect(wrapper).toBeDefined();
   });
 
+  it('should set prod to false when test url', () => {
+    window.history.pushState({}, 'Test PaymentForm', '/urldepro.com');
+    wrapper = mount(provider, { lifecycleExperimental: true });
+    expect(wrapper.find('PaymentForm').instance().state.prod).toBe(true);
+  });
+
   it('should display ZipCodeInput if lang parameter is mx and card type is Amex', () => {
-    window.history.pushState({}, 'Test PaymentForm', `/test?lang=${configs.MEXICO}`);
+    window.history.pushState({}, 'Test PaymentForm', `/${preUrl}/test?lang=${configs.MEXICO}`);
     wrapper = mount(provider, { lifecycleExperimental: true });
     wrapper.setProps({
       children: React.cloneElement(wrapper.props().children, {
@@ -55,43 +64,57 @@ describe('Component PaymentForm:', () => {
   });
 
   it('should not display ZipCodeInput if lang parameter is not mx', () => {
-    window.history.pushState({}, 'Test PaymentForm', `/test?lang=${configs.SPAIN}`);
+    window.history.pushState({}, 'Test PaymentForm', `/${preUrl}/test?lang=${configs.SPAIN}`);
     wrapper = mount(provider, { lifecycleExperimental: true });
     expect(wrapper.find('.zip-code__input-group').length).toEqual(0);
   });
 
-  it('should call showHelp', () => {
-    window.history.pushState({}, 'Test PaymentForm', `/test?app=${configs.LEGACY}`);
-    wrapper = mount(provider, { lifecycleExperimental: true });
-    const spy = jest.spyOn(wrapper.find('PaymentForm').instance(), 'showHelp');
-    wrapper.find('PaymentForm').instance().showHelp();
-    expect(spy).toBeCalled();
-  });
-
   it('should enter componentDidUpdate but not call sandChangeEvent', () => {
-    window.history.pushState({}, 'Test PaymentForm', `/test?app=${configs.LEGACY}`);
+    window.history.pushState({}, 'Test PaymentForm', `/${preUrl}/test?app=${configs.LEGACY}`);
     wrapper = mount(provider, { lifecycleExperimental: true });
-    const spy = jest.spyOn(wrapper.find('PaymentForm').instance(), 'componentDidUpdate');
+    spy = jest.spyOn(wrapper.find('PaymentForm').instance(), 'componentDidUpdate');
     wrapper.setProps({
-      children: React.cloneElement(wrapper.props().children, { cardNumber: '5' }),
+      children: React.cloneElement(wrapper.props().children, { cardNumber: '5', errors: [{ key: 'cardNumber', value: 'error' }] }),
     });
     expect(spy).toBeCalled();
   });
 
   it('should enter componentDidUpdate and call sendChangeEvent', () => {
-    window.history.pushState({}, 'Test PaymentForm', `/test?app=${configs.LEGACY}`);
+    window.history.pushState({}, 'Test PaymentForm', `/${preUrl}/test?app=${configs.LEGACY}`);
     wrapper = mount(provider, { lifecycleExperimental: true });
-    const spy = jest.spyOn(wrapper.find('PaymentForm').instance(), 'componentDidUpdate');
+    spy = jest.spyOn(wrapper.find('PaymentForm').instance(), 'componentDidUpdate');
     wrapper.setProps({
-      children: React.cloneElement(wrapper.props().children, {
-        errors: {
-          cardHolder: false,
-          cardNumber: false,
-          cardExpiration: false,
-          cardCVV: false,
-        },
-      }),
+      children: React.cloneElement(wrapper.props().children, { errors: [] }),
     });
     expect(spy).toBeCalled();
+  });
+
+  it('should enter componentDidUpdate and call sendChangeEvent, some errors exist', () => {
+    window.history.pushState({}, 'Test PaymentForm', `/test?app=${configs.LEGACY}`);
+    wrapper = mount(provider, { lifecycleExperimental: true });
+    spy = jest.spyOn(wrapper.find('PaymentForm').instance(), 'componentDidUpdate');
+    wrapper.setProps({
+      children: React.cloneElement(wrapper.props().children, { errors: [{ key: 'cardNumber', value: 'error2' }] }),
+    });
+    expect(spy).toBeCalled();
+  });
+
+  it('should give focus to expiration date when focusExpDate called', () => {
+    spy = jest.spyOn(wrapper.find('.card-exp-date__input').instance(), 'focus');
+    wrapper.find('CardNumberInput').prop('focusExpDate')();
+    expect(spy).toBeCalled();
+  });
+
+  it('should mount and send height event when document.fonts available', () => {
+    window.history.pushState({}, 'Test PaymentForm', `/${preUrl}/test?app=${configs.LEGACY}&lang=${configs.ITALY}`);
+    wrapper = mount(provider, { lifecycleExperimental: true });
+    spy = jest.spyOn(wrapper.find('PaymentForm').instance(), 'sendHeightEvent');
+    document.fonts = {
+      ready: new Promise((resolve) => {
+        resolve();
+        expect(spy).toBeCalled();
+      }),
+    };
+    wrapper.find('PaymentForm').instance().componentDidMount();
   });
 });

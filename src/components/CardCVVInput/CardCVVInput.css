@@ -30,6 +30,10 @@
   line-height: normal;
 }
 
+.card-cvv-input__input__masked {
+  -webkit-text-security: disc;
+}
+
 .card-cvv-input__input__storefront {
   padding: 10px 30px;
   border: none;
@@ -88,6 +92,10 @@
   -webkit-transition: all .2s ease;
 }
 
+.card-cvv-input__input:focus~.card-cvv-input__label__storefront {
+  color: #000;
+}
+
 .card-cvv-input__label__legacy {
   color: #000000;
   font-size: 12px;
@@ -121,6 +129,38 @@
     fill: #000;
 }
 
+.card-cvv-input__icon_invalid {
+  fill: #e55253;
+}
+
+.card-cvv-input__input:focus~.card-cvv-input__icon_invalid {
+  fill: #e55253;
+}
+
+
+/*
+* SHOW BUTTON
+*/
+.card-cvv-input__show-button {
+  position: absolute;
+  cursor: pointer;
+}
+
+.card-cvv-input__show-button__storefront {
+  right: 18px;
+  top: 48px;
+}
+
+.card-cvv-input__show-button__legacy {
+  right: 11px;
+  top: 53.5px;
+}
+
+.card-cvv-input__show-button__webmobile {
+  right: 19px;
+  top: 63.5px;
+}
+
 
 /*
 * HELP BUTTON
@@ -130,33 +170,30 @@
   position: absolute;
   cursor: pointer;
   text-align: center;
+  font-size: 14px;
+  width: 21px;
+  height: 21px;
+  border-radius: 50%;
+  background: #cdcdcd;
+  padding-left: 1px;
 }
 
 .card-cvv-input__help-button__storefront {
-  right: 10px;
+  right: -20px;
   top: 47px;
-  font-size: 14px;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: #cdcdcd;
 }
 
 .card-cvv-input__help-button__legacy {
-  right: -11px;
-  top: 57px;
-  font-size: 9px;
-  font-weight: bold;
-  width: 12px;
-  height: 12px;
-  background: #fff;
+  right: -16px;
+  top: 55px;
+  width: 17px;
+  height: 17px;
+  font-size: 12px;
 }
 
 .card-cvv-input__help-button__webmobile {
-  right: -69px;
+  right: -19px;
   top: 63px;
-  font-size: 14px;
-  text-decoration: underline;
 }
 
 

@@ -11,12 +11,59 @@ describe('form reducer', () => {
       cardExpirationMonth: '',
       cardCVV: '',
       zipCode: '',
-      errors: {
-        cardHolder: true,
-        cardNumber: true,
-        cardExpiration: true,
-        cardCVV: true,
-      },
+      errors: [],
+    });
+  });
+
+  it('should handle INIT_ERRORS', () => {
+    expect(
+      formReducer(undefined, {
+        type: constants.INIT_ERRORS,
+        errors: [
+          {
+            key: 'cardHolder',
+            value: 'error',
+          },
+          {
+            key: 'cardNumber',
+            value: 'error',
+          },
+          {
+            key: 'cardExpDate',
+            value: 'error',
+          },
+          {
+            key: 'cardCVV',
+            value: 'error',
+          },
+        ],
+      }),
+    ).toEqual({
+      cardHolder: '',
+      cardNumber: '',
+      cardType: false,
+      cardExpirationYear: '',
+      cardExpirationMonth: '',
+      cardCVV: '',
+      zipCode: '',
+      errors: [
+        {
+          key: 'cardHolder',
+          value: 'error',
+        },
+        {
+          key: 'cardNumber',
+          value: 'error',
+        },
+        {
+          key: 'cardExpDate',
+          value: 'error',
+        },
+        {
+          key: 'cardCVV',
+          value: 'error',
+        },
+      ],
     });
   });
 
@@ -35,17 +82,57 @@ describe('form reducer', () => {
     });
   });
 
-  it('should handle UPDATE_ERRORS', () => {
+  it('should handle UPDATE_ERRORS with no prev error', () => {
     expect(
-      formReducer({}, {
+      formReducer({ errors: [] }, {
         type: constants.UPDATE_ERRORS,
-        key: 'cardHolder',
-        value: false,
+        key: 'cardNumber',
+        value: 'error',
       }),
     ).toEqual({
-      errors: {
-        cardHolder: false,
-      },
+      errors: [
+        {
+          key: 'cardNumber',
+          value: 'error',
+        },
+      ],
     });
+  });
+
+  it('should handle UPDATE_ERRORS with prev error', () => {
+    expect(
+      formReducer({ errors: [{ key: 'cardNumber', value: 'error' }] }, {
+        type: constants.UPDATE_ERRORS,
+        key: 'cardNumber',
+        value: 'error2',
+      }),
+    ).toEqual({
+      errors: [
+        {
+          key: 'cardNumber',
+          value: 'error2',
+        },
+      ],
+    });
+  });
+
+  it('should handle UPDATE_ERRORS from error to correct', () => {
+    expect(
+      formReducer({ errors: [{ key: 'cardNumber', value: 'error' }] }, {
+        type: constants.UPDATE_ERRORS,
+        key: 'cardNumber',
+        value: '',
+      }),
+    ).toEqual({ errors: [] });
+  });
+
+  it('should handle UPDATE_ERRORS from correct to correct', () => {
+    expect(
+      formReducer({ errors: [{ key: 'cardNumber', value: 'error' }] }, {
+        type: constants.UPDATE_ERRORS,
+        key: 'cardHolder',
+        value: '',
+      }),
+    ).toEqual({ errors: [{ key: 'cardNumber', value: 'error' }] });
   });
 });

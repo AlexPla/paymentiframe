@@ -1,5 +1,12 @@
 import * as constants from '@Constants/actionTypes';
 
+export function initErrors(errors) {
+  return {
+    type: constants.INIT_ERRORS,
+    errors,
+  };
+}
+
 export function updateFields(newState) {
   return {
     type: constants.UPDATE_FIELDS,

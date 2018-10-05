@@ -1,37 +1,30 @@
-import { LEGACY, STOREFRONT } from '@Constants/configs';
 import EventEmitterHelper from '../EventEmitterHelper';
 
 describe('Helper EventEmitterHelper: ', () => {
-  it('should send cvv event to Storefront', () => {
-    const spy = jest.spyOn(window.parent, 'postMessage');
-    EventEmitterHelper.sendCvvEvent(STOREFRONT);
+  let spy;
+
+  it('should send cvv event', () => {
+    spy = jest.spyOn(window.parent, 'postMessage');
+    EventEmitterHelper.sendCvvEvent();
     expect(spy).toHaveBeenCalled();
   });
 
-  it('should send cvv event to Legacy', () => {
-    window.parent.PRV = { Event: { emit: jest.fn() } };
-    const spy = jest.spyOn(window.parent.PRV.Event, 'emit');
-    EventEmitterHelper.sendCvvEvent(LEGACY);
-    expect(spy).toHaveBeenCalled();
-  });
-
-  it('should send change event to Storefront', () => {
-    const spy = jest.spyOn(window.parent, 'postMessage');
-    EventEmitterHelper.sendChangeEvent(STOREFRONT, true, { cardNumber: '0123456789' });
-    expect(spy).toHaveBeenCalled();
-  });
-
-  it('should send change event to Legacy', () => {
-    window.parent.PRV = { Event: { emit: jest.fn() } };
-    const spy = jest.spyOn(window.parent.PRV.Event, 'emit');
-    return EventEmitterHelper.sendChangeEvent(LEGACY, true, { cardNumber: '0123456789' })
-      .then(() => {
-        expect(spy).toHaveBeenCalled();
-      });
+  it('should send change event', () => {
+    spy = jest.spyOn(window.parent, 'postMessage');
+    EventEmitterHelper.sendChangeEvent(true, {
+      cardHolder: 'Holder',
+      cardNumber: '0123456789',
+      cardCVV: '123',
+      cardExpirationMonth: '01',
+      cardExpirationYear: '20',
+      errors: [],
+    }).then(() => {
+      expect(spy).toHaveBeenCalled();
+    });
   });
 
   it('should send height event', () => {
-    const spy = jest.spyOn(window.parent, 'postMessage');
+    spy = jest.spyOn(window.parent, 'postMessage');
     EventEmitterHelper.sendHeightEvent(0);
     expect(spy).toHaveBeenCalled();
   });
