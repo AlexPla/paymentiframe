@@ -15,7 +15,7 @@ class CardHolderInput extends Component {
   }
 
   onInput = (e) => {
-    const cardHolder = e.target.value.trim().toUpperCase();
+    const cardHolder = e.target.value.toUpperCase();
     if (cardHolder.length <= 100) {
       const errorMessage = this.validateInput(cardHolder);
       this.updateAppState(cardHolder, errorMessage);
@@ -80,7 +80,7 @@ class CardHolderInput extends Component {
     const { errorMessage, errorDisabled } = this.state;
     const isEmpty = (value).toString().length === 0;
     return (
-      <div className="card-holder-input__input-group">
+      <div className={`card-holder-input__input-group card-holder-input__input-group__${parentApp}`}>
         { parentApp !== configs.STOREFRONT
           && <label htmlFor="cardHolderInput" className="card-holder-input__label__legacy">{ copies.holder[lang] }</label>
         }

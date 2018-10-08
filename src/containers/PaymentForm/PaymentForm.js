@@ -40,11 +40,16 @@ class PaymentForm extends Component {
     };
   }
 
-  // Need to send event with height of a form
   componentDidMount() {
     const { lang } = this.state;
     const { initErrors } = this.props;
-    EventEmitterHelper.sendHeightEvent(document.body.scrollHeight);
+    if (document.fonts) {
+      // if tool is available, use it
+      document.fonts.ready.then(this.sendHeightEvent);
+    } else {
+      // if not, set a timeout
+      setTimeout(this.sendHeightEvent, 0);
+    }
     // Set initial array of errors (all fields required in correct language)
     // It'll change app state so will enter componentDidUpdate and send first change event
     initErrors([
@@ -80,7 +85,13 @@ class PaymentForm extends Component {
     }
   }
 
-  focusExpDate = () => this.expDateInput.current.expDateInput.current.focus();
+  focusExpDate = () => {
+    this.expDateInput.current.expDateInput.current.focus();
+  }
+
+  sendHeightEvent = () => {
+    EventEmitterHelper.sendHeightEvent(document.body.scrollHeight);
+  }
 
   render() {
     const {

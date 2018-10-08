@@ -125,4 +125,14 @@ describe('form reducer', () => {
       }),
     ).toEqual({ errors: [] });
   });
+
+  it('should handle UPDATE_ERRORS from correct to correct', () => {
+    expect(
+      formReducer({ errors: [{ key: 'cardNumber', value: 'error' }] }, {
+        type: constants.UPDATE_ERRORS,
+        key: 'cardHolder',
+        value: '',
+      }),
+    ).toEqual({ errors: [{ key: 'cardNumber', value: 'error' }] });
+  });
 });
