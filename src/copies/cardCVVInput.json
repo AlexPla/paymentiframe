@@ -16,7 +16,7 @@
     },
     "pattern": {
       "en": "EN_pattern",
-      "es": "El CVV que has introducido no es correcto. Por favor, revísalo.",
+      "es": "Comprueba el CVV.",
       "it": "Il CVV inserito non è corretto. Per favore, verifica i dati.",
       "br": "O CVV inserido está errado. Por favor, revise e tente outra vez.",
       "mx": "El CVV que has introducido no es correcto. Por favor, revísalo."

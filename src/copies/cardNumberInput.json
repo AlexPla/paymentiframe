@@ -16,7 +16,7 @@
     },
     "pattern": {
       "en": "EN_pattern",
-      "es": "El número de la tarjeta no es correcto. Por favor, compruébalo.",
+      "es": "Número incorrecto. Por favor, revísalo.",
       "it": "Il numero della carta non è corretto. Per favore, verifica i dati inseriti.",
       "br": "O número do cartão está errado. Por favor, revise e tente outra vez.",
       "mx": "El número de la tarjeta no es correcto. Por favor, compruébalo."
