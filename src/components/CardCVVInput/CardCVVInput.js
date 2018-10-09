@@ -100,7 +100,6 @@ class CardCVVInput extends Component {
     const {
       value,
       cardType,
-      lang,
       parentApp,
       showHelp,
     } = this.props;
@@ -112,7 +111,7 @@ class CardCVVInput extends Component {
     return (
       <div className={`card-cvv-input__input-group card-cvv-input__input-group__${parentApp}`}>
         { parentApp !== configs.STOREFRONT
-          && <label htmlFor="cardNumberInput" className="card-cvv-input__label__legacy">{ copies.placeholder[lang] }</label>
+          && <label htmlFor="cardNumberInput" className="card-cvv-input__label__legacy">{ code }</label>
         }
         <input
           className={
@@ -130,7 +129,7 @@ class CardCVVInput extends Component {
           onBlur={this.onBlur}
         />
         { parentApp === configs.STOREFRONT
-          && <label htmlFor="cardCVVInput" className="card-cvv-input__label__storefront">{ code }</label>
+          && <label htmlFor="cardCVVInput" className={`card-cvv-input__label__storefront ${!errorDisabled && errorMessage && 'card-cvv-input__label__storefront__invalid'}`}>{ code }</label>
         }
         { !isEmpty && this.renderEye(parentApp, masked) }
         { parentApp === configs.STOREFRONT && this.renderIcon(errorDisabled, errorMessage) }

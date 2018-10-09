@@ -23,11 +23,14 @@ class CardNumberInput extends Component {
 
     if (value.length > maxLength) {
       value = oldValue;
-    } else if (value.length === maxLength) {
-      focusExpDate();
     }
 
     const errorMessage = CreditCardType.validateInput(lang, value);
+
+    if (!errorMessage && value.length === maxLength) {
+      focusExpDate();
+    }
+
     this.updateAppState(value, cardType, errorMessage);
     this.setState({ errorMessage });
   }
@@ -116,7 +119,7 @@ class CardNumberInput extends Component {
           noValidate
         />
         { parentApp === configs.STOREFRONT
-          && <label htmlFor="cardNumberInput" className="card-number__label__storefront">{ copies.placeholder[lang] }</label>
+          && <label htmlFor="cardNumberInput" className={`card-number__label__storefront ${!errorDisabled && errorMessage && 'card-number__label__storefront__invalid'}`}>{ copies.placeholder[lang] }</label>
         }
         { parentApp === configs.STOREFRONT && (!cardType || !cardType.type)
           && this.renderIcon(errorDisabled, errorMessage) }

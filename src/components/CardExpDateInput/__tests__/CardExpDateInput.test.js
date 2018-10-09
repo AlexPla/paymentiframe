@@ -58,11 +58,11 @@ describe('Component CardExpDateInput:', () => {
     // Previous year
     wrapper.find('.card-exp-date__input').prop('onInput')({ target: { value: '01 00' } });
     wrapper.update();
-    expect(wrapper.state('errorMessage')).toEqual(copies.errors.posterior[lang]);
+    expect(wrapper.state('errorMessage')).not.toBe('');
     // Same year
     wrapper.find('.card-exp-date__input').prop('onInput')({ target: { value: '01 18' } });
     wrapper.update();
-    expect(wrapper.state('errorMessage')).toEqual(copies.errors.posterior[lang]);
+    expect(wrapper.state('errorMessage')).not.toBe('');
   });
 
   /*

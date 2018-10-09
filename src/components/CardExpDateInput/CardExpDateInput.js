@@ -72,7 +72,10 @@ class CardExpDateInput extends Component {
         const currMonth = currDate.substr(0, 2);
         const currYear = currDate.substr(3, 2);
         if (value.year < currYear || (value.year === currYear && value.month < currMonth)) {
-          error = copies.errors.posterior[lang];
+          /* istanbul ignore next */
+          error = (document.body.scrollWidth < configs.BREAKPOINT)
+            ? copies.errors.posterior_short[lang]
+            : copies.errors.posterior[lang];
         }
       }
     }
@@ -118,10 +121,14 @@ class CardExpDateInput extends Component {
     const { errorMessage, errorDisabled } = this.state;
     const isEmpty = (value.month).toString().length === 0;
     const visualValue = ExpDateHelper.getVisualValue(value);
+    /* istanbul ignore next */
+    const labelText = (document.body.scrollWidth < configs.BREAKPOINT)
+      ? copies.placeholder_short[lang]
+      : copies.placeholder[lang];
     return (
       <div className={`card-exp-date__input-group card-exp-date__input-group__${parentApp}`}>
         { parentApp !== configs.STOREFRONT
-          && <label htmlFor="cardExpDateInput" className="card-exp-date__label__legacy">{ copies.placeholder[lang] }</label>
+          && <label htmlFor="cardExpDateInput" className="card-exp-date__label__legacy">{ labelText }</label>
         }
         <input
           className={`card-exp-date__input card-exp-date__input__${parentApp} ${!isEmpty && 'card-exp-date__input__not-empty'} ${!errorDisabled && errorMessage && 'card-exp-date__input_invalid'}`}
@@ -139,7 +146,7 @@ class CardExpDateInput extends Component {
           ref={this.expDateInput}
         />
         { parentApp === configs.STOREFRONT
-          && <label htmlFor="cardExpDateInput" className="card-exp-date__label__storefront">{ copies.placeholder[lang] }</label>
+          && <label htmlFor="cardExpDateInput" className={`card-exp-date__label__storefront ${!errorDisabled && errorMessage && 'card-exp-date__label__storefront__invalid'}`}>{ labelText }</label>
         }
         { parentApp === configs.STOREFRONT && this.renderIcon(errorDisabled, errorMessage) }
         { !isEmpty && this.renderClearButton(parentApp) }

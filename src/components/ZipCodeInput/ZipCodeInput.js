@@ -93,7 +93,7 @@ class ZipCodeInput extends Component {
           noValidate
         />
         { parentApp === configs.STOREFRONT
-          && <label htmlFor="ZipCodeInput" className="zip-code__label__storefront">{ copies.placeholder }</label>
+          && <label htmlFor="ZipCodeInput" className={`zip-code__label__storefront ${!errorDisabled && errorMessage && 'zip-code__label__storefront__invalid'}`}>{ copies.placeholder }</label>
         }
         { parentApp === configs.STOREFRONT && this.renderIcon(errorDisabled, errorMessage) }
         { !isEmpty && this.renderClearButton(parentApp) }

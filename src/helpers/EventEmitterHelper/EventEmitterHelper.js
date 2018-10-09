@@ -14,6 +14,10 @@ const EventEmitterHelper = {
       cardExpirationYear,
       errors,
     } = props;
+    const cardExpiration = {
+      month: cardExpirationMonth,
+      year: `20${cardExpirationYear}`,
+    };
     // eslint-disable-next-line max-len
     return AdyenEncryptionHelper.encrypt(prod, cardNumber, cardCVV, cardHolder, cardExpirationMonth, `20${cardExpirationYear}`)
       .then(([cardEncryptedJson]) => {
@@ -22,6 +26,7 @@ const EventEmitterHelper = {
           cardLastFour: cardNumber.slice(-4),
           cardEncryptedJson,
           cardHolder,
+          cardExpiration,
           errors,
         };
         window.parent.postMessage({ id: 'piframe_change', data }, '*'); // todo change. DANGER to use. https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage#Security_concerns

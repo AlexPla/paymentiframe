@@ -96,6 +96,10 @@
   color: #000;
 }
 
+.card-cvv-input__label__storefront__invalid {
+  color: #e55253;
+}
+
 .card-cvv-input__label__legacy {
   color: #000000;
   font-size: 12px;
