@@ -1,60 +1,25 @@
 {
-  "CVV": {
-    "en": "CVV",
-    "es": "CVV",
-    "it": "IT_CVV",
-    "mx": "MX_CVV",
-    "br": "BR_CVV"
-  },
-  "CVC": {
-    "en": "CVC",
-    "es": "CVC",
-    "it": "IT_CVC",
-    "mx": "MX_CVC",
-    "br": "BR_CVC"
-  },
-  "CID": {
-    "en": "CID",
-    "es": "CID",
-    "it": "IT_CID",
-    "mx": "MX_CID",
-    "br": "BR_CID"
-  },
-  "CVN": {
-    "en": "CVN",
-    "es": "CVN",
-    "it": "IT_CVN",
-    "mx": "MX_CVN",
-    "br": "BR_CVN"
-  },
-  "CVE": {
-    "en": "CVE",
-    "es": "CVE",
-    "it": "IT_CVE",
-    "mx": "MX_CVE",
-    "br": "BR_CVE"
-  },
   "placeholder": {
     "en": "EN_placeholder",
-    "es": "ES_placeholder",
-    "it": "IT_placeholder",
-    "mx": "MX_placeholder",
-    "br": "BR_placeholder"
+    "es": "Código de seguridad (CVV)",
+    "it": "Codice di sicurezza (CVV)",
+    "br": "Código de segurança (CVV)",
+    "mx": "Código de seguridad (CVV)"
   },
   "errors": {
     "required": {
       "en": "EN_required",
-      "es": "ES_required",
-      "it": "IT_required",
-      "mx": "MX_required",
-      "br": "BR_required"
+      "es": "Has olvidado escribir el ",
+      "it": "Hai dimenticato di scrivere il ",
+      "br": "Ei, você esqueceu de inserir o ",
+      "mx": "Has olvidado escribir el "
     },
     "pattern": {
       "en": "EN_pattern",
-      "es": "ES_pattern",
-      "it": "IT_pattern",
-      "mx": "MX_pattern",
-      "br": "BR_pattern"
+      "es": "Comprueba el ",
+      "it": "Controlla il ",
+      "br": "Revise o ",
+      "mx": "Comprueba el "
     }
   }
 }

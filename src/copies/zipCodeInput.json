@@ -1,7 +1,7 @@
 {
-  "placeholder": "MX_placeholder",
+  "placeholder": "Código postal",
   "errors": {
-    "required": "MX_required",
-    "minLength": "MX_minLength"
+    "required": "Introduce el código postal.",
+    "minLength": "El código postal es incorrecto. Por favor, revísalo."
   }
 }

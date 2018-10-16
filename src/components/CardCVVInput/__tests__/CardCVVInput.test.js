@@ -1,6 +1,7 @@
 import React from 'react';
 import { configure, mount } from 'enzyme';
 import copies from '@Copies/cardCVVInput';
+import * as constants from '@Constants/creditCard';
 import Adapter from 'enzyme-adapter-react-16';
 
 import CardCVVInput from '../CardCVVInput';
@@ -70,7 +71,7 @@ describe('Component CardCVVInput:', () => {
       },
     });
     component.update();
-    expect(component.state('errorMessage')).toBe(copies.errors.required[lang]);
+    expect(component.state('errorMessage')).toBe(`${copies.errors.required[lang]}CVV.`);
   });
 
 
@@ -161,11 +162,61 @@ describe('Component CardCVVInput:', () => {
   it('should show error message on lose of focus', () => {
     // To enable the button we must enter some input
     component.setProps({ value: '12' });
-    component.setState({ errorMessage: copies.errors.pattern[lang] });
+    component.setState({ errorMessage: `${copies.errors.pattern[lang]}CVV.` });
     component.find('.card-cvv-input__input').prop('onBlur')();
     component.update();
     expect(component.state('errorDisabled')).toEqual(false);
     expect(component.find('.card-cvv-input__input').props().value).toEqual('12');
     expect(component.find('.card-cvv-input__error').length).toEqual(1);
+  });
+
+  /*
+  * ERRORMESSAGE CARD TYPE CHANGE
+  */
+  it('should update errorMessage of different cardType received', () => {
+    const prevProps = component.props();
+    component.setState({ errorMessage: `${copies.errors.required[lang]}CVV.` });
+    component.setProps({
+      cardType: {
+        niceType: 'American Express',
+        type: constants.AMERICAN_EXPRESS,
+        pattern: /^3[47]\d*$/,
+        isAmex: true,
+        gaps: [4, 10],
+        lengths: [15],
+        code: {
+          name: constants.CID,
+          size: 4,
+        },
+      },
+    });
+    component.instance().componentDidUpdate(prevProps);
+    component.update();
+    expect(component.state('errorMessage')).toEqual(`${copies.errors.required[lang]}${constants.CID}.`);
+    expect(component.find('.card-cvv-input__label__storefront').text()).toEqual(constants.CID);
+  });
+
+  it('should update errorMessage on different cardType received (empty)', () => {
+    const prevProps = component.props();
+    component.setProps({
+      cardType: {
+        niceType: 'American Express',
+        type: constants.AMERICAN_EXPRESS,
+        pattern: /^3[47]\d*$/,
+        isAmex: true,
+        gaps: [4, 10],
+        lengths: [15],
+        code: {
+          name: constants.CID,
+          size: 4,
+        },
+      },
+    });
+    component.setState({ errorMessage: `${copies.errors.required[lang]}CID.` });
+    component.setProps({ cardType: false });
+    component.instance().componentDidUpdate(prevProps);
+    component.update();
+    expect(component.state('errorMessage')).toEqual(`${copies.errors.required[lang]}${constants.CVV_TYPE_DEFAULT}.`);
+    expect(component.find('.card-cvv-input__label__storefront').text()).toEqual(constants.CVV_TYPE_DEFAULT);
   });
 });

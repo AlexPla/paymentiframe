@@ -1,46 +1,60 @@
 {
   "placeholder": {
     "en": "EN_placeholder",
-    "es": "ES_placeholder",
-    "it": "IT_placeholder",
-    "mx": "MX_placeholder",
-    "br": "BR_placeholder"
+    "es": "Fecha de caducidad",
+    "it": "Data di scadenza",
+    "br": "Data de validade",
+    "mx": "Fecha de caducidad"
+  },
+  "placeholder_short": {
+    "en": "EN_placeholder_short",
+    "es": "Caducidad",
+    "it": "Scadenza",
+    "br": "Validade",
+    "mx": "Caducidad"
   },
   "help": {
-    "en": "EN_help",
-    "es": "ES_help",
-    "it": "IT_help",
-    "mx": "MX_help",
-    "br": "BR_help"
+    "en": "mm / yy",
+    "es": "mm / aa",
+    "it": "mm / aa",
+    "br": "mm / aa",
+    "mx": "mm / aa"
   },
   "errors": {
     "required": {
       "en": "EN_required",
-      "es": "ES_required",
-      "it": "IT_required",
-      "mx": "MX_required",
-      "br": "BR_required"
+      "es": "Introduce la fecha indicada en la tarjeta.",
+      "it": "Inserisci la data indicata sulla carta.",
+      "br": "Insira a data de validade do seu cartão.",
+      "mx": "Introduce la fecha indicada en la tarjeta."
     },
     "incomplete": {
       "en": "EN_incomplete",
-      "es": "ES_incomplete",
-      "it": "IT_incomplete",
-      "mx": "MX_incomplete",
-      "br": "BR_incomplete"
+      "es": "Revisa el mes y/o año.",
+      "it": "Correggi il mese e/o l’anno.",
+      "br": "Corrija o mês ou o ano.",
+      "mx": "Verificar el mes y/o año."
     },
     "pattern": {
       "en": "EN_pattern",
-      "es": "ES_pattern",
-      "it": "IT_pattern",
-      "mx": "MX_pattern",
-      "br": "BR_pattern"
+      "es": "Introduce la fecha correcta.",
+      "it": "Inserisci la data corretta.",
+      "br": "Insira a data correta.",
+      "mx": "Introduce la fecha correcta."
     },
     "posterior": {
       "en": "EN_posterior",
-      "es": "ES_posterior",
-      "it": "IT_posterior",
-      "mx": "MX_posterior",
-      "br": "BR_posterior"
+      "es": "Tarjeta caducada. Introduce otra vigente.",
+      "it": "Numero incorretto. Per favore, correggilo.",
+      "br": "Cartão expirado.  Insira um cartão válido.",
+      "mx": "Tarjeta caducada. Introduce otra vigente."
+    },
+    "posterior_short": {
+      "en": "EN_posterior",
+      "es": "Tarjeta caducada.",
+      "it": "Carta scaduta.",
+      "br": "Cartão vencido.",
+      "mx": "Tarjeta caducada."
     }
   }
 }

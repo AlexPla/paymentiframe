@@ -103,6 +103,10 @@
   color: #000;
 }
 
+.card-number__label__storefront__invalid {
+  color: #e55253;
+}
+
 .card-number__label__legacy {
   color: #000000;
   font-size: 12px;

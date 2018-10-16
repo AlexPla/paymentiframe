@@ -48,14 +48,14 @@ class PaymentForm extends Component {
       document.fonts.ready.then(this.sendHeightEvent);
     } else {
       // if not, set a timeout
-      setTimeout(this.sendHeightEvent, 0);
+      setTimeout(this.sendHeightEvent, 100);
     }
     // Set initial array of errors (all fields required in correct language)
     // It'll change app state so will enter componentDidUpdate and send first change event
     initErrors([
       {
         key: 'cardCVV',
-        value: cardCVVCopies.errors.required[lang],
+        value: `${cardCVVCopies.errors.required[lang]}${cardConstants.CVV_TYPE_DEFAULT}.`,
       },
       {
         key: 'cardExpiration',

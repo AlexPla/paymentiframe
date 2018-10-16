@@ -95,7 +95,7 @@ class CardHolderInput extends Component {
           onBlur={this.onBlur}
         />
         { parentApp === configs.STOREFRONT
-          && <label htmlFor="cardHolderInput" className="card-holder-input__label__storefront">{ copies.holder[lang] }</label>
+          && <label htmlFor="cardHolderInput" className={`card-holder-input__label__storefront ${!errorDisabled && errorMessage && 'card-holder-input__label__storefront__invalid'}`}>{ copies.holder[lang] }</label>
         }
         { parentApp === configs.STOREFRONT && this.renderIcon(errorDisabled, errorMessage) }
         { !isEmpty && this.renderClearButton(parentApp) }
