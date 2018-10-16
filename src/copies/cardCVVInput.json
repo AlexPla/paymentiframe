@@ -9,17 +9,17 @@
   "errors": {
     "required": {
       "en": "EN_required",
-      "es": "Has olvidado escribir el CVV.",
-      "it": "Hai dimenticato di scrivere il CVV.",
-      "br": "Ei, você esqueceu de inserir o CVV.",
-      "mx": "Has olvidado escribir el CVV."
+      "es": "Has olvidado escribir el ",
+      "it": "Hai dimenticato di scrivere il ",
+      "br": "Ei, você esqueceu de inserir o ",
+      "mx": "Has olvidado escribir el "
     },
     "pattern": {
       "en": "EN_pattern",
-      "es": "Comprueba el CVV.",
-      "it": "Il CVV inserito non è corretto. Per favore, verifica i dati.",
-      "br": "O CVV inserido está errado. Por favor, revise e tente outra vez.",
-      "mx": "El CVV que has introducido no es correcto. Por favor, revísalo."
+      "es": "Comprueba el ",
+      "it": "Controlla il ",
+      "br": "Revise o ",
+      "mx": "Comprueba el "
     }
   }
 }

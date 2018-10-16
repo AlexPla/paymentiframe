@@ -14,12 +14,31 @@ class CardCVVInput extends Component {
   constructor(props, context) {
     super(props, context);
 
+    const { lang } = this.props;
+
     this.state = {
-      errorMessage: '',
+      errorMessage: `${copies.errors.required[lang]}${CVV_TYPE_DEFAULT}.`,
       errorDisabled: true,
       masked: true,
     };
     this.lastCardType = CVV_TYPE_DEFAULT;
+  }
+
+  componentDidUpdate(prevProps) {
+    const { cardType: prevCardType } = prevProps;
+    const { cardType: nextCardType } = this.props;
+    let { errorMessage } = this.state;
+    if (prevCardType !== nextCardType && errorMessage) {
+      const { updateErrors } = this.props;
+      errorMessage = `${errorMessage.slice(0, errorMessage.length - 4)}${nextCardType ? nextCardType.code.name : CVV_TYPE_DEFAULT}.`;
+      updateErrors({
+        key: 'cardCVV',
+        value: errorMessage,
+      });
+      /* eslint-disable react/no-did-update-set-state */
+      this.setState({ errorMessage });
+      /* eslint-enable react/no-did-update-set-state */
+    }
   }
 
   onInput = (e) => {
@@ -45,13 +64,14 @@ class CardCVVInput extends Component {
 
   getErrorMessage = (cvv) => {
     const pattern = new RegExp(`^[0-9]{${this.getLengthLimit()}}$`);
-    const { lang } = this.props;
+    const { lang, cardType } = this.props;
+    const code = cardType ? cardType.code.name : CVV_TYPE_DEFAULT;
     let error = '';
 
     if (cvv.length === 0) {
-      error = copies.errors.required[lang];
+      error = `${copies.errors.required[lang]}${code}.`;
     } else if (!pattern.test(cvv)) {
-      error = copies.errors.pattern[lang];
+      error = `${copies.errors.pattern[lang]}${code}.`;
     }
     return error;
   }

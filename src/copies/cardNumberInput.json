@@ -1,10 +1,10 @@
 {
   "placeholder": {
     "en": "EN_placeholder",
-    "es": "Tarjeta",
-    "it": "Carta",
-    "br": "Cartão",
-    "mx": "Tarjeta"
+    "es": "Número de tarjeta",
+    "it": "Numero della carta",
+    "br": "Número do cartão",
+    "mx": "Número de tarjeta"
   },
   "errors": {
     "required": {
@@ -17,9 +17,9 @@
     "pattern": {
       "en": "EN_pattern",
       "es": "Número incorrecto. Por favor, revísalo.",
-      "it": "Il numero della carta non è corretto. Per favore, verifica i dati inseriti.",
-      "br": "O número do cartão está errado. Por favor, revise e tente outra vez.",
-      "mx": "El número de la tarjeta no es correcto. Por favor, compruébalo."
+      "it": "Numero incorretto. Per favore, correggilo.",
+      "br": "Número incorreto. Insira o número corretamente.",
+      "mx": "Número incorrecto. Por favor, revísalo."
     }
   }
 }
