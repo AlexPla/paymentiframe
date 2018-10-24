@@ -16,10 +16,10 @@
     },
     "pattern": {
       "en": "EN_pattern",
-      "es": "Número incorrecto. Por favor, revísalo.",
-      "it": "Numero incorretto. Per favore, correggilo.",
-      "br": "Número incorreto. Insira o número corretamente.",
-      "mx": "Número incorrecto. Por favor, revísalo."
+      "es": "Número incorrecto.",
+      "it": "Numero incorretto.",
+      "br": "Número incorreto.",
+      "mx": "Número incorrecto."
     }
   }
 }

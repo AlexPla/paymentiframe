@@ -16,6 +16,8 @@ class CardCVVInput extends Component {
 
     const { lang } = this.props;
 
+    this.cardCVVInput = React.createRef();
+
     this.state = {
       errorMessage: `${copies.errors.required[lang]}${CVV_TYPE_DEFAULT}.`,
       errorDisabled: true,
@@ -44,6 +46,9 @@ class CardCVVInput extends Component {
   onInput = (e) => {
     const pattern = new RegExp(`^[0-9]{0,${this.getLengthLimit()}}$`);
     const cvv = e.target.value.trim();
+    if (e.target.value.length === this.getLengthLimit()) {
+      this.cardCVVInput.current.blur();
+    }
     if (pattern.test(cvv)) {
       const errorMessage = this.getErrorMessage(cvv);
       this.updateAppState(cvv, errorMessage);
@@ -147,6 +152,7 @@ class CardCVVInput extends Component {
           onInput={this.onInput}
           onFocus={this.onFocus}
           onBlur={this.onBlur}
+          ref={this.cardCVVInput}
         />
         { parentApp === configs.STOREFRONT
           && <label htmlFor="cardCVVInput" className={`card-cvv-input__label__storefront ${!errorDisabled && errorMessage && 'card-cvv-input__label__storefront__invalid'}`}>{ code }</label>

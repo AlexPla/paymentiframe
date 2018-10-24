@@ -10,6 +10,8 @@ class ZipCodeInput extends Component {
   constructor(props, context) {
     super(props, context);
 
+    this.zipCodeInput = React.createRef();
+
     this.state = {
       errorMessage: '',
       errorDisabled: true,
@@ -90,6 +92,7 @@ class ZipCodeInput extends Component {
           onInput={this.onInput}
           onFocus={this.onFocus}
           onBlur={this.onBlur}
+          ref={this.zipCodeInput}
           noValidate
         />
         { parentApp === configs.STOREFRONT

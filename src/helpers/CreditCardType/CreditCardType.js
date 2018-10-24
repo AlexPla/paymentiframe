@@ -30,7 +30,7 @@ types[constants.VISA] = {
 types[constants.MASTERCARD] = {
   niceType: 'MasterCard',
   type: constants.MASTERCARD,
-  pattern: /^5(?!(0670[7-8])|(06715)|(0671[7-9])|(0672[0-1])|(0672[4-9])|(0673[0-3])|(06739)|(0674[0-8])|(0675[0-3])|(0677[4-8])|(0900[0-9])|(0901[3-9])|(0902[0-9])|(0903[1-5])|(0903[8-9])|(0904[0-9])|(0905[0-9])|(0906[0-4])|(0906[6-9])|(0907[0-2])|(0907[4-5])|(04175)|(0907[6-9])|(0908[0-9])|(30032)|(22499)|(09[0-7][0-9]{2})|(09[8]0[0-9])|509810)\d*$/,
+  pattern: /^5(?!(06699)|(0670[7-8])|(06715)|(0671[7-9])|(0672[0-1])|(0672[4-9])|(0673[0-3])|(06739)|(0674[0-8])|(0675[0-3])|(0677[4-8])|(0900[0-9])|(0901[3-9])|(0902[0-9])|(0903[1-5])|(0903[8-9])|(0904[0-9])|(0905[0-9])|(0906[0-4])|(0906[6-9])|(0907[0-2])|(0907[4-5])|(04175)|(0907[6-9])|(0908[0-9])|(30032)|(22499)|(09[0-7][0-9]{2})|(09[8]0[0-9])|509810)\d*$/,
   gaps: [4, 8, 12],
   lengths: [16],
   code: {
@@ -52,18 +52,6 @@ types[constants.AMERICAN_EXPRESS] = {
   },
 };
 
-types[constants.DINERS_CLUB] = {
-  niceType: 'Diners Club',
-  type: constants.DINERS_CLUB,
-  pattern: /^3(0[0-5]|[68][0-9])\d*$/,
-  gaps: [4, 10],
-  lengths: [14],
-  code: {
-    name: constants.CVV,
-    size: 3,
-  },
-};
-
 types[constants.ELO] = {
   niceType: 'Elo',
   type: constants.ELO,
@@ -78,6 +66,18 @@ types[constants.ELO] = {
 
 
 // NOT SUPPORTED TYPES
+notSupportedTypes[constants.DINERS_CLUB] = {
+  niceType: 'Diners Club',
+  type: constants.DINERS_CLUB,
+  pattern: /^3(0[0-5]|[68][0-9])\d*$/,
+  gaps: [4, 10],
+  lengths: [14],
+  code: {
+    name: constants.CVV,
+    size: 3,
+  },
+};
+
 notSupportedTypes[constants.DISCOVER] = {
   niceType: 'Discover',
   type: constants.DISCOVER,

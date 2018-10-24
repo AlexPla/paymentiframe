@@ -26,13 +26,14 @@ class CardNumberInput extends Component {
     }
 
     const errorMessage = CreditCardType.validateInput(lang, value);
+    const errorDisabled = !(value.length >= maxLength);
 
     if (!errorMessage && value.length === maxLength) {
       focusExpDate();
     }
 
     this.updateAppState(value, cardType, errorMessage);
-    this.setState({ errorMessage });
+    this.setState({ errorMessage, errorDisabled });
   }
 
   onClearClick = () => {

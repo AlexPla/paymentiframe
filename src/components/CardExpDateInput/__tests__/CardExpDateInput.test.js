@@ -9,7 +9,7 @@ describe('Component CardExpDateInput:', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = mount(<CardExpDateInput lang="es" parentApp="storefront" updateFields={jest.fn()} updateErrors={jest.fn()} value={initDate} />);
+    wrapper = mount(<CardExpDateInput lang="es" parentApp="storefront" updateFields={jest.fn()} updateErrors={jest.fn()} focusExpDatesNext={jest.fn()} value={initDate} />);
   });
 
   it('should mount', () => {

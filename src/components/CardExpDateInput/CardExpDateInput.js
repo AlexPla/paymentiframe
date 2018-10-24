@@ -20,7 +20,7 @@ class CardExpDateInput extends Component {
 
   onInput = (e) => {
     let value = ExpDateHelper.extractValueFromVisualValue(e.target.value);
-    const { value: oldValue } = this.props;
+    const { value: oldValue, focusExpDatesNext } = this.props;
 
     if (e.target.value.length > 7) {
       value = oldValue;
@@ -30,6 +30,13 @@ class CardExpDateInput extends Component {
     }
 
     const errorMessage = this.validateInput(value);
+
+    if (!errorMessage
+      && (e.target.value.length === 7
+        || (value.month.length === 2 && value.year.length === 2))) {
+      focusExpDatesNext();
+    }
+
     this.updateAppState(value.month, value.year, errorMessage);
     this.setState({ errorMessage });
   }
@@ -72,10 +79,7 @@ class CardExpDateInput extends Component {
         const currMonth = currDate.substr(0, 2);
         const currYear = currDate.substr(3, 2);
         if (value.year < currYear || (value.year === currYear && value.month < currMonth)) {
-          /* istanbul ignore next */
-          error = (document.body.scrollWidth < configs.BREAKPOINT)
-            ? copies.errors.posterior_short[lang]
-            : copies.errors.posterior[lang];
+          error = copies.errors.posterior[lang];
         }
       }
     }
@@ -163,6 +167,7 @@ class CardExpDateInput extends Component {
 CardExpDateInput.propTypes = {
   updateFields: PropTypes.func.isRequired,
   updateErrors: PropTypes.func.isRequired,
+  focusExpDatesNext: PropTypes.func.isRequired,
   value: PropTypes.objectOf(PropTypes.string).isRequired,
   lang: PropTypes.string.isRequired,
   parentApp: PropTypes.string.isRequired,

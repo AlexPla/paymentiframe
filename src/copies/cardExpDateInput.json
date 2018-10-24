@@ -44,16 +44,9 @@
     },
     "posterior": {
       "en": "EN_posterior",
-      "es": "Tarjeta caducada. Introduce otra vigente.",
-      "it": "Numero incorretto. Per favore, correggilo.",
-      "br": "Cartão expirado.  Insira um cartão válido.",
-      "mx": "Tarjeta caducada. Introduce otra vigente."
-    },
-    "posterior_short": {
-      "en": "EN_posterior",
       "es": "Tarjeta caducada.",
       "it": "Carta scaduta.",
-      "br": "Cartão vencido.",
+      "br": "Cartão expirado.",
       "mx": "Tarjeta caducada."
     }
   }

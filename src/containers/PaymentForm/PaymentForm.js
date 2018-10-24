@@ -32,6 +32,8 @@ class PaymentForm extends Component {
     super(props, context);
 
     this.expDateInput = React.createRef();
+    this.zipCodeInput = React.createRef();
+    this.cardCVVInput = React.createRef();
 
     this.state = {
       parentApp: getParamValue('app') || configs.STOREFRONT,
@@ -89,6 +91,16 @@ class PaymentForm extends Component {
     this.expDateInput.current.expDateInput.current.focus();
   }
 
+  focusExpDatesNext = () => {
+    const { lang } = this.state;
+    const { cardType } = this.props;
+    if (lang === configs.MEXICO && cardType.type === cardConstants.AMERICAN_EXPRESS) {
+      this.zipCodeInput.current.zipCodeInput.current.focus();
+    } else {
+      this.cardCVVInput.current.cardCVVInput.current.focus();
+    }
+  }
+
   sendHeightEvent = () => {
     EventEmitterHelper.sendHeightEvent(document.body.scrollHeight);
   }
@@ -139,6 +151,7 @@ class PaymentForm extends Component {
               lang={lang}
               updateFields={updateFields}
               updateErrors={updateErrors}
+              focusExpDatesNext={this.focusExpDatesNext}
               value={date}
               ref={this.expDateInput}
             />
@@ -151,6 +164,7 @@ class PaymentForm extends Component {
                   updateFields={updateFields}
                   updateErrors={updateErrors}
                   value={zipCode}
+                  ref={this.zipCodeInput}
                 />
               </div>
             )
@@ -165,6 +179,7 @@ class PaymentForm extends Component {
             showHelp={EventEmitterHelper.sendCvvEvent}
             value={cardCVV}
             cardType={cardType}
+            ref={this.cardCVVInput}
           />
         </div>
       </div>

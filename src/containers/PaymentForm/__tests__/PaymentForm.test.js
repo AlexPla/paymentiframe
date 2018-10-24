@@ -104,6 +104,36 @@ describe('Component PaymentForm:', () => {
     expect(spy).toBeCalled();
   });
 
+  it('should give focus to cvv when focusExpDatesNext called', () => {
+    spy = jest.spyOn(wrapper.find('.card-cvv-input__input').instance(), 'focus');
+    wrapper.find('CardExpDateInput').prop('focusExpDatesNext')();
+    expect(spy).toBeCalled();
+  });
+
+  it('should give focus to zip code when cardType is amex, lang is mx and focusExpDatesNext called', () => {
+    window.history.pushState({}, 'Test PaymentForm', `/${preUrl}/test?lang=${configs.MEXICO}`);
+    wrapper = mount(provider, { lifecycleExperimental: true });
+    wrapper.setProps({
+      children: React.cloneElement(wrapper.props().children, {
+        cardType: {
+          niceType: 'American Express',
+          type: constants.AMERICAN_EXPRESS,
+          pattern: /^3[47]\d*$/,
+          isAmex: true,
+          gaps: [4, 10],
+          lengths: [15],
+          code: {
+            name: constants.CID,
+            size: 4,
+          },
+        },
+      }),
+    });
+    spy = jest.spyOn(wrapper.find('.zip-code__input').instance(), 'focus');
+    wrapper.find('CardExpDateInput').prop('focusExpDatesNext')();
+    expect(spy).toBeCalled();
+  });
+
   it('should mount and send height event when document.fonts available', () => {
     window.history.pushState({}, 'Test PaymentForm', `/${preUrl}/test?app=${configs.LEGACY}&lang=${configs.ITALY}`);
     wrapper = mount(provider, { lifecycleExperimental: true });
