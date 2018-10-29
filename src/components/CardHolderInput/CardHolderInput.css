@@ -26,6 +26,7 @@
   color: #000;
   -moz-appearance: textfield;
   line-height: normal;
+  box-shadow: none;
 }
 
 .card-holder-input__input__storefront {
