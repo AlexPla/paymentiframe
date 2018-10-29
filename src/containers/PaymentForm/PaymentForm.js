@@ -12,6 +12,7 @@ import cardCVVCopies from '@Copies/cardCVVInput';
 import cardExpDateCopies from '@Copies/cardExpDateInput';
 import cardHolderCopies from '@Copies/cardHolderInput';
 import cardNumberCopies from '@Copies/cardNumberInput';
+import zipCodeCopies from '@Copies/zipCodeInput';
 import './PaymentForm.css';
 
 const getParamValue = (paramName) => {
@@ -75,14 +76,30 @@ class PaymentForm extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { errors: prevErrors } = prevProps;
-    const { errors } = this.props;
-    const { prod } = this.state;
-    // Should only change if:
-    // 1. one of the fields change from error -> success or vice versa.
-    // 2. all fields are success and one of them changes of value (but keeps being success).
+    const { cardType: prevCardType, errors: prevErrors } = prevProps;
+    const { cardType, errors, updateErrors } = this.props;
+    const { prod, lang } = this.state;
+    if (lang === configs.MEXICO
+      && cardType.type !== prevCardType.type
+      && cardType.type === cardConstants.AMERICAN_EXPRESS) {
+      const errorMessage = (this.prevZipError !== undefined)
+        ? this.prevZipError
+        : { key: 'zipCode', value: zipCodeCopies.errors.required };
+      updateErrors(errorMessage);
+    } else if (lang === configs.MEXICO
+      && cardType.type !== prevCardType.type
+      && prevCardType.type === cardConstants.AMERICAN_EXPRESS) {
+      const valid = { key: 'zipCode', value: '' };
+      this.prevZipError = errors.find(error => error.key === 'zipCode')
+        || valid;
+      updateErrors(valid);
+    }
     if (errors.length === 0
       || JSON.stringify(prevErrors) !== JSON.stringify(errors)) {
+      // Should only change if:
+      // 1. one of the fields change from error -> valid or vice versa.
+      // 2. all fields are valid and one of their value's change (but keeps being valid).
+      // 3. one of the fields error changes to a different error.
       EventEmitterHelper.sendChangeEvent(prod, this.props);
     }
   }
