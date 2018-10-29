@@ -62,6 +62,61 @@ describe('Component PaymentForm:', () => {
     expect(wrapper.find('.zip-code__input-group').length).toEqual(1);
   });
 
+  it('should display ZipCodeInput if lang parameter is mx and card type is Amex and set error when prevZipError', () => {
+    window.history.pushState({}, 'Test PaymentForm', `/${preUrl}/test?lang=${configs.MEXICO}`);
+    wrapper = mount(provider, { lifecycleExperimental: true });
+    const randomZipError = { key: 'zipCode', value: 'error' };
+    wrapper.find('PaymentForm').instance().prevZipError = randomZipError;
+    spy = jest.spyOn(wrapper.find('PaymentForm').instance(), 'componentDidUpdate');
+    wrapper.setProps({
+      children: React.cloneElement(wrapper.props().children, {
+        errors: [],
+        cardType: {
+          niceType: 'American Express',
+          type: constants.AMERICAN_EXPRESS,
+          pattern: /^3[47]\d*$/,
+          isAmex: true,
+          gaps: [4, 10],
+          lengths: [15],
+          code: {
+            name: constants.CID,
+            size: 4,
+          },
+        },
+      }),
+    });
+    expect(spy).toBeCalled();
+    expect(wrapper.find('.zip-code__input-group').length).toEqual(1);
+  });
+
+  it('should save previous zip error and update the errors if lang parameter is mx and card type changes from Amex to another', () => {
+    window.history.pushState({}, 'Test PaymentForm', `/${preUrl}/test?lang=${configs.MEXICO}`);
+    wrapper = mount(provider, { lifecycleExperimental: true });
+    wrapper.setProps({
+      children: React.cloneElement(wrapper.props().children, {
+        cardType: {
+          niceType: 'American Express',
+          type: constants.AMERICAN_EXPRESS,
+          pattern: /^3[47]\d*$/,
+          isAmex: true,
+          gaps: [4, 10],
+          lengths: [15],
+          code: {
+            name: constants.CID,
+            size: 4,
+          },
+        },
+      }),
+    });
+    wrapper.setProps({
+      children: React.cloneElement(wrapper.props().children, {
+        cardType: false,
+      }),
+    });
+    expect(wrapper.find('PaymentForm').instance().prevZipError).toEqual({ key: 'zipCode', value: '' });
+    expect(wrapper.find('.zip-code__input-group').length).toEqual(0);
+  });
+
   it('should not display ZipCodeInput if lang parameter is not mx', () => {
     window.history.pushState({}, 'Test PaymentForm', `/${preUrl}/test?lang=${configs.SPAIN}`);
     wrapper = mount(provider, { lifecycleExperimental: true });

@@ -31,7 +31,7 @@ class ZipCodeInput extends Component {
   onClearClick = () => {
     const errorMessage = copies.errors.required;
 
-    this.updateAppState('', false, errorMessage);
+    this.updateAppState('', errorMessage);
 
     this.setState({
       errorMessage,
