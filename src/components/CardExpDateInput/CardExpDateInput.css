@@ -28,6 +28,7 @@
   color: #000;
   -moz-appearance: textfield;
   line-height: normal;
+  box-shadow: none;
 }
 
 .card-exp-date__input__storefront {

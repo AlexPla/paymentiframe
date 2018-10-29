@@ -50,7 +50,7 @@ class PaymentForm extends Component {
       document.fonts.ready.then(this.sendHeightEvent);
     } else {
       // if not, set a timeout
-      setTimeout(this.sendHeightEvent, 100);
+      setTimeout(this.sendHeightEvent, 500);
     }
     // Set initial array of errors (all fields required in correct language)
     // It'll change app state so will enter componentDidUpdate and send first change event
@@ -102,7 +102,11 @@ class PaymentForm extends Component {
   }
 
   sendHeightEvent = () => {
-    EventEmitterHelper.sendHeightEvent(document.body.scrollHeight);
+    /* istanbul ignore next */
+    const height = (document.body.scrollHeight > 0)
+      ? document.body.scrollHeight
+      : 327;
+    EventEmitterHelper.sendHeightEvent(height);
   }
 
   render() {

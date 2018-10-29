@@ -28,6 +28,7 @@
   color: #000;
   -moz-appearance: textfield;
   line-height: normal;
+  box-shadow: none;
 }
 
 .card-number__input__storefront {
@@ -72,15 +73,15 @@
 }
 
 .card-number__input-left-padding__storefront {
-  padding-left: 40px;
+  padding-left: 29px;
 }
 
 .card-number__input-left-padding__legacy {
-  padding-left: 40px;
+  padding-left: 29px;
 }
 
 .card-number__input-left-padding__webmobile {
-  padding-left: 45px;
+  padding-left: 29px;
 }
 
 /*
@@ -171,8 +172,8 @@
 }
 
 .card-number__card-type_icon {
-  margin-right: 20px;
-  width: 30px;
+  margin-right: 9px;
+  width: 20px;
   height: 20px;
   display: inline-block;
 }
