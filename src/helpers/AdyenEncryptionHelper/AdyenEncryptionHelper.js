@@ -7,13 +7,14 @@ export default {
    * Dynamically load Adyen encryption scripts and append it to body,
    * @return {Promise} resolve { Error }
    */
-  downloadAdyenEncyprionScript() {
+  downloadAdyenEncryptionScript(prod) {
     return new Promise((resolve, reject) => {
       if (!this.isNode) {
-        const scriptTag = document.querySelector(`script[src="${CONFIG.ADYEN_SCRIPT_URL}"]`); // todo: check to remove
+        const url = prod ? CONFIG.ADYEN_SCRIPT_URL_PROD : CONFIG.ADYEN_SCRIPT_URL_TEST;
+        const scriptTag = document.querySelector(`script[src="${url}"]`); // todo: check to remove
         if (scriptTag) scriptTag.parentElement.removeChild(scriptTag); // todo: check to remove
         const script = document.createElement('script');
-        script.src = CONFIG.ADYEN_SCRIPT_URL;
+        script.src = url;
         script.onload = () => {
           resolve(null);
         };
@@ -36,7 +37,7 @@ export default {
    */
   async encrypt(prod, number, cvc, holderName, expiryMonth, expiryYear) {
     try {
-      if (typeof window.adyen === 'undefined') await this.downloadAdyenEncyprionScript();
+      if (typeof window.adyen === 'undefined') await this.downloadAdyenEncryptionScript(prod);
       const generationtime = new Date().toISOString();
       const cardData = {
         number, cvc, holderName, expiryMonth, expiryYear, generationtime,
