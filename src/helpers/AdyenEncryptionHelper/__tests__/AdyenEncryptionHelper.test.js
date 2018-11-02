@@ -1,6 +1,7 @@
 const mockedConfig = {
   ADYEN_DOWNLOAD_TIMEOUT: 100,
-  ADYEN_SCRIPT_URL: 'url',
+  ADYEN_SCRIPT_URL_TEST: 'url',
+  ADYEN_SCRIPT_URL_PROD: 'url',
   ADYEN_CLIENT_KEY: '1',
   ADYEN_ERROR_ENVIRONMENT: 'err_env',
   ADYEN_ERROR_TIMEOUT: 'err_timeout',
@@ -30,20 +31,20 @@ describe('Adyen encryption helper:', () => {
   });
 
   it('should call download adyen encryption script if it is not exist in global window', () => {
-    helper.downloadAdyenEncyprionScript = () => {};
-    const downloadAdyen = jest.spyOn(helper, 'downloadAdyenEncyprionScript');
+    helper.downloadAdyenEncryptionScript = () => {};
+    const downloadAdyen = jest.spyOn(helper, 'downloadAdyenEncryptionScript');
     return helper.encrypt().then(() => {
       expect(downloadAdyen).toHaveBeenCalled();
     });
   });
 
-  it('should not download adyen encryption script in node js environment', () => helper.downloadAdyenEncyprionScript().catch((error) => {
+  it('should not download adyen encryption script in node js environment', () => helper.downloadAdyenEncryptionScript(false).catch((error) => {
     expect(error.message).toBe(mockedConfig.ADYEN_ERROR_ENVIRONMENT);
   }));
 
   it('should reject downloading adyen script on timeout', () => {
     helper.isNode = false;
-    return helper.downloadAdyenEncyprionScript().catch((error) => {
+    return helper.downloadAdyenEncryptionScript(false).catch((error) => {
       expect(error.message).toBe(mockedConfig.ADYEN_ERROR_TIMEOUT);
     });
   }, mockedConfig.ADYEN_DOWNLOAD_TIMEOUT + 1);
@@ -52,10 +53,10 @@ describe('Adyen encryption helper:', () => {
     helper.isNode = false;
     const customError = new Error('Custom error');
     setTimeout(() => {
-      const scriptTag = document.querySelector(`script[src="${mockedConfig.ADYEN_SCRIPT_URL}"]`);
+      const scriptTag = document.querySelector(`script[src="${mockedConfig.ADYEN_SCRIPT_URL_TEST}"]`);
       scriptTag.onerror(customError);
     }, 10);
-    return helper.downloadAdyenEncyprionScript().catch((error) => {
+    return helper.downloadAdyenEncryptionScript(false).catch((error) => {
       expect(error).toBe(customError);
     });
   }, mockedConfig.ADYEN_DOWNLOAD_TIMEOUT + 1);
@@ -63,11 +64,23 @@ describe('Adyen encryption helper:', () => {
   it('should inject downloaded adyen encryption script in document body as a script node on success', () => {
     helper.isNode = false;
     setTimeout(() => {
-      const scriptTag = document.querySelector(`script[src="${mockedConfig.ADYEN_SCRIPT_URL}"]`);
+      const scriptTag = document.querySelector(`script[src="${mockedConfig.ADYEN_SCRIPT_URL_TEST}"]`);
       scriptTag.onload();
     }, 10);
-    return helper.downloadAdyenEncyprionScript().then(() => {
-      const scriptTag = document.querySelector(`script[src="${mockedConfig.ADYEN_SCRIPT_URL}"]`);
+    return helper.downloadAdyenEncryptionScript(false).then(() => {
+      const scriptTag = document.querySelector(`script[src="${mockedConfig.ADYEN_SCRIPT_URL_TEST}"]`);
+      expect(scriptTag).not.toBeNull();
+    });
+  }, mockedConfig.ADYEN_DOWNLOAD_TIMEOUT + 1);
+
+  it('should inject downloaded adyen encryption script in document body as a script node on success on PROD', () => {
+    helper.isNode = false;
+    setTimeout(() => {
+      const scriptTag = document.querySelector(`script[src="${mockedConfig.ADYEN_SCRIPT_URL_PROD}"]`);
+      scriptTag.onload();
+    }, 10);
+    return helper.downloadAdyenEncryptionScript(true).then(() => {
+      const scriptTag = document.querySelector(`script[src="${mockedConfig.ADYEN_SCRIPT_URL_PROD}"]`);
       expect(scriptTag).not.toBeNull();
     });
   }, mockedConfig.ADYEN_DOWNLOAD_TIMEOUT + 1);
