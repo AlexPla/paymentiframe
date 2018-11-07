@@ -21,6 +21,7 @@ class CardExpDateInput extends Component {
   onInput = (e) => {
     let value = ExpDateHelper.extractValueFromVisualValue(e.target.value);
     const { value: oldValue, focusExpDatesNext } = this.props;
+    let { errorDisabled } = this.state;
 
     if (e.target.value.length > 7) {
       value = oldValue;
@@ -31,14 +32,16 @@ class CardExpDateInput extends Component {
 
     const errorMessage = this.validateInput(value);
 
-    if (!errorMessage
-      && (e.target.value.length === 7
-        || (value.month.length === 2 && value.year.length === 2))) {
-      focusExpDatesNext();
+    if (e.target.value.length === 7
+        || (value.month.length === 2 && value.year.length === 2)) {
+      if (!errorMessage) {
+        focusExpDatesNext();
+      } else {
+        errorDisabled = false;
+      }
     }
-
     this.updateAppState(value.month, value.year, errorMessage);
-    this.setState({ errorMessage });
+    this.setState({ errorMessage, errorDisabled });
   }
 
   onClearClick = () => {

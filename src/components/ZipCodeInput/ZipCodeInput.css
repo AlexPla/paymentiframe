@@ -35,6 +35,8 @@
   padding: 10px 30px;
   border: none;
   border-bottom: 1px solid #ccc;
+  -webkit-appearance: none;
+  border-radius: 0;
 }
 
 .zip-code__input__legacy,

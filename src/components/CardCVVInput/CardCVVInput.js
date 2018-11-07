@@ -146,6 +146,8 @@ class CardCVVInput extends Component {
             ${masked && 'card-cvv-input__input__masked'}`
           }
           type="text"
+          inputMode="numeric"
+          pattern="[0-9]*"
           autoComplete="off"
           name="cardCVVInput"
           value={value}
