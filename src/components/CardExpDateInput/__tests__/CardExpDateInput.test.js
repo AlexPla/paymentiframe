@@ -107,6 +107,14 @@ describe('Component CardExpDateInput:', () => {
     expect(wrapper.find('.card-exp-date__input').props().value).toEqual('05 / 25');
   });
 
+  it('should show error message when full-length reached', () => {
+    // To enable the button we must enter some input
+    wrapper.find('.card-exp-date__input').prop('onInput')({ target: { value: '01 00' } });
+    wrapper.update();
+    expect(wrapper.state('errorDisabled')).toEqual(false);
+    expect(wrapper.find('.card-exp-date__error').length).toEqual(1);
+  });
+
   /*
   * BACKSPACE
   */
