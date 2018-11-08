@@ -143,11 +143,22 @@ const CreditCardType = {
     cards = Object.values(types)
       .filter(type => (cardNumber.length === 0 || type.pattern.test(cardNumber)));
 
-    result.cardType = (cards.length === 1) ? cards[0] : false;
+    result.cardType = CreditCardType.getCardTypeFromCards(cards);
     result.maxLength = CreditCardType.getMaxLength(cards);
     result.minLength = CreditCardType.getMinLength(cards);
 
     return result;
+  },
+
+  getCardTypeFromCards(cards) {
+    const eloType = cards.find(type => type.type === constants.ELO);
+    let cardType;
+    if (eloType && cards.length === 2) {
+      cardType = eloType;
+    } else {
+      cardType = (cards.length === 1) ? cards[0] : false;
+    }
+    return cardType;
   },
 
   getTypeInfo(type) {
