@@ -18,7 +18,7 @@ class ZipCodeInput extends Component {
     };
   }
 
-  onInput = (e) => {
+  onChange = (e) => {
     const { value: prevValue } = this.props;
     const newValue = ZipCodeHelper.extractValueFromVisualValue(e.target.value);
     const value = (newValue.length > ZIP_CODE_MAX_LENGTH) ? prevValue : newValue;
@@ -89,7 +89,7 @@ class ZipCodeInput extends Component {
           autoComplete="off"
           id="zipCodeInput"
           value={value}
-          onInput={this.onInput}
+          onChange={this.onChange}
           onFocus={this.onFocus}
           onBlur={this.onBlur}
           ref={this.zipCodeInput}

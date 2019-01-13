@@ -43,7 +43,7 @@ class CardCVVInput extends Component {
     }
   }
 
-  onInput = (e) => {
+  onChange = (e) => {
     const pattern = new RegExp(`^[0-9]{0,${this.getLengthLimit()}}$`);
     const cvv = e.target.value.trim();
     if (e.target.value.length === this.getLengthLimit()) {
@@ -151,7 +151,7 @@ class CardCVVInput extends Component {
           autoComplete="off"
           name="cardCVVInput"
           value={value}
-          onInput={this.onInput}
+          onChange={this.onChange}
           onFocus={this.onFocus}
           onBlur={this.onBlur}
           ref={this.cardCVVInput}

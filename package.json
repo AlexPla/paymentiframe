@@ -73,7 +73,8 @@
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom",
     "test-ci": "jest --env=jsdom --coverage",
-    "lint": "eslint 'src/**/*.{js,jsx}'"
+    "lint": "eslint 'src/**/*.{js,jsx}'",
+    "lint-fix": "eslint -- --fix 'src/**/*.{js,jsx}'"
   },
   "pre-commit": {
     "run": [

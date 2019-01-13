@@ -14,7 +14,7 @@ class CardHolderInput extends Component {
     };
   }
 
-  onInput = (e) => {
+  onChange = (e) => {
     const cardHolder = e.target.value.toUpperCase();
     if (cardHolder.length <= 100) {
       const errorMessage = this.validateInput(cardHolder);
@@ -90,7 +90,7 @@ class CardHolderInput extends Component {
           autoComplete="on"
           id="cardHolderInput"
           value={value}
-          onInput={this.onInput}
+          onChange={this.onChange}
           onFocus={this.onFocus}
           onBlur={this.onBlur}
           tabIndex="0"

@@ -18,7 +18,7 @@ describe('Component ZipCodeInput:', () => {
   * SUCCESS
   */
   it('should process correct input', () => {
-    wrapper.find('.zip-code__input').prop('onInput')({ target: { value: '01020' } });
+    wrapper.find('.zip-code__input').prop('onChange')({ target: { value: '01020' } });
     wrapper.update();
     expect(wrapper.state('errorMessage')).toEqual('');
     expect(wrapper.find('.zip-code__error').length).toEqual(0);
@@ -29,18 +29,18 @@ describe('Component ZipCodeInput:', () => {
   */
   it('should process incorrect input -> empty', () => {
     // To enable error message display we must have a min-length input first
-    wrapper.find('.zip-code__input').prop('onInput')({ target: { value: '01020' } });
+    wrapper.find('.zip-code__input').prop('onChange')({ target: { value: '01020' } });
     // Actual input
-    wrapper.find('.zip-code__input').prop('onInput')({ target: { value: '' } });
+    wrapper.find('.zip-code__input').prop('onChange')({ target: { value: '' } });
     wrapper.update();
     expect(wrapper.state('errorMessage')).toEqual(copies.errors.required);
   });
 
   it('should process incorrect input -> minLength', () => {
     // To enable error message display we must have a min-length input first
-    wrapper.find('.zip-code__input').prop('onInput')({ target: { value: '01020' } });
+    wrapper.find('.zip-code__input').prop('onChange')({ target: { value: '01020' } });
     // Actual input
-    wrapper.find('.zip-code__input').prop('onInput')({ target: { value: '0102' } });
+    wrapper.find('.zip-code__input').prop('onChange')({ target: { value: '0102' } });
     wrapper.update();
     expect(wrapper.state('errorMessage')).toEqual(copies.errors.minLength);
   });
@@ -90,7 +90,7 @@ describe('Component ZipCodeInput:', () => {
   it('should not allow more input when full-length reached', () => {
     // To enable the button we must enter some input
     wrapper.setProps({ value: '0123456789' });
-    wrapper.find('.zip-code__input').prop('onInput')({ target: { value: '01234567890' } });
+    wrapper.find('.zip-code__input').prop('onChange')({ target: { value: '01234567890' } });
     wrapper.update();
     expect(wrapper.find('.zip-code__input').props().value).toEqual('0123456789');
   });

@@ -16,7 +16,7 @@ class CardNumberInput extends Component {
     };
   }
 
-  onInput = (e) => {
+  onChange = (e) => {
     let value = CreditCardType.removeGaps(e.target.value);
     const { cardType, maxLength } = CreditCardType.getCardType(value);
     const { value: oldValue, lang, focusExpDate } = this.props;
@@ -114,7 +114,7 @@ class CardNumberInput extends Component {
           autoComplete="off"
           id="cardNumberInput"
           value={visualValue}
-          onInput={this.onInput}
+          onChange={this.onChange}
           onFocus={this.onFocus}
           onBlur={this.onBlur}
           noValidate

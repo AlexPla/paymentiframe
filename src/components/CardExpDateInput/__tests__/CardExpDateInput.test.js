@@ -1,5 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import moment from 'moment';
 import copies from '@Copies/cardExpDateInput';
 import CardExpDateInput from '../CardExpDateInput';
 
@@ -20,7 +21,7 @@ describe('Component CardExpDateInput:', () => {
   * SUCCESS
   */
   it('should process correct input', () => {
-    wrapper.find('.card-exp-date__input').prop('onInput')({ target: { value: '05 25' } });
+    wrapper.find('.card-exp-date__input').prop('onChange')({ target: { value: '05 25' } });
     wrapper.update();
     expect(wrapper.state('errorMessage')).toEqual('');
     expect(wrapper.find('.card-exp-date__error').length).toEqual(0);
@@ -31,9 +32,9 @@ describe('Component CardExpDateInput:', () => {
   */
   it('should process incorrect input -> empty', () => {
     // To enable error message display we must have a full-length input first
-    wrapper.find('.card-exp-date__input').prop('onInput')({ target: { value: '05 25' } });
+    wrapper.find('.card-exp-date__input').prop('onChange')({ target: { value: '05 25' } });
     // Actual input
-    wrapper.find('.card-exp-date__input').prop('onInput')({ target: { value: '' } });
+    wrapper.find('.card-exp-date__input').prop('onChange')({ target: { value: '' } });
     wrapper.update();
     expect(wrapper.state('errorMessage')).toEqual(copies.errors.required[lang]);
     expect(wrapper.find('.card-exp-date__error').length).toEqual(0);
@@ -41,26 +42,28 @@ describe('Component CardExpDateInput:', () => {
 
   it('should process incorrect input -> incomplete', () => {
     // To enable error message display we must have a full-length input first
-    wrapper.find('.card-exp-date__input').prop('onInput')({ target: { value: '05 25' } });
+    wrapper.find('.card-exp-date__input').prop('onChange')({ target: { value: '05 25' } });
     // Actual input
-    wrapper.find('.card-exp-date__input').prop('onInput')({ target: { value: '05 1' } });
+    wrapper.find('.card-exp-date__input').prop('onChange')({ target: { value: '05 1' } });
     wrapper.update();
     expect(wrapper.state('errorMessage')).toEqual(copies.errors.incomplete[lang]);
   });
 
   it('should process incorrect input -> pattern', () => {
-    wrapper.find('.card-exp-date__input').prop('onInput')({ target: { value: '35 25' } });
+    wrapper.find('.card-exp-date__input').prop('onChange')({ target: { value: '35 25' } });
     wrapper.update();
     expect(wrapper.state('errorMessage')).toEqual(copies.errors.pattern[lang]);
   });
 
   it('should process incorrect input -> posterior', () => {
     // Previous year
-    wrapper.find('.card-exp-date__input').prop('onInput')({ target: { value: '01 00' } });
+    wrapper.find('.card-exp-date__input').prop('onChange')({ target: { value: '01 00' } });
     wrapper.update();
     expect(wrapper.state('errorMessage')).not.toBe('');
     // Same year
-    wrapper.find('.card-exp-date__input').prop('onInput')({ target: { value: '01 18' } });
+    const currDate = moment(new Date()).format('MM/YY');
+    const currYear = currDate.substr(3, 2);
+    wrapper.find('.card-exp-date__input').prop('onChange')({ target: { value: `01 ${currYear}` } });
     wrapper.update();
     expect(wrapper.state('errorMessage')).not.toBe('');
   });
@@ -102,14 +105,14 @@ describe('Component CardExpDateInput:', () => {
   it('should not allow more input when full-length reached', () => {
     // To enable the button we must enter some input
     wrapper.setProps({ value: { month: '05', year: '25' } });
-    wrapper.find('.card-exp-date__input').prop('onInput')({ target: { value: '05 / 254' } });
+    wrapper.find('.card-exp-date__input').prop('onChange')({ target: { value: '05 / 254' } });
     wrapper.update();
     expect(wrapper.find('.card-exp-date__input').props().value).toEqual('05 / 25');
   });
 
   it('should show error message when full-length reached', () => {
     // To enable the button we must enter some input
-    wrapper.find('.card-exp-date__input').prop('onInput')({ target: { value: '01 00' } });
+    wrapper.find('.card-exp-date__input').prop('onChange')({ target: { value: '01 00' } });
     wrapper.update();
     expect(wrapper.state('errorDisabled')).toEqual(false);
     expect(wrapper.find('.card-exp-date__error').length).toEqual(1);
@@ -120,7 +123,7 @@ describe('Component CardExpDateInput:', () => {
   */
   it('should erase last digit of month when backspace after the slash', () => {
     wrapper.setProps({ value: { month: '05', year: '' } });
-    wrapper.find('.card-exp-date__input').prop('onInput')({ target: { value: '05 /' } });
+    wrapper.find('.card-exp-date__input').prop('onChange')({ target: { value: '05 /' } });
     wrapper.update();
     // it's impossible to update app state from tests, so I have to pass prop myself
     wrapper.setProps({ value: { month: '0', year: '' } });

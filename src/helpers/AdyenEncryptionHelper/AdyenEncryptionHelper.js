@@ -46,6 +46,7 @@ export default {
       const cseInstance = window.adyen.encrypt.createEncryption(key, {});
       return [cseInstance.encrypt(cardData), null];
     } catch (error) {
+      // eslint-disable-next-line no-console
       if (!this.isNode) console.error(error);
       return [false, error];
     }

@@ -31,7 +31,7 @@ describe('Component CardNumberInput:', () => {
   * SUCCESS
   */
   it('should process correct input', () => {
-    wrapper.find('.card-number__input').prop('onInput')({ target: { value: '5585 5585 5585 5583' } });
+    wrapper.find('.card-number__input').prop('onChange')({ target: { value: '5585 5585 5585 5583' } });
     wrapper.update();
     expect(wrapper.state('errorMessage')).toEqual('');
     expect(wrapper.find('.card-number__error').length).toEqual(0);
@@ -42,15 +42,15 @@ describe('Component CardNumberInput:', () => {
   */
   it('should process incorrect input -> empty', () => {
     // To enable error message display we must have a full-length input first
-    wrapper.find('.card-number__input').prop('onInput')({ target: { value: '5585 5585 5585 5583' } });
+    wrapper.find('.card-number__input').prop('onChange')({ target: { value: '5585 5585 5585 5583' } });
     // Actual input
-    wrapper.find('.card-number__input').prop('onInput')({ target: { value: '' } });
+    wrapper.find('.card-number__input').prop('onChange')({ target: { value: '' } });
     wrapper.update();
     expect(wrapper.state('errorMessage')).toEqual(copies.errors.required[lang]);
   });
 
   it('should process incorrect input -> pattern', () => {
-    wrapper.find('.card-number__input').prop('onInput')({ target: { value: '9999 9999 9999 9999' } });
+    wrapper.find('.card-number__input').prop('onChange')({ target: { value: '9999 9999 9999 9999' } });
     wrapper.update();
     expect(wrapper.state('errorMessage')).toEqual(copies.errors.pattern[lang]);
   });
@@ -100,7 +100,7 @@ describe('Component CardNumberInput:', () => {
   it('should not allow more input when full-length reached', () => {
     // To enable the button we must enter some input
     wrapper.setProps({ value: '5585558555855583' });
-    wrapper.find('.card-number__input').prop('onInput')({ target: { value: '5585 5585 5585 55830' } });
+    wrapper.find('.card-number__input').prop('onChange')({ target: { value: '5585 5585 5585 55830' } });
     wrapper.update();
     expect(wrapper.find('.card-number__input').props().value).toEqual('5585 5585 5585 5583');
   });

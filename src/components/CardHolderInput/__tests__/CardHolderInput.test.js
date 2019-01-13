@@ -28,7 +28,7 @@ describe('Component CardHolderInput:', () => {
   });
 
   it('should call updateFields method from props and pass proper object with new field value as an argument', () => {
-    input.prop('onInput')({
+    input.prop('onChange')({
       target: {
         value: 'changed',
       },
@@ -37,7 +37,7 @@ describe('Component CardHolderInput:', () => {
   });
 
   it('should validate input on input and clear state.errorMessage for proper name', () => {
-    input.prop('onInput')({
+    input.prop('onChange')({
       target: {
         value: 'John Doe',
       },
@@ -47,7 +47,7 @@ describe('Component CardHolderInput:', () => {
   });
 
   it('should validate input on input and set state.errorMessage if holder name is empty', () => {
-    input.prop('onInput')({
+    input.prop('onChange')({
       target: {
         value: '',
       },
@@ -57,7 +57,7 @@ describe('Component CardHolderInput:', () => {
   });
 
   it('should validate input on input and set state.errorMessage if holder name length is less then 2 symbols', () => {
-    input.prop('onInput')({
+    input.prop('onChange')({
       target: {
         value: 'a',
       },
@@ -67,7 +67,7 @@ describe('Component CardHolderInput:', () => {
   });
 
   it('should validate input on input and not set state.errorMessage if holder name length is more then 100 symbols', () => {
-    input.prop('onInput')({
+    input.prop('onChange')({
       target: {
         value: new Array(102).join('a'),
       },
@@ -77,7 +77,7 @@ describe('Component CardHolderInput:', () => {
   });
 
   it('should validate input on input and set state.errorMessage if holder name does not match validation pattern', () => {
-    input.prop('onInput')({
+    input.prop('onChange')({
       target: {
         value: '%!@#',
       },
@@ -87,7 +87,7 @@ describe('Component CardHolderInput:', () => {
   });
 
   it('should call updateErrorsMock with true error value if validation fails on user input', () => {
-    input.prop('onInput')({
+    input.prop('onChange')({
       target: {
         value: '%!@#',
       },
@@ -97,7 +97,7 @@ describe('Component CardHolderInput:', () => {
   });
 
   it('should call updateErrorsMock with false error value if validation pass on user input', () => {
-    input.prop('onInput')({
+    input.prop('onChange')({
       target: {
         value: 'John Doe',
       },

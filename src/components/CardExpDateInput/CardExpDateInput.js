@@ -18,7 +18,7 @@ class CardExpDateInput extends Component {
     };
   }
 
-  onInput = (e) => {
+  onChange = (e) => {
     let value = ExpDateHelper.extractValueFromVisualValue(e.target.value);
     const { value: oldValue, focusExpDatesNext } = this.props;
     let { errorDisabled } = this.state;
@@ -81,7 +81,7 @@ class CardExpDateInput extends Component {
         const currDate = moment(new Date()).format('MM/YY');
         const currMonth = currDate.substr(0, 2);
         const currYear = currDate.substr(3, 2);
-        if (value.year < currYear || (value.year === currYear && value.month < currMonth)) {
+        if (value.year < currYear || (value.year === currYear && value.month <= currMonth)) {
           error = copies.errors.posterior[lang];
         }
       }
@@ -145,7 +145,7 @@ class CardExpDateInput extends Component {
           autoComplete="off"
           id="cardExpDateInput"
           value={visualValue}
-          onInput={this.onInput}
+          onChange={this.onChange}
           onFocus={this.onFocus}
           onBlur={this.onBlur}
           noValidate

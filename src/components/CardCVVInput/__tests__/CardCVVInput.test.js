@@ -37,7 +37,7 @@ describe('Component CardCVVInput:', () => {
   });
 
   it('should call updateFields method from props and pass proper object with new field value as an argument', () => {
-    input.prop('onInput')({
+    input.prop('onChange')({
       target: {
         value: '123',
       },
@@ -46,7 +46,7 @@ describe('Component CardCVVInput:', () => {
   });
 
   it('should not call updateFields method if input does not match pattern', () => {
-    input.prop('onInput')({
+    input.prop('onChange')({
       target: {
         value: 'a',
       },
@@ -55,7 +55,7 @@ describe('Component CardCVVInput:', () => {
   });
 
   it('should validate input on input and clear state.errorMessage for proper name', () => {
-    input.prop('onInput')({
+    input.prop('onChange')({
       target: {
         value: '123',
       },
@@ -65,7 +65,7 @@ describe('Component CardCVVInput:', () => {
   });
 
   it('should validate input on input and set state.errorMessage if holder name is empty', () => {
-    input.prop('onInput')({
+    input.prop('onChange')({
       target: {
         value: '',
       },
@@ -76,7 +76,7 @@ describe('Component CardCVVInput:', () => {
 
 
   it('should validate input on input and set state.errorMessage if cvv is less then should be', () => {
-    input.prop('onInput')({
+    input.prop('onChange')({
       target: {
         value: '12',
       },
@@ -95,7 +95,7 @@ describe('Component CardCVVInput:', () => {
       },
     });
     component.update();
-    input.prop('onInput')({
+    input.prop('onChange')({
       target: {
         value: '1234',
       },
@@ -105,7 +105,7 @@ describe('Component CardCVVInput:', () => {
   });
 
   it('should call updateErrorsMock with false error value if validation pass on user input', () => {
-    input.prop('onInput')({
+    input.prop('onChange')({
       target: {
         value: '123',
       },
